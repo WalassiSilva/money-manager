@@ -70,4 +70,25 @@ app.put("/api/transactions/:id", async (req, res) => {
   res.status(200).send();
 });
 
+// -------- DELETE TRANSACTION -----------
+app.delete("/api/transactions/:id", async (req, res) => {
+  const id = Number(req.params.id);
+
+  try {
+    const targetTransaction = await prisma.transaction.findUnique({ where: { id } });
+    if(!targetTransaction){
+      return res.status(404).send({message: "Id da transação não encontrado"});
+    }
+
+    await prisma.transaction.delete({where: {id}});
+  } catch (error) {
+    res.status(500).send({message: "Erro ao tentar deletar transaçaõ"});
+  }
+
+  res.status(200).send();
+});
+
+// -------- FILTER TRANSACTIONS BY CATEGORY --------
+// -------- FILTER TRANSACTIONS BY MONTH -----------
+// -------- FILTER TRANSACTIONS BY NAME ------------
 app.listen(port, () => console.log(`Running in http://localhost:${port}`));
