@@ -6,7 +6,15 @@ const app = express();
 const prisma = new PrismaClient();
 
 app.get("/api/getall", async (req, res) => {
-  const getall = await prisma.transaction.findMany();
+  const getall = await prisma.transaction.findMany({
+    orderBy: {
+      day: "desc",
+    }, 
+    include: {
+      categories: true,
+    }
+
+  });
   res.json(getall);
 });
 

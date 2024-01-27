@@ -8,13 +8,21 @@ datasource db {
 }
 
 model Transaction {
-  id         Int       @id @default(autoincrement())
-  title      String?   @db.VarChar(50)
-  value      Float?    @db.Real
-  day        DateTime? @db.Date
-  n_category Int?      @db.SmallInt
-  category   String?   @db.VarChar(50)
-  type       Int?      @db.SmallInt
+  id          Int       @id @default(autoincrement())
+  title       String?   @db.VarChar(50)
+  value       Float?    @db.Real
+  day         DateTime? @db.Date
+  category_id Int?      @db.SmallInt
+  type        Int?      @db.SmallInt
+  categories  Category? @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_category")
 
   @@map("transactions")
+}
+
+model Category {
+  id           Int           @id
+  title        String?       @db.VarChar(50)
+  transactions Transaction[]
+
+  @@map("categories")
 }
