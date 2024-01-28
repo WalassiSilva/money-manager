@@ -8,7 +8,7 @@ app.use(express.json());
 
 //--------- GET ALL TRANSACTIONS-----------
 app.get("/api/getall", async (_, res) => {
-  const getall = await prisma.transaction.findMany({
+  const filterResult = await prisma.transaction.findMany({
     orderBy: {
       day: "desc",
     },
@@ -17,7 +17,12 @@ app.get("/api/getall", async (_, res) => {
     }
 
   });
-  res.json(getall);
+
+
+  const resultsFinded = filterResult.length;
+  setExpensesAsNegative(filterResult);
+
+  res.json({ resultsFinded, filterResult });
 });
 
 // -------- POST NEW TRANSACTION -----------
@@ -25,7 +30,7 @@ app.post("/api/transactions", async (req, res) => {
   const { title, value, category_id, day, type } = req.body;
 
   try {
-    await prisma.transaction.create({
+    const newTransaction = await prisma.transaction.create({
       data: {
         title,
         value,
@@ -34,11 +39,10 @@ app.post("/api/transactions", async (req, res) => {
         day: new Date(day)
       }
     });
+    res.status(201).json(newTransaction);
   } catch (error) {
     return res.status(500).send({ message: "Erro ao cadastrar uma transação" });
   }
-
-  res.status(201).send();
 });
 
 
@@ -67,7 +71,7 @@ app.put("/api/transactions/:id", async (req, res) => {
   } catch (error) {
     return res.status(500).send({ message: "Erro ao atualizar transação" });
   }
-  res.status(200).send();
+  res.status(200).send({ message: "Atualização concluída!" });
 });
 
 // -------- DELETE TRANSACTION -----------
@@ -93,7 +97,7 @@ app.get("/api/transactions/filterAll/:categoryTitle", async (req, res) => {
   const categoryTitle = req.params.categoryTitle;
 
   try {
-    const filteredCategory = await prisma.transaction.findMany({
+    const filterResult = await prisma.transaction.findMany({
       include: { categories: true },
       where: {
         categories: {
@@ -107,7 +111,11 @@ app.get("/api/transactions/filterAll/:categoryTitle", async (req, res) => {
       }
     });
 
-    res.status(200).send(filteredCategory);
+    setExpensesAsNegative(filterResult);
+    const resultsFinded = filterResult.length;
+    const totalValue = sumValues(filterResult);
+
+    res.status(200).json({ resultsFinded, totalValue, filterResult });
   } catch (error) {
     return res.status(500).send({ message: "Erro ao filtrar por Categoria" });
   }
@@ -144,7 +152,11 @@ app.get("/api/transactions/filter/month/:category/:year/:month", async (req, res
       orderBy: { day: "desc" }
     });
 
-    res.status(200).send(filterResult);
+    setExpensesAsNegative(filterResult);
+    const resultsFinded = filterResult.length;
+    const totalValue = sumValues(filterResult);
+
+    res.status(200).json({ resultsFinded, totalValue, filterResult });
   } catch (error) {
     return res.status(500).send({ message: "Erro ao Filtrar por categoria e mês" });
   }
@@ -163,7 +175,7 @@ app.get("/api/transactions/filter/:year/:month", async (req, res) => {
     : new Date(`${year + 1}-01-01`);
 
   try {
-    const filteredMonth = await prisma.transaction.findMany({
+    const filterResult = await prisma.transaction.findMany({
       where: {
         day: {
           lt: new Date(finalDay),
@@ -175,13 +187,63 @@ app.get("/api/transactions/filter/:year/:month", async (req, res) => {
       }
 
     });
-    res.status(200).send(filteredMonth);
+    setExpensesAsNegative(filterResult);
+
+    const balance = { incomes: 0, expenses: 0, result: 0 };
+    for (const item of filterResult) {
+      if (item.type === 1) balance.incomes += item.value;
+      if (item.type === 0) balance.expenses += item.value;
+    }
+    balance.result = balance.incomes + balance.expenses;
+    console.log(balance);
+
+    res.status(200).json({balance, filterResult });
   }
   catch (error) {
-    return res.status(500).send({ message: "Falha ao filtrar por mês" });
+    return res.status(500).send({ message: "Erro ao filtrar por mês" });
   }
 });
 
 
 // -------- FILTER TRANSACTIONS BY NAME ------------
+app.get("/api/transactions/filterTitle/:title", async (req, res) => {
+
+  const title = req.params.title;
+
+  try {
+    const filterResult = await prisma.transaction.findMany({
+      where: { title: { equals: title, mode: "insensitive" } },
+      orderBy: { day: "desc" }
+    });
+
+    setExpensesAsNegative(filterResult);
+
+    const resultsFinded = filterResult.length;
+
+    const totalValue = sumValues(filterResult);
+
+    return res.json({ resultsFinded, totalValue, filterResult });
+
+  } catch (error) {
+    return res.status(500).send({ message: "Error ao Pesquisar pelo titulo" });
+  }
+});
+
+
 app.listen(port, () => console.log(`Running in http://localhost:${port}`));
+
+function sumValues(filterResult: { id: number; title: string | null; value: number | null; day: Date | null; category_id: number | null; type: number | null; }[]) {
+  let totalValue = 0;
+  for (const item of filterResult) {
+    totalValue += item.value!;
+  }
+  return totalValue;
+}
+
+function setExpensesAsNegative(filterResult: { id: number; title: string | null; value: number | null; day: Date | null; category_id: number | null; type: number | null; }[]) {
+  for (const item of filterResult) {
+    if (item.type === 0) {
+      item.value! *= -1;
+    }
+  }
+}
