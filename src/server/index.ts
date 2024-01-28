@@ -13,7 +13,7 @@ app.get("/api/getall", async (_, res) => {
       day: "desc",
     },
     include: {
-      categories: true,
+      categories: { select: { title: true } },
     }
 
   });
@@ -44,7 +44,6 @@ app.post("/api/transactions", async (req, res) => {
     return res.status(500).send({ message: "Erro ao cadastrar uma transação" });
   }
 });
-
 
 // -------- UPDATE TRANSACTION -----------
 app.put("/api/transactions/:id", async (req, res) => {
@@ -98,7 +97,7 @@ app.get("/api/transactions/filterAll/:categoryTitle", async (req, res) => {
 
   try {
     const filterResult = await prisma.transaction.findMany({
-      include: { categories: true },
+      include: { categories: { select: { title: true } } },
       where: {
         categories: {
           title: {
@@ -164,7 +163,6 @@ app.get("/api/transactions/filter/month/:category/:year/:month", async (req, res
 });
 
 // -------- FILTER TRANSACTIONS BY MONTH -----------
-
 app.get("/api/transactions/filter/:year/:month", async (req, res) => {
 
   const month = Number(req.params.month);
@@ -197,13 +195,12 @@ app.get("/api/transactions/filter/:year/:month", async (req, res) => {
     balance.result = balance.incomes + balance.expenses;
     console.log(balance);
 
-    res.status(200).json({balance, filterResult });
+    res.status(200).json({ balance, filterResult });
   }
   catch (error) {
     return res.status(500).send({ message: "Erro ao filtrar por mês" });
   }
 });
-
 
 // -------- FILTER TRANSACTIONS BY NAME ------------
 app.get("/api/transactions/filterTitle/:title", async (req, res) => {
@@ -212,7 +209,7 @@ app.get("/api/transactions/filterTitle/:title", async (req, res) => {
 
   try {
     const filterResult = await prisma.transaction.findMany({
-      where: { title: { equals: title, mode: "insensitive" } },
+      where: { title: { contains: title, mode: "insensitive" } },
       orderBy: { day: "desc" }
     });
 
@@ -229,6 +226,35 @@ app.get("/api/transactions/filterTitle/:title", async (req, res) => {
   }
 });
 
+// -------- GROUP BY CATEGORY ------------
+app.get("/api/transactions/group/category/:yyyy/:mm", async (req, res) => {
+  const yyyy = Number(req.params.yyyy);
+  const mm = Number(req.params.mm);
+  const initialDay = new Date(`${yyyy}-${mm}-01`);
+  const finalDay = (mm !== 12)
+    ? new Date(`${yyyy}-${mm + 1}-01`)
+    : new Date(`${yyyy + 1}-01-01`);
+
+  try {
+    // const filterResult = await prisma.transaction.groupBy({
+    //   by: ["category_id"],
+    //   _sum: { value: true },
+    //   orderBy: { category_id: "asc" },
+    // });
+    const filterResult = await prisma.$queryRaw`
+      select  c.title Category, sum(t.value)
+      from transactions t 
+      left outer join categories c on c.id = t.category_id 
+      where t.day between  ${initialDay} and ${finalDay}
+      group by c.title
+    `;
+
+    res.status(200).json(filterResult);
+  } catch (error) {
+    return res.status(500).send({ message: "Erros ao agrupar por categorias" });
+  }
+
+});
 
 app.listen(port, () => console.log(`Running in http://localhost:${port}`));
 
