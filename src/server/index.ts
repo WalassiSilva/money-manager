@@ -103,7 +103,7 @@ app.get("/api/transactions/filterAll/:categoryTitle", async (req, res) => {
           title: {
             equals: categoryTitle, mode: "insensitive"
           }
-        }
+        },
       },
       orderBy: {
         day: "desc"
@@ -236,11 +236,6 @@ app.get("/api/transactions/group/category/:yyyy/:mm", async (req, res) => {
     : new Date(`${yyyy + 1}-01-01`);
 
   try {
-    // const filterResult = await prisma.transaction.groupBy({
-    //   by: ["category_id"],
-    //   _sum: { value: true },
-    //   orderBy: { category_id: "asc" },
-    // });
     const filterResult = await prisma.$queryRaw`
       select  c.title Category, sum(t.value)
       from transactions t 
