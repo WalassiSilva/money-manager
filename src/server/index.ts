@@ -1,13 +1,15 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import cors from "cors";
 
-const port = 3000;
+const port = 3001;
 const app = express();
 const prisma = new PrismaClient();
 app.use(express.json());
+app.use(cors());
 
 //--------- GET ALL TRANSACTIONS-----------
-app.get("/api/getall", async (_, res) => {
+app.get("/api/transactions/all", async (_, res) => {
   const filterResult = await prisma.transaction.findMany({
     orderBy: {
       day: "desc",
