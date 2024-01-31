@@ -20,7 +20,6 @@ app.get("/api/transactions/all", async (_, res) => {
 
   });
 
-
   const resultsFinded = filterResult.length;
   setExpensesAsNegative(filterResult);
 
@@ -195,7 +194,6 @@ app.get("/api/transactions/filter/:year/:month", async (req, res) => {
       if (item.type === 0) balance.expenses += item.value;
     }
     balance.result = balance.incomes + balance.expenses;
-    console.log(balance);
 
     res.status(200).json({ balance, filterResult });
   }
