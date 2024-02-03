@@ -26,8 +26,15 @@ app.get("/api/transactions/all", async (_, res) => {
   res.json({ resultsFinded, filterResult });
 });
 
+// -------- GET CATEGORY ------------
+app.get("/api/categories", async (_, res) => {
+  const filterResult = await prisma.category.findMany();
+
+  res.json(filterResult);
+});
+
 // -------- POST NEW TRANSACTION -----------
-app.post("/api/transactions", async (req, res) => {
+app.post("/api/transactions/add", async (req, res) => {
   const { title, value, category_id, day, type } = req.body;
 
   try {
@@ -250,6 +257,9 @@ app.get("/api/transactions/group/category/:yyyy/:mm", async (req, res) => {
   }
 
 });
+
+
+
 
 app.listen(port, () => console.log(`Running in http://localhost:${port}`));
 

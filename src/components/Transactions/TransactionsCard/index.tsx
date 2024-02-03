@@ -5,6 +5,7 @@ import { GiMoneyStack } from "react-icons/gi";
 import { GiReceiveMoney } from "react-icons/gi";
 import { IoBuild } from "react-icons/io5";
 import { FaChartLine } from "react-icons/fa";
+import { GiPlantWatering } from "react-icons/gi";
 
 interface TransactionsProps {
   id: number;
@@ -15,7 +16,7 @@ interface TransactionsProps {
   type: number;
 }
 
-export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, day, category_id, type }) => {
+export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, day, category_id, type, id }) => {
 
   const monetaryValue = (value: number) => {
     if (value) {
@@ -30,7 +31,7 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
   const setIconCategory = (category_id: number) => {
     switch (category_id) {
       case 1: { return <FaHome className="bg-gray-400 rounded-full p-2 h-10 w-10" />; }
-      case 2: { return <FaBus className="bg-blue-400 rounded-full p-2 h-10 w-10" />; }
+      case 2: { return <GiPlantWatering className="bg-green-500 rounded-full p-2 h-10 w-10" />; }
       case 3: { return <GiFireSpellCast className="bg-red-400 rounded-full p-2 h-10 w-10" />; }
       case 4: { return <MdHealthAndSafety className="bg-yellow-500 rounded-full p-2 h-10 w-10" />; }
       case 5: { return <FaBus className="bg-green-300 rounded-full p-2 h-10 w-10" />; }
@@ -42,7 +43,7 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
     }
   };
   return (
-    <Link to={"#"} className="bg-gray-600 m-4 p-4 rounded-xl flex">
+    <Link to={`/transactionform/${id}`} className="bg-gray-600 m-4 p-4 rounded-xl flex">
       <div className="flex items-center justify-center m-3 ml-0">
         {setIconCategory(Number(category_id))}
       </div>

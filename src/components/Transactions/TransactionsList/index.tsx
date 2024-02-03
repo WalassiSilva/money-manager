@@ -4,7 +4,7 @@ import { getAllTransactions, getTransactionsByMonth } from "../../../services-ap
 import Calendar from "react-calendar";
 import { TransactionsCard } from "../TransactionsCard";
 
-interface TransactionsProps {
+export interface TransactionsProps {
   id: number;
   title: string;
   value: number;
@@ -12,7 +12,7 @@ interface TransactionsProps {
   category_id: string;
   type: number;
 }
-interface BalanceProps {
+export interface BalanceProps {
   incomes: number;
   expenses: number;
   result: number;
@@ -39,7 +39,7 @@ export const TransactionsList = () => {
       const fetchData = await getAllTransactions();
       const dataArray = fetchData.filterResult;
 
-      monthData(date.getFullYear(), date.getMonth() + 1);
+      fetchMonthData(date.getFullYear(), date.getMonth() + 1);
 
       // setTransactions(dataArray);
     };
@@ -47,13 +47,13 @@ export const TransactionsList = () => {
     fetchAllTransactions();
   }, [date]);
 
-  const monthData = async (year: string | number, month: string | number) => {
+  const fetchMonthData = async (year: string | number, month: string | number) => {
     const data = await getTransactionsByMonth(year, month);
     setTransactions(data.filterResult);
     setBalance(data?.balance);
 
   };
-  
+
 
   const onChange = (date: Date) => {
     setDate(date);
@@ -78,14 +78,14 @@ export const TransactionsList = () => {
           </div>
         </div>
         {
-          transactions.map((item) => (          
+          transactions.map((item) => (
             <TransactionsCard key={Math.random()}
-            id={item.id}
-            title={item.title}
-            value={item.value}
-            day={item.day}
-            category_id={item.category_id}
-            type={item.type}/>
+              id={item.id}
+              title={item.title}
+              value={item.value}
+              day={item.day}
+              category_id={item.category_id}
+              type={item.type} />
           ))
         }
       </article>
