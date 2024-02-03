@@ -6,15 +6,9 @@ import { GiReceiveMoney } from "react-icons/gi";
 import { IoBuild } from "react-icons/io5";
 import { FaChartLine } from "react-icons/fa";
 import { GiPlantWatering } from "react-icons/gi";
+import { TransactionsProps } from "../../../Types";
 
-interface TransactionsProps {
-  id: number;
-  title: string;
-  value: number;
-  day: string;
-  category_id: string;
-  type: number;
-}
+
 
 export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, day, category_id, type, id }) => {
 

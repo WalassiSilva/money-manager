@@ -3,11 +3,9 @@ import { BsTrash3Fill } from "react-icons/bs";
 import { FaArrowLeft } from "react-icons/fa";
 import { baseUrl } from "../../../variables";
 import { getCategories } from "../../../services-api";
+import { Link, useNavigate, } from "react-router-dom";
+import { CategoriesProps } from "../../../Types";
 
-export interface CategoriesProps {
-  id: number,
-  title: string
-}
 
 export const TransactionsPost = () => {
 
@@ -18,6 +16,8 @@ export const TransactionsPost = () => {
   const [category_id, setCagetory_id] = useState(1);
   const [type, setType] = useState(0);
   const [categories, setCategoires] = useState<CategoriesProps[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -29,11 +29,18 @@ export const TransactionsPost = () => {
     e.preventDefault();
     const data = { title, value, day, category_id, type };
 
+    setIsLoading(true);
+
     fetch(`${baseUrl}/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
-    }).then(() => console.log("Transaction added"));
+    }).then(() => {
+      console.log("Transaction added");
+      setIsLoading(false);
+      navigate(-1);
+    });
+
   }
 
   async function fetchCategories() {
@@ -45,11 +52,12 @@ export const TransactionsPost = () => {
 
   return (
     <main className="w-full min-h-screen text-white bg-gray-900 flex flex-col gap-8 px-4 items-center">
-      <header className=" w-full">
+      <header className=" w-full ">
         <nav className="flex items-center justify-between">
-          <FaArrowLeft />
-          <p className="">Edit Transaction</p>
-          <BsTrash3Fill />
+          <Link to={"/"}><FaArrowLeft className="m-2 hover:scale-105" /></Link>
+
+          <p className="font-bold">Add Transaction</p>
+          <BsTrash3Fill className="m-2 cursor-pointer hover:scale-105" />
         </nav>
       </header>
       <div className="flex flex-col items-center justify-between">
@@ -75,7 +83,7 @@ export const TransactionsPost = () => {
 
           <label >category</label>
           <div className="flex px-[-1rem] w-full">
-            
+
             <select
               value={category_id}
               onChange={(e) => setCagetory_id(Number(e.target.value))}
@@ -111,10 +119,18 @@ export const TransactionsPost = () => {
             placeholder="Date"
             className="bg-gray-800 rounded-md border-node outline-none" />
 
-          <input
+          {!isLoading ? (
+           <input
             type="submit"
             value="Save"
-            className="cursor-pointer bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500" />
+            className={"cursor-pointer bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} /> 
+          ) : (
+            <input disabled
+            type="submit"
+            value="Saving..."
+            className={"cursor-wait opacity-50 bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} />
+          )}
+          
 
         </div>
       </form>

@@ -3,20 +3,11 @@ import { getAllTransactions, getTransactionsByMonth } from "../../../services-ap
 
 import Calendar from "react-calendar";
 import { TransactionsCard } from "../TransactionsCard";
+import { Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
+import { BalanceProps, TransactionsProps } from "../../../Types";
 
-export interface TransactionsProps {
-  id: number;
-  title: string;
-  value: number;
-  day: string;
-  category_id: string;
-  type: number;
-}
-export interface BalanceProps {
-  incomes: number;
-  expenses: number;
-  result: number;
-}
+
 
 export const TransactionsList = () => {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
@@ -60,17 +51,19 @@ export const TransactionsList = () => {
   };
 
   return (
-    <main className="w-full min-h-screen bg-gray-900 flex flex-col  px-4 items-center">
-      <header>
+    <main className="relative w-full min-h-screen bg-gray-900 flex flex-col  px-4 items-center">
+      <header className="">
+        
+      <Link to={"/"}><FaArrowLeft className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-4" /></Link>
         <Calendar className={"p-0 h-10 overflow-hidden duration-300 hover:duration-300 hover:h-[350px] rounded-lg "}
           view="year"
           onClickMonth={onChange}
           value={date} />
       </header>
-      <article className="text-white w-full md:max-w-2xl">
+      <article className=" text-white w-full md:max-w-2xl">
         <div className="p-4">
           <h4 className="text-sm">Transactions: {transactions.length}</h4>
-          <div className="flex justify-between">
+          <div className="flex justify-between text-center">
             <p className="text-green-300">Incomes: {monetaryValue(balance?.incomes as number)} </p>
             <p className="text-red-500">Expenses: {monetaryValue(balance?.expenses as number)} </p>
             <p className={`${(balance?.result as number > 0) ? "text-green-300" : "text-red-500"}`}>Balance: {monetaryValue(balance?.result as number)}</p>

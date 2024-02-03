@@ -12,12 +12,13 @@ const Header = () => {
   }
 
   return (
-    <div className="text-black m-auto my-1 ">
+    <div className="text-black my-1 flex justify-center items-center ">
       <Calendar
         onClickMonth={onChangeHandle}
         value={dateValue}
         view="year"
-        className={"h-12 hover:h-[360px] overflow-hidden duration-200 rounded-lg"}
+        className={"h-12 hover:h-[250px] overflow-hidden duration-200 rounded-lg"}
+        
       />
     </div>
   );
