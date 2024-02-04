@@ -37,18 +37,21 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
     }
   };
   return (
-    <Link to={`/transactions/${id}`} className="bg-gray-600 m-4 p-4 rounded-xl flex">
+    <Link to={`/transactions/${id}`} className="bg-gray-600 m-4 p-4 rounded-xl flex ">
       <div className="flex items-center justify-center m-3 ml-0">
         {setIconCategory(Number(category_id))}
       </div>
 
-      <div className="flex-1">
-        <h2 className="font-bold text-lg capitalize">{title}</h2>
-        <p></p>
-        <p>{day.slice(0,10)}</p>
+      <div className="flex-1 ">
+        <h2 className="font-bold text-sm md:text-lg capitalize">{title}</h2>
+        <div className="flex justify-between mt-2">
+          <div>
+            <p className="text-sm md:text-lg">{day.slice(0, 10)}</p>
+            <p className="text-gray-400 text-xs">YYYY-MM-DD</p>
+          </div>
+          <div className={`${type !== 0 ? "text-green-300" : "text-red-500"} font-bold`}>{monetaryValue(value)}</div>
+        </div>
       </div>
-
-      <div className={`${type !== 0 ? "text-green-300" : "text-red-500"} font-bold`}>{monetaryValue(value)}</div>
 
     </Link>
   );

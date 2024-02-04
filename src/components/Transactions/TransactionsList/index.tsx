@@ -43,23 +43,36 @@ export const TransactionsList = () => {
     setDate(date);
   };
 
-   return (
-    <main className="relative overflow-auto w-full min-h-screen mb-8 bg-gray-900 flex flex-col  px-4 items-center">
+  return (
+    <main className="relative overflow-auto w-full min-h-screen mb-8 bg-gray-900 flex flex-col py-1 px-1 items-center">
       <header className="">
 
-        <Link to={"/"}><FaArrowLeft className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-4" /></Link>
-        <Calendar className={"p-0 h-10 overflow-hidden duration-300 hover:duration-300 hover:h-[250px] rounded-lg bg-gray-500 text-white "}
+        <Link to={"/"}>
+          <FaArrowLeft
+            className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-3" />
+        </Link>
+        <Calendar
+          className={"w-56 p-0 h-10 overflow-hidden duration-300 hover:duration-300 hover:h-[250px] rounded-lg bg-gray-500 text-white "}
           view="year"
           onClickMonth={onChange}
           value={date} />
       </header>
       <article className=" text-white w-full md:max-w-2xl">
         <div className="p-4">
-          <h4 className="text-sm">Transactions: {transactions.length}</h4>
+          <h4 className="text-sm text-center">Transactions: {transactions.length}</h4>
           <div className="flex justify-between text-center">
-            <p className="text-green-300">Incomes: {monetaryValue(balance?.incomes as number)} </p>
-            <p className="text-red-500">Expenses: {monetaryValue(balance?.expenses as number)} </p>
-            <p className={`${(balance?.result as number > 0) ? "text-green-300" : "text-red-500"}`}>Balance: {monetaryValue(balance?.result as number)}</p>
+            <div className="text-green-300">
+              <p >Incomes:</p>
+              <p>{monetaryValue(balance?.incomes as number)}</p>
+            </div>
+            <div className="text-red-500">
+              <p>Expenses:  </p>
+              <p>{monetaryValue(balance?.expenses as number)}</p>
+            </div>
+            <div  className={`${(balance?.result as number > 0) ? "text-green-300" : "text-red-500"}`}>
+            <p>Balance:</p>
+            <p> {monetaryValue(balance?.result as number)}</p>
+            </div>
 
           </div>
         </div>

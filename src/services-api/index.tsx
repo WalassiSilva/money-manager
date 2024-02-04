@@ -63,8 +63,8 @@ export async function getTransactionsByTitle(title: string) {
   }
 }
 
-export async function getTransactionById(id: number){
-  try{
+export async function getTransactionById(id: number) {
+  try {
     const response = await fetch(`${baseUrl}/id/${id}`);
     const data = await response.json();
     return data;
@@ -74,7 +74,27 @@ export async function getTransactionById(id: number){
 
 }
 
-export async function updateTransaction(data:TransactionsProps) {
+// export async function deleteTransaction(id: number) {
+//   try {
+//     const response = await fetch(`${baseUrl}/${id}`);
+
+//     console.log();
+
+//   } catch (error) {
+//     console.log("Error: ", Error);
+//   }
+// }
+export async function deleteTransaction(id: number) {
+  try {
+    await api.delete(`${baseUrl}/${id}`, {
+      params: { id }
+    });
+  } catch (error) {
+    console.log("Error :", error);
+  }
+}
+
+export async function updateTransaction(data: TransactionsProps) {
   try {
     const response = await api.put(`${baseUrl}/${data.id}`, data);
     console.log(data.id);

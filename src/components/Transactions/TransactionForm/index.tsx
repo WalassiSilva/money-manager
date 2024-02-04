@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BsTrash3Fill } from "react-icons/bs";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCategories, getTransactionById } from "../../../services-api";
+import { deleteTransaction, getCategories, getTransactionById } from "../../../services-api";
 import { CategoriesProps } from "../../../Types";
 
 import { FaCalendarAlt } from "react-icons/fa";
@@ -21,26 +21,33 @@ export const TransactionForm = () => {
 
   useEffect(() => {
 
-    const fetchGetTransaction = async (id: number) => {
-      const data = await getTransactionById(Number(id));
-      setTitle(data.target.title);
-      setValue(data.target.value);
-      setDay(data.target.day);
-      setCategory_id(data.target.category_id);
-      setType(data.target.type);
-
-
-    };
-
-    const fetchGetCategories = async () => {
-      const data = await getCategories();
-      setCategories(data);
-    };
-
     fetchGetTransaction(Number(idParam.id));
     fetchGetCategories();
 
+
   }, []);
+
+  const fetchGetTransaction = async (id: number) => {
+    const data = await getTransactionById(Number(id));
+    setTitle(data.target.title);
+    setValue(data.target.value);
+    setDay(data.target.day);
+    setCategory_id(data.target.category_id);
+    setType(data.target.type);
+  };
+
+  const fetchGetCategories = async () => {
+    const data = await getCategories();
+    setCategories(data);
+  };
+
+  const handleDelete = async (id: number) => {
+    const check = confirm("Deletar transação?");
+    if (check) {
+      await deleteTransaction(Number(id));
+      navigate(-1);
+    } else return;
+  };
 
   return (
     <main className="w-full min-h-screen text-white bg-gray-900 flex flex-col gap-8 px-4 items-center">
@@ -54,7 +61,7 @@ export const TransactionForm = () => {
 
           <h1 className="font-bold">Edit Transaction</h1>
 
-          <button><BsTrash3Fill /></button>
+          <button onClick={() => handleDelete(Number(idParam.id))}><BsTrash3Fill /></button>
         </nav>
       </header>
 
@@ -110,7 +117,7 @@ export const TransactionForm = () => {
               onChange={e => setDay(day)}
               className="bg-gray-800 rounded-md border-none outline-none" />
 
-            <button className="flex justify-center items-center bg-gray-800 rounded-md border-node outline-none w-8 "              
+            <button className="flex justify-center items-center bg-gray-800 rounded-md border-node outline-none w-8 "
             ><FaCalendarAlt /></button>
           </div>
 

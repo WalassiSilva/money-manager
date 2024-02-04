@@ -17,7 +17,7 @@ const Header = () => {
         onClickMonth={onChangeHandle}
         value={dateValue}
         view="year"
-        className={"h-12 hover:h-[250px] overflow-hidden duration-200 rounded-lg"}
+        className={"w-56 p-0 h-10 overflow-hidden duration-300 hover:duration-300 hover:h-[250px] rounded-lg bg-gray-500 text-white"}
         
       />
     </div>
