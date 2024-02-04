@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getAllTransactions, getTransactionsByMonth } from "../../../services-api";
+import { getTransactionsByMonth } from "../../../services-api";
 
 import Calendar from "react-calendar";
 import { TransactionsCard } from "../TransactionsCard";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { BalanceProps, TransactionsProps } from "../../../Types";
+import { ScrollUpButton } from "../../ScrollUpButton";
 
 
 
@@ -26,17 +27,9 @@ export const TransactionsList = () => {
 
   useEffect(() => {
 
-    const fetchAllTransactions = async () => {
-      const fetchData = await getAllTransactions();
-      const dataArray = fetchData.filterResult;
+    fetchMonthData(date.getFullYear(), date.getMonth() + 1);
 
-      fetchMonthData(date.getFullYear(), date.getMonth() + 1);
-
-      // setTransactions(dataArray);
-    };
-
-    fetchAllTransactions();
-  }, [date]);
+  }, [date, transactions.length]);
 
   const fetchMonthData = async (year: string | number, month: string | number) => {
     const data = await getTransactionsByMonth(year, month);
@@ -50,12 +43,12 @@ export const TransactionsList = () => {
     setDate(date);
   };
 
-  return (
-    <main className="relative w-full min-h-screen bg-gray-900 flex flex-col  px-4 items-center">
+   return (
+    <main className="relative overflow-auto w-full min-h-screen mb-8 bg-gray-900 flex flex-col  px-4 items-center">
       <header className="">
-        
-      <Link to={"/"}><FaArrowLeft className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-4" /></Link>
-        <Calendar className={"p-0 h-10 overflow-hidden duration-300 hover:duration-300 hover:h-[350px] rounded-lg "}
+
+        <Link to={"/"}><FaArrowLeft className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-4" /></Link>
+        <Calendar className={"p-0 h-10 overflow-hidden duration-300 hover:duration-300 hover:h-[250px] rounded-lg bg-gray-500 text-white "}
           view="year"
           onClickMonth={onChange}
           value={date} />
@@ -82,6 +75,7 @@ export const TransactionsList = () => {
           ))
         }
       </article>
+      <ScrollUpButton />
     </main>
   );
 };

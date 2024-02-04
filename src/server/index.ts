@@ -1,12 +1,30 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
+import { TbArcheryArrow } from "react-icons/tb";
+import { CgSmartphoneChip } from "react-icons/cg";
 
 const port = 3001;
 const app = express();
 const prisma = new PrismaClient();
 app.use(express.json());
 app.use(cors());
+
+
+
+//--------- GET TRANSACTIONS BY ID---------
+app.get("/api/transactions/id/:id", async (req, res) => {
+  const id = Number(req.params.id);
+
+  try {
+    const target = await prisma.transaction.findUnique({ where: { id } });
+    if (!target) return res.status(404).send({ message: "Id da Transação não encontrado" });
+    return res.status(200).json({ target });
+  } catch (error) {
+    res.status(500).send({ message: "Erro ao buscar transação por di" });
+  }
+
+});
 
 //--------- GET ALL TRANSACTIONS-----------
 app.get("/api/transactions/all", async (_, res) => {

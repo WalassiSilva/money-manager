@@ -3,7 +3,7 @@ import { TransactionsList } from "../components/Transactions/TransactionsList";
 
 const Transactions = () => {
   return (
-    <div>
+    <div >
       <TransactionsList />
     </div>
   );

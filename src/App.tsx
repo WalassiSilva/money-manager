@@ -14,7 +14,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/transactions/add" element={<TransactionsPost />} />
-            {/* <Route path={"/transactionform/:id"} element={<TransactionForm />} /> */}
+            <Route path={"/transactions/:id"} element={<TransactionForm />} />
           </Route>
         </Routes>
       </Router>

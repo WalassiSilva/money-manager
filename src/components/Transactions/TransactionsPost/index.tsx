@@ -9,10 +9,9 @@ import { CategoriesProps } from "../../../Types";
 
 export const TransactionsPost = () => {
 
-
   const [title, setTitle] = useState("");
   const [value, setValue] = useState<number>(0);
-  const [day, setDay] = useState(new Date().toLocaleDateString("pt-br"));
+  const [day, setDay] = useState(new Date().toLocaleDateString("en-US"));
   const [category_id, setCagetory_id] = useState(1);
   const [type, setType] = useState(0);
   const [categories, setCategoires] = useState<CategoriesProps[]>([]);
@@ -22,7 +21,6 @@ export const TransactionsPost = () => {
 
   useEffect(() => {
     fetchCategories();
-
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -52,12 +50,17 @@ export const TransactionsPost = () => {
 
   return (
     <main className="w-full min-h-screen text-white bg-gray-900 flex flex-col gap-8 px-4 items-center">
-      <header className=" w-full ">
+      <header className=" w-full my-2 ">
         <nav className="flex items-center justify-between">
-          <Link to={"/"}><FaArrowLeft className="m-2 hover:scale-105" /></Link>
+
+          <div className="p-2 bg-gray-200 rounded-full text-gray-800 hover:scale-105 ">
+            <Link to={"/"}><FaArrowLeft /></Link>
+          </div>
 
           <p className="font-bold">Add Transaction</p>
-          <BsTrash3Fill className="m-2 cursor-pointer hover:scale-105" />
+          <div className="p-2 bg-gray-200 rounded-full text-gray-800 hover:scale-105">
+            <BsTrash3Fill />
+          </div>
         </nav>
       </header>
       <div className="flex flex-col items-center justify-between">
@@ -81,7 +84,7 @@ export const TransactionsPost = () => {
             onChange={(e) => setValue(Number(e.target.value))}
             className="remove-arrow bg-gray-800 rounded-md border-node outline-none" />
 
-          <label >category</label>
+          <label >Category</label>
           <div className="flex px-[-1rem] w-full">
 
             <select
@@ -94,15 +97,15 @@ export const TransactionsPost = () => {
                 ))
               }
             </select>
-            <input type="number"
+            <input type="number" readOnly
               placeholder="Category"
               value={category_id}
               onChange={(e) => setCagetory_id(Number(e.target.value))}
-              className="remove-arrow bg-gray-800 rounded-md border-node outline-none w-8 text-center ml-4 mr-[-16px]" />
+              className=" remove-arrow bg-gray-800 rounded-md border-node outline-none w-8 text-center ml-4 mr-[-16px]" />
           </div>
 
 
-          <label >type</label>
+          <label >Type</label>
           <select
             value={type}
             onChange={(e) => setType(Number(e.target.value))}
@@ -111,7 +114,7 @@ export const TransactionsPost = () => {
             <option value="1">Income</option>
           </select>
 
-          <label >Date</label>
+          <label >Date  <span className="text-slate-300 text-sm">MM/dd/YYYY</span></label>
           <input
             type="text"
             value={day}
@@ -120,17 +123,17 @@ export const TransactionsPost = () => {
             className="bg-gray-800 rounded-md border-node outline-none" />
 
           {!isLoading ? (
-           <input
-            type="submit"
-            value="Save"
-            className={"cursor-pointer bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} /> 
+            <input
+              type="submit"
+              value="Save"
+              className={"cursor-pointer bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} />
           ) : (
             <input disabled
-            type="submit"
-            value="Saving..."
-            className={"cursor-wait opacity-50 bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} />
+              type="submit"
+              value="Saving..."
+              className={"cursor-wait opacity-50 bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} />
           )}
-          
+
 
         </div>
       </form>

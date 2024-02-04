@@ -1,3 +1,4 @@
+import { TransactionsProps } from "../Types";
 import { baseUrl } from "../variables";
 import axios from "axios";
 
@@ -26,7 +27,7 @@ export async function getTransactionsByMonth(year: string | number, month: strin
     return (response.data);
 
   } catch (error) {
-    console.log("Error", error);
+    console.log("Error: ", error);
 
   }
 }
@@ -38,7 +39,7 @@ export async function getAllTransactions() {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log("Error", error);
+    console.log("Error: ", error);
   }
 }
 
@@ -48,7 +49,7 @@ export async function getCategories() {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log("Error", error);
+    console.log("Error: ", error);
   }
 }
 
@@ -58,14 +59,25 @@ export async function getTransactionsByTitle(title: string) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log("Error", error);
+    console.log("Error: ", error);
   }
 }
 
-export async function updateTransaction(id: number, data) {
+export async function getTransactionById(id: number){
+  try{
+    const response = await fetch(`${baseUrl}/id/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+
+}
+
+export async function updateTransaction(data:TransactionsProps) {
   try {
-    const response = await api.put(`${baseUrl}/${id}`, data);
-    console.log(id);
+    const response = await api.put(`${baseUrl}/${data.id}`, data);
+    console.log(data.id);
     return response.data;
   } catch (error) {
     console.log("Error", error);
