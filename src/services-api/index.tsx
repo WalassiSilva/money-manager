@@ -103,3 +103,12 @@ export async function updateTransaction(data: TransactionsProps) {
     console.log("Error", error);
   }
 }
+
+export async function getCategoriesSum(year, month) {
+  try {
+    const response = await api.get(`${baseUrl}/group/category/${year}/${month}`);
+    return response.data;
+  } catch (error) {
+    console.log("Error", error);
+  }
+}

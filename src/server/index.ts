@@ -252,22 +252,29 @@ app.get("/api/transactions/filterTitle/:title", async (req, res) => {
 });
 
 // -------- GROUP BY CATEGORY ------------
-app.get("/api/transactions/group/category/:yyyy/:mm", async (req, res) => {
-  const yyyy = Number(req.params.yyyy);
-  const mm = Number(req.params.mm);
-  const initialDay = new Date(`${yyyy}-${mm}-01`);
-  const finalDay = (mm !== 12)
-    ? new Date(`${yyyy}-${mm + 1}-01`)
-    : new Date(`${yyyy + 1}-01-01`);
+app.get("/api/transactions/group/category/:year/:month", async (req, res) => {
+  const year = Number(req.params.year);
+  const month = Number(req.params.month);
+  const initialDay = new Date(`${year}-${month}-01`);
+  const finalDay = (month !== 12)
+    ? new Date(`${year}-${month + 1}-01`)
+    : new Date(`${year + 1}-01-01`); 
 
   try {
     const filterResult = await prisma.$queryRaw`
-      select  c.title Category, sum(t.value)
+      select  c.title Category, c.id, sum(t.value)
+      from transactions t 
+      left outer join categories c on c.id = t.category_id 
+      where t.day between ${initialDay} and ${finalDay} and t.type = 0
+      group by c.id 
+      order by c.id
+    `;
+
+    /*      select  c.title Category, sum(t.value)
       from transactions t 
       left outer join categories c on c.id = t.category_id 
       where t.day between  ${initialDay} and ${finalDay}
-      group by c.title
-    `;
+      group by c.title*/
 
     res.status(200).json(filterResult);
   } catch (error) {

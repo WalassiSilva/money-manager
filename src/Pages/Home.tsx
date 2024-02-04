@@ -12,7 +12,7 @@ const Home = () => {
     <div className="bg-gray-900 text-white w-full h-screen flex flex-col gap-6">
       <Header />
 
-      <CategoryBalance />
+      <CategoryBalance year={2023} month={10} />
       <LastTransactions />
     </div>
   );
