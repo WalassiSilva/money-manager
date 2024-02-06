@@ -69,22 +69,24 @@ export const TransactionsList = () => {
               <p>Expenses:  </p>
               <p>{monetaryValue(balance?.expenses as number)}</p>
             </div>
-            <div  className={`${(balance?.result as number > 0) ? "text-green-300" : "text-red-500"}`}>
-            <p>Balance:</p>
-            <p> {monetaryValue(balance?.result as number)}</p>
+            <div className={`${(balance?.result as number > 0) ? "text-green-300" : "text-red-500"}`}>
+              <p>Balance:</p>
+              <p> {monetaryValue(balance?.result as number)}</p>
             </div>
 
           </div>
         </div>
         {
           transactions.map((item) => (
-            <TransactionsCard key={Math.random()}
-              id={item.id}
-              title={item.title}
-              value={item.value}
-              day={item.day}
-              category_id={item.category_id}
-              type={item.type} />
+            <Link to={`/transactions/${item.id}`}  key={Math.random()}>
+              <TransactionsCard
+                id={item.id}
+                title={item.title}
+                value={item.value}
+                day={item.day}
+                category_id={item.category_id}
+                type={item.type} />
+            </Link>
           ))
         }
       </article>

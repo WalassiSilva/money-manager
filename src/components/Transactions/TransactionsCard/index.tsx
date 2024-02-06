@@ -36,7 +36,7 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
     }
   };
   return (
-    <Link to={`/transactions/${id}`} className="bg-gray-600 m-4 p-4 rounded-xl flex hover:shadow-xl">
+    <section className="bg-gray-600 m-4 p-4 rounded-xl flex hover:shadow-xl">
       <div className="flex items-center justify-center m-3 ml-0">
         {setIconCategory(Number(category_id))}
       </div>
@@ -51,6 +51,6 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
           <div className={`${type !== 0 ? "text-green-300" : "text-red-500"} font-bold`}>{monetaryValue(value)}</div>
         </div>
       </div>
-    </Link>
+    </section>
   );
 };
