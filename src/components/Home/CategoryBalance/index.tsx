@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { getCategories, getCategoriesSum } from "../../../services-api";
-import { baseUrl } from "../../../variables";
-import { CategoriesProps, colors } from "../../../Types";
+import { CategoriesProps, DataProps, colors } from "../../../Types";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const CategoryBalance = ({year, month}) => {
+const CategoryBalance = ({ year, month }: DataProps) => {
   const [categories, setCategories] = useState([]);
   const [categoryValues, setCategoryValue] = useState([]);
 
@@ -42,8 +41,8 @@ const CategoryBalance = ({year, month}) => {
 
   const options = {};
   return (
-    <section>
-      <div className="w-screen h-full md:w-[500px] flex items-center justify-center">
+    <section className="flex items-center justify-center">
+      <div className=" w-[300px] sm:w-[400px] flex items-center justify-center">
         <Doughnut data={data} options={options} ></Doughnut>
       </div>
       <Link to="#"></Link>

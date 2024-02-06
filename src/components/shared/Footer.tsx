@@ -1,19 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+import { MdOutlineHome } from "react-icons/md";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { FaRegListAlt } from "react-icons/fa";
+
+export const Footer = () => {
   return (
-    <footer className="flex items-center shrink-0 fixed h-8 bottom-0 w-full text-white bg-black">
-      <nav className="w-full">
-        <ul className="  flex justify-around px-4">
-          <li className="">
-            <Link to="/" className="underline">Home</Link>
+    <footer className="flex items-center shrink-0 fixed py-2 bottom-0 w-full text-white bg-black ">
+      <nav className="w-full ">
+        <ul className="  flex justify-around text-2xl ">
+          <li className="hover:scale-110 duration-200 ">
+            <Link to="/" className="underline">
+              <MdOutlineHome />
+            </Link>
+          </li >
+          <li className="hover:scale-110 duration-200">
+            <Link to="/transactions/add">
+              <IoMdAddCircleOutline />
+            </Link>
           </li>
-          <li>
-            <Link to="/transactions/add" className="underline">Add</Link>
-          </li>
-          <li>
-            <Link to="/transactions" className="underline">Transactions</Link>
+          <li className="hover:scale-110 duration-200">
+            <Link to="/transactions">
+              <FaRegListAlt />
+            </Link>
           </li>
 
         </ul>
@@ -21,5 +31,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export { Footer };

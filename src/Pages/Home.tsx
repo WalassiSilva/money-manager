@@ -9,11 +9,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-gray-900 text-white w-full h-screen flex flex-col gap-6">
+    <div className="bg-gray-900 text-white w-full h-screen flex flex-col gap-6 items-center overflow-scroll">
       <Header />
 
       <CategoryBalance year={2023} month={10} />
-      <LastTransactions />
+      <LastTransactions  />
     </div>
   );
 };

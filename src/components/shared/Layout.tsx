@@ -4,8 +4,11 @@ import { Footer } from "./Footer";
 
 function Layout() {
   return (
-    <div className="relative h-[100%]">
-      <div>{<Outlet />}</div>
+    <div className="relative ">
+      <div className="">
+        {<Outlet />}
+      </div>
+
       <Footer />
     </div>
   );

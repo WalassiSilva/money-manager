@@ -61,7 +61,7 @@ export const TransactionForm = () => {
 
           <h1 className="font-bold">Edit Transaction</h1>
 
-          <button onClick={() => handleDelete(Number(idParam.id))}><BsTrash3Fill /></button>
+          <button className="hover:scale-105" onClick={() => handleDelete(Number(idParam.id))}><BsTrash3Fill /></button>
         </nav>
       </header>
 
