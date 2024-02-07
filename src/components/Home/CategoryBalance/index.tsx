@@ -2,26 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { getCategories, getCategoriesSum } from "../../../services-api";
-import { CategoriesProps, DataProps, colors } from "../../../Types";
+import { getCategoriesSum } from "../../../services-api";
+import { DataProps } from "../../../Types";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const CategoryBalance = ({ year, month }: DataProps) => {
   const [categories, setCategories] = useState([]);
   const [categoryValues, setCategoryValue] = useState([]);
+  const limitDate = new Date(new Date().getFullYear(), new Date().getMonth());
+  const targetDate = new Date(Number(year), Number(month));
 
-  useEffect(() => {
-    // fetchCategories();
-    fetchCategorieSum(year, month);
-  }, []);
-
-  // const fetchCategories = async () => {
-  //   const data = await getCategories();
-  //   // setCategories(data.map((e: { title: string, sum: number }) => e.title));
-  // };
   const fetchCategorieSum = async (year: string | number, month: string | number) => {
-    const data = await getCategoriesSum(year, month);
+    const data = await getCategoriesSum(year, Number(month) + 1);
+
     setCategories(data.map((e: { category: string, sum: number }) => e.category));
     setCategoryValue(data.map((e: { category: string, sum: number }) => e.sum));
   };
@@ -37,13 +31,18 @@ const CategoryBalance = ({ year, month }: DataProps) => {
     }]
   };
 
-
+  useEffect(() => {
+    fetchCategorieSum(year, month);
+  }, [year, month]);
 
   const options = {};
   return (
     <section className="flex items-center justify-center">
       <div className=" w-[300px] sm:w-[400px] flex items-center justify-center">
-        <Doughnut data={data} options={options} ></Doughnut>
+        {limitDate >= targetDate && (
+
+          <Doughnut data={data} options={options} ></Doughnut>
+        )}
       </div>
       <Link to="#"></Link>
     </section>

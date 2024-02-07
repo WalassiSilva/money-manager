@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getTransactionsByMonth } from "../../../services-api";
 
 import Calendar from "react-calendar";
@@ -7,13 +7,15 @@ import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { BalanceProps, TransactionsProps } from "../../../Types";
 import { ScrollUpButton } from "../../ScrollUpButton";
+import { DateContext } from "../../../context/GlobalProvider";
 
 
 
 export const TransactionsList = () => {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
   const [balance, setBalance] = useState<BalanceProps>();
-  const [date, setDate] = useState(new Date());
+  // const [date, setDate] = useState(new Date());
+  const { date, setDate } = useContext(DateContext);
 
   const monetaryValue = (value: number) => {
     if (value) {
@@ -27,7 +29,7 @@ export const TransactionsList = () => {
 
   useEffect(() => {
 
-    fetchMonthData(date.getFullYear(), date.getMonth() + 1);
+    fetchMonthData(new Date(date).getFullYear(), new Date(date).getMonth() + 1);
 
   }, [date, transactions.length]);
 
@@ -35,7 +37,6 @@ export const TransactionsList = () => {
     const data = await getTransactionsByMonth(year, month);
     setTransactions(data.filterResult);
     setBalance(data?.balance);
-
   };
 
 
@@ -78,7 +79,7 @@ export const TransactionsList = () => {
         </div>
         {
           transactions.map((item) => (
-            <Link to={`/transactions/${item.id}`}  key={Math.random()}>
+            <Link to={`/transactions/${item.id}`} key={Math.random()}>
               <TransactionsCard
                 id={item.id}
                 title={item.title}
