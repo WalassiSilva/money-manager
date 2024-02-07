@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getTransactionsByMonth } from "../../../services-api";
 
 import Calendar from "react-calendar";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { BalanceProps, TransactionsProps } from "../../../Types";
 import { ScrollUpButton } from "../../ScrollUpButton";
-import { DateContext } from "../../../context/GlobalProvider";
+import {  useDateContext } from "../../../context/GlobalProvider";
 
 
 
@@ -15,7 +15,7 @@ export const TransactionsList = () => {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
   const [balance, setBalance] = useState<BalanceProps>();
   // const [date, setDate] = useState(new Date());
-  const { date, setDate } = useContext(DateContext);
+  const { date, setDate } = useDateContext();
 
   const monetaryValue = (value: number) => {
     if (value) {
@@ -41,7 +41,7 @@ export const TransactionsList = () => {
 
 
   const onChange = (date: Date) => {
-    setDate(date);
+    setDate(date.toDateString());
   };
 
   return (
@@ -78,6 +78,7 @@ export const TransactionsList = () => {
           </div>
         </div>
         {
+          transactions.length > 0 ? 
           transactions.map((item) => (
             <Link to={`/transactions/${item.id}`} key={Math.random()}>
               <TransactionsCard
@@ -89,6 +90,7 @@ export const TransactionsList = () => {
                 type={item.type} />
             </Link>
           ))
+          : <h2 className="flex justify-center font-bold">No transaction yet! 😢</h2>
         }
       </article>
       <ScrollUpButton />

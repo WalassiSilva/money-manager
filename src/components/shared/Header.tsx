@@ -1,12 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { DateContext } from "../../context/GlobalProvider";
-import { DateContextProps } from "../../Types";
+import {  useDateContext } from "../../context/GlobalProvider";
 
 const Header = () => {
 
-  const { date, setDate } = useContext(DateContext);
+  const { date, setDate } = useDateContext();
 
   useEffect(() => {
     onChangeHandle(date);
