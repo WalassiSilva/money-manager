@@ -90,8 +90,7 @@ app.put("/api/transactions/:id", async (req, res) => {
 
     await prisma.transaction.update({
       where: { id },
-      data:
-        data
+      data: data
     });
   } catch (error) {
     return res.status(500).send({ message: "Erro ao atualizar transação" });

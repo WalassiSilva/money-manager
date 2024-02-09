@@ -45,8 +45,8 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
         <h2 className="font-bold text-sm md:text-lg capitalize">{title}</h2>
         <div className="flex justify-between mt-2">
           <div>
-            <p className="text-sm md:text-lg">{day.slice(0, 10)}</p>
-            <p className="text-gray-400 text-xs">YYYY-MM-DD</p>
+            <p className="text-sm md:text-lg">{day}</p>
+            <p className="text-gray-400 text-xs">dd/MM/yyyy</p>
           </div>
           <div className={`${type !== 0 ? "text-green-300" : "text-red-500"} font-bold`}>{monetaryValue(value)}</div>
         </div>

@@ -8,6 +8,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { BalanceProps, TransactionsProps } from "../../../Types";
 import { ScrollUpButton } from "../../ScrollUpButton";
 import {  useDateContext } from "../../../context/GlobalProvider";
+import { format } from "date-fns";
 
 
 
@@ -56,7 +57,8 @@ export const TransactionsList = () => {
           className={"w-56 p-0 h-10 overflow-hidden duration-300 hover:duration-300 hover:h-[250px] rounded-lg bg-gray-500 text-white "}
           view="year"
           onClickMonth={onChange}
-          value={date} />
+          value={date}
+           />
       </header>
       <article className=" text-white w-full md:max-w-2xl">
         <div className="p-4">
@@ -85,7 +87,7 @@ export const TransactionsList = () => {
                 id={item.id}
                 title={item.title}
                 value={item.value}
-                day={item.day}
+                day={format(item.day,"dd/MM/yyyy")}
                 category_id={item.category_id}
                 type={item.type} />
             </Link>

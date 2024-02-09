@@ -58,9 +58,9 @@ export const TransactionsPost = () => {
           </div>
 
           <p className="font-bold">Add Transaction</p>
-          <div className="p-2 bg-gray-200 rounded-full text-gray-800 hover:scale-105">
+          <button className="p-2 bg-gray-200 rounded-full text-gray-800 hover:scale-105">
             <BsTrash3Fill />
-          </div>
+          </button>
         </nav>
       </header>
       <div className="flex flex-col items-center justify-between">
@@ -90,7 +90,7 @@ export const TransactionsPost = () => {
             <select
               value={category_id}
               onChange={(e) => setCagetory_id(Number(e.target.value))}
-              className="w-20 bg-gray-700 rounded-md border-node outline-none flex-1 p-0 ml-[-16px] " >
+              className="w-20 pl-4 bg-gray-700 rounded-md border-node outline-none flex-1 p-0 ml-[-16px] " >
               {
                 categories.map((item) => (
                   <option key={item.id} value={item.id}>{item.title}</option>
