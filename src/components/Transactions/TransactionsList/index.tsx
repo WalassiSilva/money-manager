@@ -15,7 +15,6 @@ import { format } from "date-fns";
 export const TransactionsList = () => {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
   const [balance, setBalance] = useState<BalanceProps>();
-  // const [date, setDate] = useState(new Date());
   const { date, setDate } = useDateContext();
 
   const monetaryValue = (value: number) => {
@@ -34,7 +33,7 @@ export const TransactionsList = () => {
 
   }, [date, transactions.length]);
 
-  const fetchMonthData = async (year: string | number, month: string | number) => {
+ const fetchMonthData = async (year: string | number, month: string | number) => {
     const data = await getTransactionsByMonth(year, month);
     setTransactions(data.filterResult);
     setBalance(data?.balance);

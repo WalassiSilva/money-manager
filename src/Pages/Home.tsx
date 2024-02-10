@@ -23,7 +23,7 @@ const Home = () => {
       <Header />
       <p>{months[month]}</p>
       <CategoryBalance year={year} month={month} />
-      <LastTransactions />
+      <LastTransactions date={date} setDate={setDate} />
     </div>
   );
 };
