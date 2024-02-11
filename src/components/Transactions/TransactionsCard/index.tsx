@@ -1,4 +1,4 @@
-import React from "react"; import { Link } from "react-router-dom";
+import React from "react";
 import { FaHome, FaBus } from "react-icons/fa"; import { GiFireSpellCast } from "react-icons/gi";
 import { MdHealthAndSafety } from "react-icons/md";
 import { GiMoneyStack } from "react-icons/gi";
@@ -13,7 +13,7 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
 
   const monetaryValue = (value: number) => {
     if (value) {
-      const format = new Intl.NumberFormat("tp-BR", {
+      const format = new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
       }).format(value);
@@ -34,6 +34,15 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
       case 9: { return <GiMoneyStack className="bg-[#54816c] rounded-full p-1 h-10 w-10" />; }
       case 10: { return <GiMoneyStack className="bg-green-700 rounded-full p-2 h-10 w-10" />; }
     }
+    console.log("day", day);
+    
+  };
+
+  const formatDate = (date: string) => {
+    const d = new Date(date).getUTCDate().toString().padStart(2, "0");
+    const m = (new Date(date).getUTCMonth() + 1).toString().padStart(2, "0");
+    const y = new Date(date).getUTCFullYear().toString();
+    return `${d}/${m}/${y}`;
   };
   return (
     <section className="bg-gray-600 m-4 p-4 rounded-xl flex hover:shadow-xl">
@@ -45,7 +54,7 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
         <h2 className="font-bold text-sm md:text-lg capitalize">{title}</h2>
         <div className="flex justify-between mt-2">
           <div>
-            <p className="text-sm md:text-lg">{day}</p>
+            <p className="text-sm md:text-lg">{formatDate(day)}</p>
             <p className="text-gray-400 text-xs">dd/MM/yyyy</p>
           </div>
           <div className={`${type !== 0 ? "text-green-300" : "text-red-500"} font-bold`}>{monetaryValue(value)}</div>

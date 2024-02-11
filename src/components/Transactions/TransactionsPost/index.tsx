@@ -25,7 +25,8 @@ export const TransactionsPost = () => {
   useEffect(() => {
 
     fetchGetCategories();
-
+    console.log(day);
+    
 
   }, []);
 
@@ -33,6 +34,7 @@ export const TransactionsPost = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const data = { title, value, day, category_id, type };
+    
 
     setIsLoading(true);
 
@@ -61,16 +63,15 @@ export const TransactionsPost = () => {
   };
 
 
-
   return (
     <main className="w-full min-h-screen text-white bg-gray-900 flex flex-col gap-8 px-4 items-center">
       <header className="w-full my-2">
         <nav className="flex items-center justify-between">
 
-          <div className="p-2 bg-gray-200 rounded-full text-gray-800 hover:scale-105"
+          <button className="p-2 bg-gray-200 rounded-full text-gray-800 hover:scale-105"
             onClick={() => navigate(-1)}>
             <FaArrowLeft />
-          </div>
+          </button>
 
           <h1 className="font-bold">Add Transaction</h1>
 
@@ -78,7 +79,7 @@ export const TransactionsPost = () => {
         </nav>
       </header>
 
-      <form className="flex flex-col gap-3 " onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-3 sm:w-[40%]" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label >Title</label>
           <input type="text"
@@ -115,11 +116,11 @@ export const TransactionsPost = () => {
             <span className="text-sm text-gray-500"> dd/MM/yyyy</span>
           </label>
 
-          <div className="flex gap-1">
+          <div className="flex justify-between gap-1">
             <input type="text" placeholder="Date" readOnly
               value={format(day, "dd/MM/yyyy")}
               onChange={e => setDay(new Date(e.target.value))}
-              className="bg-gray-800 rounded-md border-none outline-none text-gray-400 pl-4" />
+              className="bg-gray-800 rounded-md border-none outline-none text-gray-400 pl-4 flex-1" />
 
             <div className="relative flex justify-center items-center bg-gray-800 rounded-md border-none outline-none w-8 hover:scale-110 duration-200 "
             >
@@ -149,13 +150,13 @@ export const TransactionsPost = () => {
         </div>
         {!isLoading
           ? <input type="submit" value="Save"
-          className={"cursor-pointer bg-gray-800 font-bold rounded-md hover:bg-slate-300 hover:text-gray-800 duration-200 active:bg-gray-500"} />
+            className={"cursor-pointer bg-gray-800 font-bold rounded-md hover:bg-slate-300 hover:text-gray-800 duration-200 active:bg-gray-500"} />
           : <input disabled
-          type="submit"
-          value="Saving..."
-          className={"cursor-wait opacity-50 bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} />      
+            type="submit"
+            value="Saving..."
+            className={"cursor-wait opacity-50 bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} />
         }
-        
+
 
       </form>
 

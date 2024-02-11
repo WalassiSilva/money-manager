@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { BalanceProps, TransactionsProps } from "../../../Types";
 import { ScrollUpButton } from "../../ScrollUpButton";
-import {  useDateContext } from "../../../context/GlobalProvider";
-import { format } from "date-fns";
+import { useDateContext } from "../../../context/GlobalProvider";
 
 
 
@@ -33,16 +32,22 @@ export const TransactionsList = () => {
 
   }, [date, transactions.length]);
 
- const fetchMonthData = async (year: string | number, month: string | number) => {
+  const fetchMonthData = async (year: string | number, month: string | number) => {
     const data = await getTransactionsByMonth(year, month);
     setTransactions(data.filterResult);
     setBalance(data?.balance);
   };
 
-
   const onChange = (date: Date) => {
     setDate(date.toDateString());
   };
+
+  // const formatDate = (date: Date) => {
+  //   const d = new Date(date).getUTCDate().toString().padStart(2, "0");
+  //   const m = (new Date(date).getUTCMonth() + 1).toString().padStart(2, "0");
+  //   const y = new Date(date).getUTCFullYear().toString();
+  //   return `${d}/${m}/${y}`;
+  // };
 
   return (
     <main className="relative overflow-auto w-full min-h-screen mb-8 bg-gray-900 flex flex-col py-1 px-1 items-center">
@@ -57,7 +62,7 @@ export const TransactionsList = () => {
           view="year"
           onClickMonth={onChange}
           value={date}
-           />
+        />
       </header>
       <article className=" text-white w-full md:max-w-2xl">
         <div className="p-4">
@@ -79,19 +84,19 @@ export const TransactionsList = () => {
           </div>
         </div>
         {
-          transactions.length > 0 ? 
-          transactions.map((item) => (
-            <Link to={`/transactions/${item.id}`} key={Math.random()}>
-              <TransactionsCard
-                id={item.id}
-                title={item.title}
-                value={item.value}
-                day={format(item.day,"dd/MM/yyyy")}
-                category_id={item.category_id}
-                type={item.type} />
-            </Link>
-          ))
-          : <h2 className="flex justify-center font-bold">No transaction yet! 😢</h2>
+          transactions.length > 0 ?
+            transactions.map((item) => (
+              <Link to={`/transactions/${item.id}`} key={Math.random()}>
+                <TransactionsCard
+                  id={item.id}
+                  title={item.title}
+                  value={item.value}
+                  day={(item.day)}
+                  category_id={item.category_id}
+                  type={item.type} />
+              </Link>
+            ))
+            : <h2 className="flex justify-center font-bold">No transaction yet! 😢</h2>
         }
       </article>
       <ScrollUpButton />

@@ -16,17 +16,21 @@ const LastTransactions = ({ date }: DateContextProps) => {
   const fetchMonthData = async (year: string | number, month: string | number) => {
     const data = await getTransactionsByMonth(year, month);
     setTransactions(data.filterResult.slice(0, 3));
-    console.log(transactions);
-
-
   };
+
   return (
     <section className="sm:w-[50%] mb-10 bg-gray-800 rounded-lg ">
-      <Link to="/transactions" className="">   
+      <Link to="/transactions" className="">
         <h2 className="text-center text-lg font-bold">LastTransactions</h2>     {transactions.length > 0
           ? transactions.map((item) => (
-            <TransactionsCard key={Math.random()}
-              id={item.id} title={item.title} value={item.value} day={format(item.day, "dd/MM/yyyy")} category_id={item.category_id} type={item.type} />
+            <TransactionsCard
+              key={Math.random()}
+              id={item.id}
+              title={item.title}
+              value={item.value}
+              category_id={item.category_id} type={item.type}
+              day={(item.day)}
+            />
           ))
           : (
             <TransactionsCard id={0} title={"No transaction yet! 😢"} value={0} day={format(date, "dd/MM/yyyy")} category_id={"3"} type={1} />
