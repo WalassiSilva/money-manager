@@ -42,13 +42,6 @@ export const TransactionsList = () => {
     setDate(date.toDateString());
   };
 
-  // const formatDate = (date: Date) => {
-  //   const d = new Date(date).getUTCDate().toString().padStart(2, "0");
-  //   const m = (new Date(date).getUTCMonth() + 1).toString().padStart(2, "0");
-  //   const y = new Date(date).getUTCFullYear().toString();
-  //   return `${d}/${m}/${y}`;
-  // };
-
   return (
     <main className="relative overflow-auto w-full min-h-screen mb-8 bg-gray-900 flex flex-col py-1 px-1 items-center">
       <header className="">

@@ -104,7 +104,7 @@ export async function updateTransaction(data: TransactionsProps) {
   }
 }
 
-export async function getCategoriesSum(year, month) {
+export async function getCategoriesSum(year:number | string, month:number | string) {
   try {
     const response = await api.get(`${baseUrl}/group/category/${year}/${month}`);
     return response.data;
