@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { BsTrash3Fill } from "react-icons/bs";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, } from "react-router-dom";
@@ -26,7 +26,7 @@ export const TransactionsPost = () => {
 
     fetchGetCategories();
     console.log(day);
-    
+
 
   }, []);
 
@@ -34,7 +34,7 @@ export const TransactionsPost = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const data = { title, value, day, category_id, type };
-    
+
 
     setIsLoading(true);
 

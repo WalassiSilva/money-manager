@@ -1,12 +1,12 @@
-import React, { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { Header } from "../components/shared/Header";
 import { CategoryBalance } from "../components/Home/CategoryBalance";
 import { LastTransactions } from "../components/Home/LastTransactions";
 
-import { DateContext } from "../context/GlobalProvider";
+import {  useDateContext } from "../context/GlobalProvider";
 
 const Home = () => {
-  const { date, setDate } = useContext(DateContext);
+  const { date, setDate } = useDateContext();
   const year = new Date(date).getFullYear();
   const month = new Date(date).getMonth();
   useEffect(() => {

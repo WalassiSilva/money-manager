@@ -44,8 +44,8 @@ export const TransactionsUpdate = () => {
     });
   };
   const handleDayChange = (e) => {
-    const newDate = e.target.value;
-    setDay(new Date(newDate));
+    const { value } = e.target as HTMLInputElement;
+    setDay(new Date(value));
   };
 
   const handleCalendar = () => {
@@ -77,7 +77,7 @@ export const TransactionsUpdate = () => {
       navigate(-1);
     } else return;
   };
-  
+
   const formatDate = (date: Date) => {
     const d = new Date(date).getUTCDate().toString().padStart(2, "0");
     const m = (new Date(date).getUTCMonth() + 1).toString().padStart(2, "0");

@@ -9,7 +9,7 @@ import { GiPlantWatering } from "react-icons/gi";
 import { TransactionsProps } from "../../../Types";
 
 
-export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, day, category_id, type, id }) => {
+export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, day, category_id, type }) => {
 
   const monetaryValue = (value: number) => {
     if (value) {

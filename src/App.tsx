@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Layout } from "./components/shared/Layout";
 import { Transactions } from "./Pages/Transactions";

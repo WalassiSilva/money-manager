@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import {  useDateContext } from "../../context/GlobalProvider";
+import { useDateContext } from "../../context/GlobalProvider";
 
 const Header = () => {
 

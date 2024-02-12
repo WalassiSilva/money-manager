@@ -1,8 +1,6 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
-import { TbArcheryArrow } from "react-icons/tb";
-import { CgSmartphoneChip } from "react-icons/cg";
 
 const port = 3001;
 const app = express();
@@ -214,8 +212,8 @@ app.get("/api/transactions/filter/:year/:month", async (req, res) => {
 
     const balance = { incomes: 0, expenses: 0, result: 0 };
     for (const item of filterResult) {
-      if (item.type === 1) balance.incomes += item.value;
-      if (item.type === 0) balance.expenses += item.value;
+      if (item.type === 1) balance.incomes += item.value!;
+      if (item.type === 0) balance.expenses += item.value!;
     }
     balance.result = balance.incomes + balance.expenses;
 
