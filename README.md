@@ -25,7 +25,7 @@ Nele será possível:
    <img align='center' height='54' width='68' title='Tailwindcss' alt='ESLint' src='https://github.com/devicons/devicon/blob/master/icons/eslint/eslint-original-wordmark.svg' />
 
 ## Preview
-[<img src="./public/money-manager-preview.gif" alt="Visão geral do projeto"]
+[<img src="./public/money-manager-preview.gif" alt="Visão geral do projeto">]
 
 
 
