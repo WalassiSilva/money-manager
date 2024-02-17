@@ -4,6 +4,7 @@ import { getCagetoriesDetails, getTransactionsByCategory } from "../../../servic
 import { TransactionsCard } from "../../Transactions/TransactionsCard";
 import { TransactionsProps } from "../../../Types";
 import { useDateContext } from "../../../context/GlobalProvider";
+import { setIconCategory } from "../../../utils";
 
 type categoryProps = {
   category: string,
@@ -15,14 +16,14 @@ type transactionsProps = {
   resultsFinded: number,
   filterResult: TransactionsProps[]
 }
+
 export const CategoriesDetails = () => {
   const [categories, setCategories] = useState<categoryProps[]>([]);
   const [categoryName, setCategoryName] = useState("casa");
   const [transactions, setTransactions] = useState<transactionsProps>({ totalValue: 0, resultsFinded: 0, filterResult: [] });
-  // TODO get date by custom hook
-  const {date} = useDateContext();
+  const { date } = useDateContext();
   const year = new Date(date).getFullYear();
-  const month = new Date(date).getMonth()+1;
+  const month = new Date(date).getMonth() + 1;
 
   const fetchCategories = async (year: number, month: number) => {
     const data = await getCagetoriesDetails(year, month);
@@ -34,25 +35,37 @@ export const CategoriesDetails = () => {
     setTransactions(data);
   };
 
-  useEffect(() => {
-    fetchCategories(year, month);
-    fetchTransactionsByCategories(categoryName, year, month);
-    
-  }, [categoryName, date]);
-
   const handleCategoryClick = (category: string) => {
     setCategoryName(category);
   };
 
+  const monetaryValue = (value: number) => {
+    if (value) {
+      const format = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(value);
+      return format;
+    } else return 0;
+  };
+
+  useEffect(() => {
+    fetchCategories(year, month);
+    fetchTransactionsByCategories(categoryName, year, month);
+
+  }, [categoryName, date]);
+
+
   return (
-    <main className="bg-gray-900 text-white h-dvh">
+    <main className="bg-gray-900 text-white min-h-screen">
       <Header />
-      <div className="m-4 flex flex-col items-center">
+      <div className="m-3 flex flex-wrap items-center">
         {categories.map(item => (
-          <div className="cursor-pointer hover:shadow-md m-2"
+          <div className="flex flex-col text-center justify-center items-center cursor-pointer hover:shadow-md m-1 border rounded-md p-1 text-sm"
             onClick={() => handleCategoryClick(item.category)}
             key={Math.random()}>
-            <strong >{item.category}</strong> : <span> {item.sum}</span>
+            <div className="flex justify-center items-center gap-1 p-2">{setIconCategory(item.id)} {monetaryValue(item.sum)} </div>
+            <p className="text-sm text-slate-500">{item.category}</p>
           </div>
         ))}
       </div>

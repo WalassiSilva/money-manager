@@ -9,7 +9,7 @@ import { BalanceProps, TransactionsProps } from "../../../Types";
 import { ScrollUpButton } from "../../ScrollUpButton";
 import { useDateContext } from "../../../context/GlobalProvider";
 import { SearchHeader } from "../../Search/SearchHeader";
-
+import { monetaryValue } from "../../../utils";
 
 
 export const TransactionsList = () => {
@@ -20,15 +20,6 @@ export const TransactionsList = () => {
   const [searchSum, setSearchSum] = useState(0);
   const [searchValue, setSearchValue] = useState("");
 
-  const monetaryValue = (value: number) => {
-    if (value) {
-      const format = new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(value);
-      return format;
-    } else return 0;
-  };
 
   useEffect(() => {
 
@@ -52,7 +43,7 @@ export const TransactionsList = () => {
     setDate(date.toDateString());
   };
   const handleSearch = () => {
-    if(!searchValue)return;
+    if (!searchValue) return;
 
     const fetchSearch = async (title: string) => {
       const data = await getTransactionsByTitle(title);
@@ -73,7 +64,7 @@ export const TransactionsList = () => {
           <FaArrowLeft
             className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-3" />
         </Link>
-        <div className="absolute right-3 top-3 flex gap-2">
+        <div className="sm:absolute sm:right-3 sm:top-3 sm:flex sm:gap-2 sm:my-0 flex justify-center gap-2 my-4 static">
           <button onClick={clearSearch} className=" hover:scale-105 top-3">❌</button>
           <input className="  w-36 rounded-md px-1"
             type="text" value={searchValue} onChange={handleInputSearch} placeholder="Search transaction" />
@@ -90,7 +81,7 @@ export const TransactionsList = () => {
       <section className=" text-white w-full md:max-w-2xl">
 
         {searchResults.length !== 0
-          ? <SearchHeader resultsLength={searchResults.length} searchSum={searchSum} />
+          ? <SearchHeader resultsLength={searchResults.length} searchSum={monetaryValue(searchSum)} />
           :
           <div className="p-4">
             <h4 className="text-sm text-center">Transactions: {transactions.length}</h4>

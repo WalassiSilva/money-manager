@@ -16,7 +16,7 @@ const Header = () => {
   }
 
   return (
-    <div className="text-black my-1 flex justify-center items-center ">
+    <div className="text-black py-1 flex justify-center items-center ">
       <Calendar
         onClickMonth={onChangeHandle}
         value={date}

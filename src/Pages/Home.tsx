@@ -4,6 +4,7 @@ import { CategoryBalance } from "../components/Categories/CategoryBalance";
 import { LastTransactions } from "../components/Home/LastTransactions";
 
 import {  useDateContext } from "../context/GlobalProvider";
+import { months } from "../utils";
 
 const Home = () => {
   const { date, setDate } = useDateContext();
@@ -13,10 +14,6 @@ const Home = () => {
     setDate(new Date(date).toISOString());
   }, [date]);
 
-  const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
 
   return (
     <div className="bg-gray-900 text-white w-full h-screen flex flex-col gap-6 items-center overflow-scroll">

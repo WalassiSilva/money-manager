@@ -33,5 +33,5 @@ export interface DateContextProps {
 
 export interface SearchHeaderProps {
   resultsLength: number;
-   searchSum: number;
+  searchSum: number | string;
 }
