@@ -7,7 +7,6 @@ function Layout() {
       <div className="">
         {<Outlet />}
       </div>
-
       <Footer />
     </div>
   );

@@ -106,7 +106,7 @@ export const TransactionsUpdate = () => {
         className="flex flex-col gap-3 sm:w-[40%] ">
         <div className="flex flex-col">
           <label >Title</label>
-          <input type="text"
+          <input type="text" autoFocus
             value={title} onChange={e => setTitle(e.target.value)}
             className="bg-gray-800 rounded-md border-none outline-none pl-4" />
         </div>

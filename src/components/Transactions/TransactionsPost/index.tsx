@@ -25,8 +25,6 @@ export const TransactionsPost = () => {
   useEffect(() => {
 
     fetchGetCategories();
-    console.log(day);
-
 
   }, []);
 
@@ -38,7 +36,7 @@ export const TransactionsPost = () => {
 
     setIsLoading(true);
 
-    fetch(`${baseUrl}/add`, {
+    fetch(`${baseUrl}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -82,7 +80,7 @@ export const TransactionsPost = () => {
       <form className="flex flex-col gap-3 sm:w-[40%]" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label >Title</label>
-          <input type="text"
+          <input type="text" autoFocus
             value={title} onChange={e => setTitle(e.target.value)} placeholder="Title"
             className="bg-gray-800 rounded-md border-none outline-none pl-4" />
         </div>

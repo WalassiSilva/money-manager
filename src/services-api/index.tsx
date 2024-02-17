@@ -7,7 +7,7 @@ export const api = axios.create({
 });
 
 export async function postTransaction(data = {}) {
-  const response = await fetch(`${baseUrl}/add`, {
+  const response = await fetch(`${baseUrl}`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -35,7 +35,7 @@ export async function getTransactionsByMonth(year: string | number, month: strin
 export async function getAllTransactions() {
 
   try {
-    const response = await fetch(`${baseUrl}/all`);
+    const response = await fetch(`${baseUrl}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -45,17 +45,38 @@ export async function getAllTransactions() {
 
 export async function getCategories() {
   try {
-    const response = await fetch("https://money-manager-two.vercel.app/api/categories");
+    const response = await fetch("http://localhost:3001/api/categories");
     const data = await response.json();
     return data;
   } catch (error) {
     console.log("Error: ", error);
   }
 }
+export async function getCagetoriesDetails(year: number, month: number) {
+  try {
+    const response = await fetch(`${baseUrl}/categories/${year}/${month}`);
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+}
+
+export async function getTransactionsByCategory(category: string, year: number, month: number) {
+  try {
+    const response = await fetch(`${baseUrl}/filter/month/${category}/${year}/${month}`);
+    const data = await response.json();
+    return data;
+  }
+  catch (error) {
+    console.log("Error: ", error);
+  }
+}
 
 export async function getTransactionsByTitle(title: string) {
   try {
-    const response = await fetch(`${baseUrl}/${title}`);
+    const response = await fetch(`${baseUrl}/filtertitle/${title}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -104,9 +125,9 @@ export async function updateTransaction(data: TransactionsProps) {
   }
 }
 
-export async function getCategoriesSum(year:number | string, month:number | string) {
+export async function getCategoriesSum(year: number | string, month: number | string) {
   try {
-    const response = await api.get(`${baseUrl}/group/category/${year}/${month}`);
+    const response = await api.get(`${baseUrl}/categories/${year}/${month}`);
     return response.data;
   } catch (error) {
     console.log("Error", error);

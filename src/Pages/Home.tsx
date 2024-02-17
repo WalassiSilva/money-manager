@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Header } from "../components/shared/Header";
-import { CategoryBalance } from "../components/Home/CategoryBalance";
+import { CategoryBalance } from "../components/Categories/CategoryBalance";
 import { LastTransactions } from "../components/Home/LastTransactions";
 
 import {  useDateContext } from "../context/GlobalProvider";

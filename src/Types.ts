@@ -30,3 +30,8 @@ export interface DateContextProps {
   date: string;
   setDate: (c: string) => void;
 }
+
+export interface SearchHeaderProps {
+  resultsLength: number;
+   searchSum: number;
+}

@@ -1,6 +1,8 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
+import "dotenv/config";
+// import {transactionsPool} from "../../DBConfig";
 
 const port = 3001;
 const app = express();
@@ -25,7 +27,7 @@ app.get("/api/transactions/id/:id", async (req, res) => {
 });
 
 //--------- GET ALL TRANSACTIONS-----------
-app.get("/api/transactions/all", async (_, res) => {
+app.get("/api/transactions", async (_, res) => {
   const filterResult = await prisma.transaction.findMany({
     orderBy: {
       day: "desc",
@@ -42,15 +44,17 @@ app.get("/api/transactions/all", async (_, res) => {
   res.json({ resultsFinded, filterResult });
 });
 
-// -------- GET CATEGORY ------------
+// -------- GET CATEGORIES ------------
 app.get("/api/categories", async (_, res) => {
-  const filterResult = await prisma.category.findMany();
+  const filterResult = await prisma.category.findMany({
+    orderBy: { id: "asc" }
+  });
 
   res.json(filterResult);
 });
 
 // -------- POST NEW TRANSACTION -----------
-app.post("/api/transactions/add", async (req, res) => {
+app.post("/api/transactions", async (req, res) => {
   const { title, value, category_id, day, type } = req.body;
 
   try {
@@ -203,9 +207,11 @@ app.get("/api/transactions/filter/:year/:month", async (req, res) => {
           gte: new Date(initialDay)
         }
       },
-      orderBy: {
-        day: "desc"
-      }
+      orderBy: [
+        { day: "desc" },
+        { id: "desc" }
+      ]
+
 
     });
     setExpensesAsNegative(filterResult);
@@ -249,13 +255,13 @@ app.get("/api/transactions/filterTitle/:title", async (req, res) => {
 });
 
 // -------- GROUP BY CATEGORY ------------
-app.get("/api/transactions/group/category/:year/:month", async (req, res) => {
+app.get("/api/transactions/categories/:year/:month", async (req, res) => {
   const year = Number(req.params.year);
   const month = Number(req.params.month);
   const initialDay = new Date(`${year}-${month}-01`);
   const finalDay = (month !== 12)
     ? new Date(`${year}-${month + 1}-01`)
-    : new Date(`${year + 1}-01-01`); 
+    : new Date(`${year + 1}-01-01`);
 
   try {
     const filterResult = await prisma.$queryRaw`

@@ -4,6 +4,7 @@ import { Transactions } from "./Pages/Transactions";
 import { Home } from "./Pages/Home";
 import { TransactionsUpdate } from "./components/Transactions/TransactionsUpdate";
 import { TransactionsPost } from "./components/Transactions/TransactionsPost";
+import { Categories } from "./Pages/Categories";
 function App() {
   return (
     <div >
@@ -14,6 +15,7 @@ function App() {
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/transactions/add" element={<TransactionsPost />} />
             <Route path={"/transactions/:id"} element={<TransactionsUpdate />} />
+            <Route path={"/transactions/categories"} element={<Categories />} />
           </Route>
         </Routes>
       </Router>
