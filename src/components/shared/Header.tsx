@@ -12,7 +12,7 @@ const Header = () => {
   }, []);
 
   function onChangeHandle(e) {
-    setDate(e);
+    setDate(e);    
   }
 
   return (

@@ -3,6 +3,7 @@ import { Header } from "../../shared/Header";
 import { getCagetoriesDetails, getTransactionsByCategory } from "../../../services-api";
 import { TransactionsCard } from "../../Transactions/TransactionsCard";
 import { TransactionsProps } from "../../../Types";
+import { useDateContext } from "../../../context/GlobalProvider";
 
 type categoryProps = {
   category: string,
@@ -19,6 +20,9 @@ export const CategoriesDetails = () => {
   const [categoryName, setCategoryName] = useState("casa");
   const [transactions, setTransactions] = useState<transactionsProps>({ totalValue: 0, resultsFinded: 0, filterResult: [] });
   // TODO get date by custom hook
+  const {date} = useDateContext();
+  const year = new Date(date).getFullYear();
+  const month = new Date(date).getMonth()+1;
 
   const fetchCategories = async (year: number, month: number) => {
     const data = await getCagetoriesDetails(year, month);
@@ -31,9 +35,10 @@ export const CategoriesDetails = () => {
   };
 
   useEffect(() => {
-    fetchCategories(2023, 12);
-    fetchTransactionsByCategories(categoryName, 2024, 2);
-  }, [categoryName]);
+    fetchCategories(year, month);
+    fetchTransactionsByCategories(categoryName, year, month);
+    
+  }, [categoryName, date]);
 
   const handleCategoryClick = (category: string) => {
     setCategoryName(category);
