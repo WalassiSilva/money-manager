@@ -34,14 +34,15 @@ app.get("/api/transactions", async (_, res) => {
     },
     include: {
       categories: { select: { title: true } },
-    }
+    },
 
   });
 
   const resultsFinded = filterResult.length;
   setExpensesAsNegative(filterResult);
+  const totalValue = sumValues(filterResult);
 
-  res.json({ resultsFinded, filterResult });
+  res.json({ resultsFinded, totalValue, filterResult });
 });
 
 // -------- GET CATEGORIES ------------
@@ -216,12 +217,7 @@ app.get("/api/transactions/filter/:year/:month", async (req, res) => {
     });
     setExpensesAsNegative(filterResult);
 
-    const balance = { incomes: 0, expenses: 0, result: 0 };
-    for (const item of filterResult) {
-      if (item.type === 1) balance.incomes += item.value!;
-      if (item.type === 0) balance.expenses += item.value!;
-    }
-    balance.result = balance.incomes + balance.expenses;
+    const balance = getBalance(filterResult);
 
     res.status(200).json({ balance, filterResult });
   }
@@ -286,10 +282,51 @@ app.get("/api/transactions/categories/:year/:month", async (req, res) => {
 
 });
 
+// -------- GET PATRIMONY ------------
+app.get("/api/transactions/patrimony/:year/:month", async (req, res) => {
+  const year = Number(req.params.year);
+  const month = Number(req.params.month);
+  const finalDay = (month !== 12)
+    ? new Date(`${year}-${month + 1}-01`)
+    : new Date(`${year + 1}-01-01`);
+
+  try {
+    const result = await prisma.transaction.findMany({
+      where: {
+        day: {
+          lt: new Date(finalDay)
+        }
+      },
+      orderBy: [
+        { day: "desc" },
+        { id: "desc" }
+      ]
+    });
+    setExpensesAsNegative(result);
+    const totalValue = sumValues(result);
+    const balance = getBalance(result);
+
+    console.log(result);
+    res.status(200).json({ totalValue, balance, result });
+  } catch (error) {
+    return res.status(500).send({ message: "Erro ao Somar patrimonio" });
+  }
+});
+
 
 
 
 app.listen(port, () => console.log(`Running in http://localhost:${port}`));
+
+function getBalance(filterResult: { id: number; title: string | null; value: number | null; day: Date | null; category_id: number | null; type: number | null; }[]) {
+  const balance = { incomes: 0, expenses: 0, result: 0 };
+  for (const item of filterResult) {
+    if (item.type === 1) balance.incomes += item.value!;
+    if (item.type === 0) balance.expenses += item.value!;
+  }
+  balance.result = balance.incomes + balance.expenses;
+  return balance;
+}
 
 function sumValues(filterResult: { id: number; title: string | null; value: number | null; day: Date | null; category_id: number | null; type: number | null; }[]) {
   let totalValue = 0;

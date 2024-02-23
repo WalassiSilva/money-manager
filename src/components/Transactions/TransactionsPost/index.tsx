@@ -13,8 +13,8 @@ import { format } from "date-fns";
 export const TransactionsPost = () => {
 
   const [title, setTitle] = useState("");
-  const [value, setValue] = useState(0);
-  const [day, setDay] = useState(new Date());
+  const [value, setValue] = useState<number>(0);
+  const [day, setDay] = useState<Date>(new Date());
   const [category_id, setCategory_id] = useState(1);
   const [type, setType] = useState(0);
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
@@ -88,10 +88,37 @@ export const TransactionsPost = () => {
         <div className="flex flex-col">
           <label >Value</label>
           <input type="number"
-            value={value} onChange={e => setValue(Number(e.target.value))}
+            value={value} onChange={e => setValue(Number(e.target.value))} placeholder="Value"
             className="remove-arrow bg-gray-800 rounded-md border-none outline-none pl-4" />
         </div>
 
+        <div className="flex flex-col">
+          <label >
+            Day
+            <span className="text-sm text-gray-500"> dd/MM/yyyy</span>
+          </label>
+
+          <div className="flex justify-between gap-1">
+            <input type="text" placeholder="Date" readOnly
+              value={format(day, "dd/MM/yyyy")}
+              onChange={e => setDay(new Date(e.target.value))}
+              className="bg-gray-800 rounded-md border-none outline-none text-gray-400 pl-4 flex-1" />
+
+            <div className="relative flex justify-center items-center bg-gray-800 rounded-md border-none outline-none w-8 hover:scale-110 duration-200 cursor-pointer "
+            >
+              <FaCalendarAlt onClick={handleCalendar} />
+            </div>
+          </div>
+
+          <div className="relative flex justify-center">
+            {showCalendar && (
+              <Calendar calendarType="gregory"
+                onClickDay={handleCalendarChange}
+                value={day}
+                className="absolute p-0 left-0 duration-300 hover:daration-300 rounded-lg bg-gray-500 text-white" />
+            )}
+          </div>
+        </div>
         <div className="flex flex-col">
           <label>Category</label>
           <div className="flex gap-1">
@@ -108,33 +135,6 @@ export const TransactionsPost = () => {
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <label >
-            Day
-            <span className="text-sm text-gray-500"> dd/MM/yyyy</span>
-          </label>
-
-          <div className="flex justify-between gap-1">
-            <input type="text" placeholder="Date" readOnly
-              value={format(day, "dd/MM/yyyy")}
-              onChange={e => setDay(new Date(e.target.value))}
-              className="bg-gray-800 rounded-md border-none outline-none text-gray-400 pl-4 flex-1" />
-
-            <div className="relative flex justify-center items-center bg-gray-800 rounded-md border-none outline-none w-8 hover:scale-110 duration-200 "
-            >
-              <FaCalendarAlt onClick={handleCalendar} />
-            </div>
-          </div>
-
-          <div className="relative flex justify-center">
-            {showCalendar && (
-              <Calendar calendarType="gregory"
-                onClickDay={handleCalendarChange}
-                value={day}
-                className="absolute p-0 left-0 duration-300 hover:daration-300 rounded-lg bg-gray-500 text-white" />
-            )}
-          </div>
-        </div>
 
         <div className="flex flex-col">
           <label >Type</label>

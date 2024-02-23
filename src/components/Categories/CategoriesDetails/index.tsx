@@ -5,6 +5,7 @@ import { TransactionsCard } from "../../Transactions/TransactionsCard";
 import { TransactionsProps } from "../../../Types";
 import { useDateContext } from "../../../context/GlobalProvider";
 import { setIconCategory } from "../../../utils";
+import { Link } from "react-router-dom";
 
 type categoryProps = {
   category: string,
@@ -57,9 +58,9 @@ export const CategoriesDetails = () => {
 
 
   return (
-    <main className="bg-gray-900 text-white min-h-screen">
+    <main className=" flex flex-col items-center bg-gray-900 text-white min-h-screen overflow-auto mb-8">
       <Header />
-      <div className="m-3 flex flex-wrap items-center">
+      <div className="m-3 flex flex-wrap items-center justify-center">
         {categories.map(item => (
           <div className="flex flex-col text-center justify-center items-center cursor-pointer hover:shadow-md m-1 border rounded-md p-1 text-sm"
             onClick={() => handleCategoryClick(item.category)}
@@ -72,20 +73,20 @@ export const CategoriesDetails = () => {
       <div>
 
       </div>
-      <div>
+      <div className="sm:w-[50%]">
         <h2 className="text-center text-slate-500">Transactions: {transactions.resultsFinded}</h2>
         {transactions.filterResult.length > 0 && transactions.filterResult.map((item) => (
-          <TransactionsCard key={item.id}
-            title={item.title}
-            value={item.value}
-            day={item.day}
-            category_id={item.category_id}
-            type={item.type}
-            id={item.id} />
+          <Link to={`/transactions/${item.id}`} key={Math.random()}>
+            <TransactionsCard
+              title={item.title}
+              value={item.value}
+              day={item.day}
+              category_id={item.category_id}
+              type={item.type}
+              id={item.id} />
+          </Link>
         ))}
       </div>
-
-
     </main>
   );
 };

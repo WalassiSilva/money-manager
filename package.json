@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite",
     "dev-node": "tsx watch src/server",
-    "vercel-build ": "npx prisma migrate deploy",
     "postinstall": "patch-package",
     "build": "tsc && vite build",
+    "vercel-build": "npx prisma migrate deploy",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

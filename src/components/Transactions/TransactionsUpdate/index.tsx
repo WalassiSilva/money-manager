@@ -120,21 +120,6 @@ export const TransactionsUpdate = () => {
         </div>
 
         <div className="flex flex-col">
-          <label>Category</label>
-          <div className="flex gap-1">
-            <select
-              value={category_id} onChange={e => setCategory_id(Number(e.target.value))}
-              className="w-full bg-gray-700 rounded-md border-none outline-none pl-4" >
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>{category.title}</option>
-              ))}
-            </select>
-            <input readOnly type="text" value={category_id}
-              className="bg-gray-800 rounded-md border-node outline-none w-8 text-center" />
-          </div>
-        </div>
-
-        <div className="flex flex-col">
           <label >
             Day
             <span className="text-sm text-gray-500"> dd/MM/yyyy</span>
@@ -158,9 +143,25 @@ export const TransactionsUpdate = () => {
               onClickDay={handleCalendarChange}
               value={day}
             />
-          )
-          }</div>
+          )}
+          </div>
         </div>
+        <div className="flex flex-col">
+          <label>Category</label>
+          <div className="flex gap-1">
+            <select
+              value={category_id} onChange={e => setCategory_id(Number(e.target.value))}
+              className="w-full bg-gray-700 rounded-md border-none outline-none pl-4" >
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>{category.title}</option>
+              ))}
+            </select>
+            <input readOnly type="text" value={category_id}
+              className="bg-gray-800 rounded-md border-node outline-none w-8 text-center" />
+          </div>
+        </div>
+
+
 
         <div className="flex flex-col">
           <label >Type</label>

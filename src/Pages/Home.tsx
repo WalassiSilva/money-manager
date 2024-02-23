@@ -3,13 +3,14 @@ import { Header } from "../components/shared/Header";
 import { CategoryBalance } from "../components/Categories/CategoryBalance";
 import { LastTransactions } from "../components/Home/LastTransactions";
 
-import {  useDateContext } from "../context/GlobalProvider";
+import { useDateContext } from "../context/GlobalProvider";
 import { months } from "../utils";
 
 const Home = () => {
   const { date, setDate } = useDateContext();
   const year = new Date(date).getFullYear();
   const month = new Date(date).getMonth();
+
   useEffect(() => {
     setDate(new Date(date).toISOString());
   }, [date]);

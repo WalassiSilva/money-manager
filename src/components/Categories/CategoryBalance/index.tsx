@@ -44,8 +44,7 @@ const CategoryBalance = ({ year, month }: DataProps) => {
           <div>
             <Doughnut data={data} options={options} ></Doughnut>
             <div className="flex justify-center mt-3 py-1 shadow-md bg-gray-500 rounded-lg">
-              <Link to="/transactions/categories" >Click for more details</Link>
-
+              <Link to="/transactions/categories" >Categories details</Link>
             </div>
           </div>
 
