@@ -21,7 +21,7 @@ app.get("/api/transactions/id/:id", async (req, res) => {
     if (!target) return res.status(404).send({ message: "Id da Transação não encontrado" });
     return res.status(200).json({ target });
   } catch (error) {
-    res.status(500).send({ message: "Erro ao buscar transação por di" });
+    res.status(500).send({ message: "Erro ao buscar transação por id" });
   }
 
 });
@@ -98,7 +98,7 @@ app.put("/api/transactions/:id", async (req, res) => {
   } catch (error) {
     return res.status(500).send({ message: "Erro ao atualizar transação" });
   }
-  res.status(200).send({ message: "Atualização concluída!" });
+  res.status(200).send({ message: "Atualização concluída!"});
 });
 
 // -------- DELETE TRANSACTION -----------
@@ -306,7 +306,6 @@ app.get("/api/transactions/patrimony/:year/:month", async (req, res) => {
     const totalValue = sumValues(result);
     const balance = getBalance(result);
 
-    console.log(result);
     res.status(200).json({ totalValue, balance, result });
   } catch (error) {
     return res.status(500).send({ message: "Erro ao Somar patrimonio" });

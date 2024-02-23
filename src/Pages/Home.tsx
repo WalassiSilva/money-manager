@@ -5,6 +5,7 @@ import { LastTransactions } from "../components/Home/LastTransactions";
 
 import { useDateContext } from "../context/GlobalProvider";
 import { months } from "../utils";
+import { Patrimony } from "../components/Home/Patrimony";
 
 const Home = () => {
   const { date, setDate } = useDateContext();
@@ -20,6 +21,7 @@ const Home = () => {
     <div className="bg-gray-900 text-white w-full h-screen flex flex-col gap-6 items-center overflow-scroll">
       <Header />
       <p>{months[month]}</p>
+      <Patrimony />
       <CategoryBalance year={year} month={month} />
       <LastTransactions date={date} setDate={setDate} />
     </div>

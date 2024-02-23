@@ -23,16 +23,13 @@ export const TransactionsPost = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-
     fetchGetCategories();
-
   }, []);
 
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const data = { title, value, day, category_id, type };
-
 
     setIsLoading(true);
 
@@ -52,6 +49,8 @@ export const TransactionsPost = () => {
 
   const handleCalendarChange = (date: Date) => {
     setDay(new Date(date));
+    console.log(day);
+    
     setShowCalendar(!showCalendar);
   };
 

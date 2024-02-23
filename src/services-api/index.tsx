@@ -133,3 +133,12 @@ export async function getCategoriesSum(year: number | string, month: number | st
     console.log("Error", error);
   }
 }
+
+export async function getPatrimony(year: number | string, month: number | string) {
+  try {
+    const response = await api.get(`${baseUrl}/patrimony/${year}/${month}`);
+    return response.data;
+  } catch (error) {
+    console.log("Error", error);
+  }
+}
