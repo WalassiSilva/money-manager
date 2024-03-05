@@ -11,6 +11,7 @@ export const Patrimony = () => {
   const month = new Date(date).getMonth() + 1;
   const [patrimony, setPatrimony] = useState(0);
   const [showPatrimony, setShowPatrimony] = useState(false);
+  
 
 
   useEffect(() => {
