@@ -46,7 +46,7 @@ app.get("/api/transactions", async (_, res) => {
 });
 
 // -------- GET CATEGORIES ------------
-app.get("/api/categories", async (_, res) => {
+app.get("/api/transactions/categories", async (_, res) => {
   try {
     const filterResult = await prisma.category.findMany({
       orderBy: { id: "asc" }
@@ -153,6 +153,7 @@ app.get("/api/transactions/filterAll/:categoryTitle", async (req, res) => {
     return res.status(500).send({ message: "Erro ao filtrar por Categoria" });
   }
 });
+
 // -------- FILTER TRANSACTIONS BY MONTH AND CATEGORY -----------
 app.get("/api/transactions/filter/month/:category/:year/:month", async (req, res) => {
 
@@ -273,7 +274,7 @@ app.get("/api/transactions/categories/:year/:month", async (req, res) => {
       from transactions t 
       left outer join categories c on c.id = t.category_id 
       where t.day between ${initialDay} and ${finalDay} and t.type = 0
-      group by c.id 
+      group by c.id, c.title
       order by c.id
     `;
 
@@ -323,7 +324,7 @@ app.get("/api/transactions/patrimony/:year/:month", async (req, res) => {
 
 
 
-app.listen(port, () => console.log(`Running in http://localhost:${port}`));
+app.listen(port, () => console.log(`Running in port${port}`));
 
 function getBalance(filterResult: { id: number; title: string | null; value: number | null; day: Date | null; category_id: number | null; type: number | null; }[]) {
   const balance = { incomes: 0, expenses: 0, result: 0 };
