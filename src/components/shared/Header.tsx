@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -12,13 +13,13 @@ const Header = () => {
   }, []);
 
   function onChangeHandle(e) {
-    setDate(e);    
+    setDate(e);
   }
 
   return (
     <div className="text-black py-1 flex justify-center items-center ">
       <Calendar
-        onClickMonth={onChangeHandle}
+        onClickMonth={e => onChangeHandle(e)}
         value={date}
         view="year"
         className={"w-56 p-0 h-10 overflow-hidden duration-300 hover:duration-300 hover:h-[250px] rounded-lg bg-gray-500 text-white"}

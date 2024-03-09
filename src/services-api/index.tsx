@@ -95,16 +95,6 @@ export async function getTransactionById(id: number) {
 
 }
 
-// export async function deleteTransaction(id: number) {
-//   try {
-//     const response = await fetch(`${baseUrl}/${id}`);
-
-//     console.log();
-
-//   } catch (error) {
-//     console.log("Error: ", Error);
-//   }
-// }
 export async function deleteTransaction(id: number) {
   try {
     await api.delete(`${baseUrl}/${id}`, {
@@ -118,7 +108,6 @@ export async function deleteTransaction(id: number) {
 export async function updateTransaction(data: TransactionsProps) {
   try {
     const response = await api.put(`${baseUrl}/${data.id}`, data);
-    console.log(data.id);
     return response.data;
   } catch (error) {
     console.log("Error", error);

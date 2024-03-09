@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "tsx src/server",
     "dev": "vite",
     "dev-node": "tsx watch src/server",
     "postinstall": "patch-package",
     "build": "tsc && vite build",
-    "vercel-build": "npx prisma migrate deploy",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/node": "^20.11.6",
+    "@types/node": "^20.11.24",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.19.1",

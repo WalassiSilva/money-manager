@@ -9,7 +9,7 @@ datasource db {
 
 model Transaction {
   id          Int       @id @default(autoincrement())
-  title       String?   @db.VarChar(50)
+  title       String    @db.VarChar(50)
   value       Float?    @db.Real
   day         DateTime? @db.Date
   category_id Int?      @db.SmallInt
@@ -20,8 +20,9 @@ model Transaction {
 }
 
 model Category {
-  id           Int           @id
+  id           Int?          @unique(map: "unique_id")
   title        String?       @db.VarChar(50)
+  unique_id    Int           @unique @default(autoincrement())
   transactions Transaction[]
 
   @@map("categories")

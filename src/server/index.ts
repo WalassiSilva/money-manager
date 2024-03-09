@@ -2,7 +2,6 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
 import "dotenv/config";
-// import {transactionsPool} from "../../DBConfig";
 
 const port = 3001;
 const app = express();
@@ -11,6 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 
+app.use(express.static(process.cwd() + "/dist"));
 
 //--------- GET TRANSACTIONS BY ID---------
 app.get("/api/transactions/id/:id", async (req, res) => {
@@ -47,11 +47,17 @@ app.get("/api/transactions", async (_, res) => {
 
 // -------- GET CATEGORIES ------------
 app.get("/api/categories", async (_, res) => {
-  const filterResult = await prisma.category.findMany({
-    orderBy: { id: "asc" }
-  });
+  try {
+    const filterResult = await prisma.category.findMany({
+      orderBy: { id: "asc" }
+    });
+    res.json(filterResult);
 
-  res.json(filterResult);
+  } catch (error) {
+    console.log("error categoriesPool: ", error);
+
+    return res.status(500).send({ message: "Erro ao buscar categorias" });
+  }
 });
 
 // -------- POST NEW TRANSACTION -----------
@@ -98,7 +104,7 @@ app.put("/api/transactions/:id", async (req, res) => {
   } catch (error) {
     return res.status(500).send({ message: "Erro ao atualizar transação" });
   }
-  res.status(200).send({ message: "Atualização concluída!"});
+  res.status(200).send({ message: "Atualização concluída!" });
 });
 
 // -------- DELETE TRANSACTION -----------
@@ -121,7 +127,7 @@ app.delete("/api/transactions/:id", async (req, res) => {
 
 // -------- FILTER ALL TRANSACTIONS BY CATEGORY --------
 app.get("/api/transactions/filterAll/:categoryTitle", async (req, res) => {
-  const categoryTitle = req.params.categoryTitle;
+  const categoryTitle = req.params.categoryTitle;  
 
   try {
     const filterResult = await prisma.transaction.findMany({
@@ -149,6 +155,7 @@ app.get("/api/transactions/filterAll/:categoryTitle", async (req, res) => {
 });
 // -------- FILTER TRANSACTIONS BY MONTH AND CATEGORY -----------
 app.get("/api/transactions/filter/month/:category/:year/:month", async (req, res) => {
+
   const category = req.params.category;
   const month = Number(req.params.month);
   const year = Number(req.params.year);
@@ -178,6 +185,7 @@ app.get("/api/transactions/filter/month/:category/:year/:month", async (req, res
       },
       orderBy: { day: "desc" }
     });
+
 
     setExpensesAsNegative(filterResult);
     const resultsFinded = filterResult.length;

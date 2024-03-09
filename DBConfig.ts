@@ -6,3 +6,9 @@ export const transactionsPool = new Pool({
     rejectUnauthoridez: false
   }
 });
+export const categoriesPool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthoridez: false
+  }
+});

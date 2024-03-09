@@ -43,7 +43,7 @@ export const TransactionsUpdate = () => {
       navigate(-1);
     });
   };
-  const handleDayChange = (e) => {
+  const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target as HTMLInputElement;
     setDay(new Date(value));
   };

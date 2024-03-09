@@ -49,7 +49,6 @@ export const TransactionsPost = () => {
 
   const handleCalendarChange = (date: Date) => {
     setDay(new Date(date));
-    console.log(day);
     
     setShowCalendar(!showCalendar);
   };
