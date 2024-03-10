@@ -67,7 +67,7 @@ export const TransactionsList = () => {
         <div className="sm:absolute sm:right-3 sm:top-3 sm:flex sm:gap-2 sm:my-0 flex justify-center gap-2 my-4 static">
           <button onClick={clearSearch} className=" hover:scale-105 top-3">❌</button>
           <input className="  w-36 rounded-md px-1"
-            type="text" value={searchValue} onChange={handleInputSearch} placeholder="Search transaction" />
+            type="text" value={searchValue} onChange={handleInputSearch} onKeyDown={(e) => e.key === "Enter" && handleSearch()} placeholder="Search transaction" />
           <button onClick={handleSearch} className=" hover:scale-105 top-3" >🔍</button>
         </div>
         <Calendar

@@ -49,7 +49,7 @@ export const TransactionsPost = () => {
 
   const handleCalendarChange = (date: Date) => {
     setDay(new Date(date));
-    
+
     setShowCalendar(!showCalendar);
   };
 
@@ -79,15 +79,15 @@ export const TransactionsPost = () => {
         <div className="flex flex-col">
           <label >Title</label>
           <input type="text" autoFocus
-            value={title} onChange={e => setTitle(e.target.value)} placeholder="Title"
-            className="bg-gray-800 rounded-md border-none outline-none pl-4" />
+            value={title} onChange={e => setTitle(e.target.value)} placeholder="Title" required
+            className="py-1 bg-gray-800 rounded-md border-none outline-none pl-4" />
         </div>
 
         <div className="flex flex-col">
           <label >Value</label>
           <input type="number"
             value={value} onChange={e => setValue(Number(e.target.value))} placeholder="Value"
-            className="remove-arrow bg-gray-800 rounded-md border-none outline-none pl-4" />
+            className="py-1 remove-arrow bg-gray-800 rounded-md border-none outline-none pl-4" />
         </div>
 
         <div className="flex flex-col">
@@ -100,7 +100,7 @@ export const TransactionsPost = () => {
             <input type="text" placeholder="Date" readOnly
               value={format(day, "dd/MM/yyyy")}
               onChange={e => setDay(new Date(e.target.value))}
-              className="bg-gray-800 rounded-md border-none outline-none text-gray-400 pl-4 flex-1" />
+              className="py-1 bg-gray-800 rounded-md border-none outline-none text-gray-400 pl-4 flex-1" />
 
             <div className="relative flex justify-center items-center bg-gray-800 rounded-md border-none outline-none w-8 hover:scale-110 duration-200 cursor-pointer "
             >
@@ -129,7 +129,7 @@ export const TransactionsPost = () => {
             </select>
             <input readOnly type="text" value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="bg-gray-800 text-gray-500 rounded-md border-node outline-none w-8 text-center" />
+              className="py-1 bg-gray-800 text-gray-500 rounded-md border-node outline-none w-8 text-center" />
           </div>
         </div>
 
@@ -139,18 +139,18 @@ export const TransactionsPost = () => {
           <select
             value={type}
             onChange={e => setType(Number(e.target.value))}
-            className="bg-gray-700 rounded-md border-node outline-none pl-4">
+            className="py-1 bg-gray-700 rounded-md border-node outline-none pl-4">
             <option value="0">Expense</option>
             <option value="1">Income</option>
           </select>
         </div>
         {!isLoading
           ? <input type="submit" value="Save"
-            className={"cursor-pointer bg-gray-800 font-bold rounded-md hover:bg-slate-300 hover:text-gray-800 duration-200 active:bg-gray-500"} />
+            className={"py-2 cursor-pointer bg-gray-800 font-bold rounded-md hover:bg-slate-300 hover:text-gray-800 duration-200 active:bg-gray-500"} />
           : <input disabled
             type="submit"
             value="Saving..."
-            className={"cursor-wait opacity-50 bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} />
+            className={"py-2 cursor-wait opacity-50 bg-slate-300 text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white duration-200 active:bg-gray-500"} />
         }
 
 
