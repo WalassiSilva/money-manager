@@ -86,7 +86,7 @@ export async function getTransactionsByTitle(title: string) {
 
 export async function getTransactionById(id: number) {
   try {
-    const response = await fetch(`${baseUrl}/id/${id}`);
+    const response = await fetch(`${baseUrl}/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {

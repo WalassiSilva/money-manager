@@ -15,7 +15,7 @@ const LastTransactions = ({ date }: DateContextProps) => {
 
   const fetchMonthData = async (year: string | number, month: string | number) => {
     const data = await getTransactionsByMonth(year, month);
-    setTransactions(data.filterResult.slice(0, 3));
+    setTransactions(data.data.slice(0, 3));
   };
 
   return (

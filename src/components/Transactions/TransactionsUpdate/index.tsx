@@ -58,11 +58,13 @@ export const TransactionsUpdate = () => {
 
   const fetchGetTransaction = async (id: number) => {
     const data = await getTransactionById(Number(id));
-    setTitle(data.target.title);
-    setValue(data.target.value);
-    setDay(data.target.day);
-    setCategory_id(data.target.category_id);
-    setType(data.target.type);
+    console.log("cade voce", data);
+    
+    setTitle(data.transaction.title);
+    setValue(data.transaction.value);
+    setDay(data.transaction.day);
+    setCategory_id(data.transaction.category_id);
+    setType(data.transaction.type);
   };
 
   const fetchGetCategories = async () => {

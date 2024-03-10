@@ -15,13 +15,13 @@ type categoryProps = {
 type transactionsProps = {
   totalValue: number,
   resultsFinded: number,
-  filterResult: TransactionsProps[]
+  data: TransactionsProps[]
 }
 
 export const CategoriesDetails = () => {
   const [categories, setCategories] = useState<categoryProps[]>([]);
   const [categoryName, setCategoryName] = useState("casa");
-  const [transactions, setTransactions] = useState<transactionsProps>({ totalValue: 0, resultsFinded: 0, filterResult: [] });
+  const [transactions, setTransactions] = useState<transactionsProps>({ totalValue: 0, resultsFinded: 0, data: [] });
   const [monthValue, setMonthValue] = useState(0);
   const { date } = useDateContext();
   const year = new Date(date).getFullYear();
@@ -89,7 +89,7 @@ export const CategoriesDetails = () => {
       <div className="sm:w-[50%]">
         <h2 className="text-center text-slate-500">Transactions: {transactions.resultsFinded}</h2>
         <h2 className="text-center text-slate-500">Total: {monetaryValue(monthValue)}</h2>
-        {transactions.filterResult.length > 0 && transactions.filterResult.map((item) => (
+        {transactions.data.length > 0 && transactions.data.map((item) => (
           <Link to={`/transactions/${item.id}`} key={Math.random()}>
             <TransactionsCard
               title={item.title}

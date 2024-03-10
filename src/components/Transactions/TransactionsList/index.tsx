@@ -30,7 +30,7 @@ export const TransactionsList = () => {
 
   const fetchMonthData = async (year: string | number, month: string | number) => {
     const data = await getTransactionsByMonth(year, month);
-    setTransactions(data.filterResult);
+    setTransactions(data.data);
     setBalance(data?.balance);
   };
 
@@ -47,7 +47,7 @@ export const TransactionsList = () => {
 
     const fetchSearch = async (title: string) => {
       const data = await getTransactionsByTitle(title);
-      setSearchResults(data.filterResult);
+      setSearchResults(data.data);
       setSearchSum(data.totalValue);
     };
     fetchSearch(searchValue);
