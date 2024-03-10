@@ -43,8 +43,9 @@ const CategoryBalance = ({ year, month }: DataProps) => {
         {limitDate >= targetDate && (
           <div>
             <Doughnut data={data} options={options} ></Doughnut>
-            <div className="flex justify-center mt-3 py-1 shadow-md bg-gray-500 rounded-lg">
-              <Link to="/transactions/categories" >Categories details</Link>
+            <div>
+              <Link to="/transactions/categories"
+              className="flex justify-center mt-3 py-1 shadow-md bg-gray-500 rounded-lg" >Categories details</Link>
             </div>
           </div>
 

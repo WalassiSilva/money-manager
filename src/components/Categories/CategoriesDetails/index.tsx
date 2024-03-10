@@ -86,7 +86,7 @@ export const CategoriesDetails = () => {
       <div>
 
       </div>
-      <div className="sm:w-[50%]">
+      <div className="sm:w-[60%] w-[90%]">
         <h2 className="text-center text-slate-500">Transactions: {transactions.resultsFinded}</h2>
         <h2 className="text-center text-slate-500">Total: {monetaryValue(monthValue)}</h2>
         {transactions.data.length > 0 && transactions.data.map((item) => (

@@ -19,7 +19,7 @@ const LastTransactions = ({ date }: DateContextProps) => {
   };
 
   return (
-    <section className="sm:w-[50%] mb-10 bg-gray-800 rounded-lg ">
+    <section className="sm:w-[60%] w-[90%] mb-10 bg-gray-800 rounded-lg ">
       <Link to="/transactions" className="">
         <h2 className="text-center text-lg font-bold">LastTransactions</h2>     {transactions.length > 0
           ? transactions.map((item) => (
