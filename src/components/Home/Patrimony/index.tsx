@@ -29,7 +29,7 @@ export const Patrimony = () => {
   };
   return (
     <div>
-      <button onClick={handleShowPatrimony} className="text-gray-300 font-bold flex items-center flex-col">Patrimônio {!showPatrimony ? <FaEye /> : <FaEyeSlash />}</button>
+      <button onClick={handleShowPatrimony} className="text-gray-300 font-bold flex items-center flex-col">Patrimony {!showPatrimony ? <FaEye /> : <FaEyeSlash />}</button>
       <p className="text-gray-300 font-bold duration-200">
         {showPatrimony 
         ?

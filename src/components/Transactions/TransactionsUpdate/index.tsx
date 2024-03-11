@@ -141,7 +141,7 @@ export const TransactionsUpdate = () => {
           <div className="relative flex justify-center">{showCalendar === true && (
             <Calendar
               className=" absolute p-0 left-auto  duration-300 hover:duration-300 rounded-lg bg-gray-500 text-white "
-              calendarType="gregory"
+              calendarType="gregory" locale="en"
               onClickDay={handleCalendarChange}
               value={day}
             />
