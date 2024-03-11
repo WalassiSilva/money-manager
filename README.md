@@ -9,7 +9,10 @@ Nele será possível:
   - Por mês (x)
   - Por Categorias (x)
   - Ver categorias com gráfico (x)
-  - Pesquisar por nome 
+  - Pesquisar por nome (x)
+  - Ver o Patrimonio ate dado momento (x)
+  - Ver ultimas transações na pagina inicial (x)
+  - Ver o balanço de cada mês (x)
 
 ## Tecnologias Utilizadas
 
