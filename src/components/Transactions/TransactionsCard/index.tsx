@@ -2,14 +2,22 @@ import React from "react";
 import { TransactionsProps } from "../../../Types";
 import { monetaryValue, setIconCategory } from "../../../utils";
 
-
-export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, day, category_id, type }) => {
-
-  const formatDate = (date: string) => {
-    const d = new Date(date).getUTCDate().toString().padStart(2, "0");
-    const m = (new Date(date).getUTCMonth() + 1).toString().padStart(2, "0");
-    const y = new Date(date).getUTCFullYear().toString();
-    return `${d}/${m}/${y}`;
+export const TransactionsCard: React.FC<TransactionsProps> = ({
+  title,
+  value,
+  day,
+  category_id,
+  type,
+}) => {
+  const formatedDate = (zuluDate: Date | string) => {
+    const date = new Date(zuluDate); // Cria um objeto Date a partir do horário Zulu (UTC)
+    const offset = 22; // Fuso horário de Brasília é UTC-3
+    date.setHours(date.getHours() + offset); // Ajusta a hora
+    return date.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
   };
   return (
     <section className="bg-gray-600 m-4 p-4 rounded-xl flex hover:shadow-xl">
@@ -21,10 +29,16 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({ title, value, da
         <h2 className="font-bold text-sm md:text-lg capitalize">{title}</h2>
         <div className="flex justify-between mt-2">
           <div>
-            <p className="text-sm md:text-lg">{formatDate(day)}</p>
-            <p className="text-gray-400 text-xs">dd/MM/yyyy</p>
+            <p className="text-sm md:text-lg">{formatedDate(day)}</p>
+            {/* <p className="text-gray-400 text-xs">dd/MM/yyyy</p> */}
           </div>
-          <div className={`${type !== 0 ? "text-green-300" : "text-red-500"} font-bold`}>{monetaryValue(value)}</div>
+          <div
+            className={`${
+              type !== 0 ? "text-green-300" : "text-red-500"
+            } font-bold`}
+          >
+            {monetaryValue(value)}
+          </div>
         </div>
       </div>
     </section>
