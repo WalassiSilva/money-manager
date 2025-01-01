@@ -29,7 +29,9 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({
         <h2 className="font-bold text-sm md:text-lg capitalize">{title}</h2>
         <div className="flex justify-between mt-2">
           <div>
-            <p className="text-sm md:text-lg">{formatedDate(day)}</p>
+            <p className="text-xs md:text-lg">
+              {formatedDate(day).replace("de", "")}
+            </p>
             {/* <p className="text-gray-400 text-xs">dd/MM/yyyy</p> */}
           </div>
           <div

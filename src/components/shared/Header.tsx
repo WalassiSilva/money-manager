@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useDateContext } from "../../context/GlobalProvider";
 import { FaCalendarAlt } from "react-icons/fa";
 
 const Header = () => {
-  const [showCalendar, setShowCalendar] = useState(false);
   const { date, setDate } = useDateContext();
 
   useEffect(() => {
@@ -17,23 +16,23 @@ const Header = () => {
   }
 
   return (
-    <div className="text-black py-1 flex flex-col justify-center items-center gap-4 transaction">
-      <button
-        className="text-white p-5 bg-white/50 rounded-full"
-        onClick={() => setShowCalendar(!showCalendar)}
+    <div className="text-black py-1 flex flex-col justify-center items-center gap-4 transition-all duration-300">
+      <input id="toggle" type="checkbox" className="peer hidden" />
+      <label
+        htmlFor="toggle"
+        className=" text-white p-5 bg-white/50 rounded-full cursor-pointer"
       >
         <FaCalendarAlt />
-      </button>
-      {showCalendar && (
-        <Calendar
-          onClickMonth={(e) => onChangeHandle(e)}
-          value={date}
-          view="year"
-          className={
-            "w-56 p-0 overflow-hidden duration-300 hover:duration-300 rounded-lg bg-gray-500 text-white"
-          }
-        />
-      )}
+      </label>
+
+      <Calendar
+        onClickMonth={(e) => onChangeHandle(e)}
+        value={date}
+        view="year"
+        className={
+          "transition-all peer-checked:h-[250px] w-56 h-0 p-0 overflow-hidden duration-300 rounded-lg bg-gray-500 text-white"
+        }
+      />
     </div>
   );
 };
