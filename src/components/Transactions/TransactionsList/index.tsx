@@ -13,6 +13,7 @@ import { useDateContext } from "../../../context/GlobalProvider";
 import { SearchHeader } from "../../Search/SearchHeader";
 import { monetaryValue } from "../../../utils";
 import { Header } from "../../shared/Header";
+import { FaSearchDollar } from "react-icons/fa";
 
 export const TransactionsList = () => {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
@@ -33,11 +34,6 @@ export const TransactionsList = () => {
     const data = await getTransactionsByMonth(year, month);
     setTransactions(data.data);
     setBalance(data?.balance);
-  };
-
-  const clearSearch = () => {
-    setSearchResults([]);
-    setSearchValue("");
   };
 
   const handleSearch = () => {
@@ -61,19 +57,19 @@ export const TransactionsList = () => {
           <FaArrowLeft className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-3" />
         </Link>
         <div className="w-48 sm:w-[400px] lg:w-[640px] flex justify-center gap-2 my-4">
-          <button onClick={clearSearch} className=" hover:scale-105 top-3">
-            ❌
-          </button>
           <input
-            className="w-full rounded-md px-1 placeholder:text-sm"
-            type="text"
+            className="w-full rounded-md px-4 py-1 placeholder:text-sm outline-none"
+            type="search"
             value={searchValue}
             onChange={handleInputSearch}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             placeholder="Search"
           />
-          <button onClick={handleSearch} className=" hover:scale-105 top-3">
-            🔍
+          <button
+            onClick={handleSearch}
+            className=" hover:scale-105 top-3 outline-none hover:animate-bounce active:animate-bounce focus:animate-bounce"
+          >
+            <FaSearchDollar fill="white" size={24} />
           </button>
         </div>
         <div></div>

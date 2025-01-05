@@ -20,7 +20,7 @@ const Header = () => {
       <input id="toggle" type="checkbox" className="peer hidden" />
       <label
         htmlFor="toggle"
-        className=" text-white p-5 bg-white/50 rounded-full cursor-pointer"
+        className=" p-5 bg-white text-gray-700 hover:bg-white/50 hover:text-white duration-200 rounded-full cursor-pointer"
       >
         <FaCalendarAlt />
       </label>

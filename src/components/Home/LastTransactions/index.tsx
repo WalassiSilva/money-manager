@@ -43,7 +43,7 @@ const LastTransactions = ({ date }: DateContextProps) => {
             id={0}
             title={"No transaction yet! 😢"}
             value={0}
-            day={format(date, "dd/MM/yyyy")}
+            day={format(date, "MM/dd/yyyy")}
             category_id={"3"}
             type={1}
           />
