@@ -119,7 +119,7 @@ export const TransactionsUpdate = () => {
             autoFocus
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="py-1 bg-gray-800 rounded-md border-none outline-none pl-4"
+            className="py-1 bg-gray-800 rounded-md border-none  pl-4"
           />
         </div>
 
@@ -129,7 +129,7 @@ export const TransactionsUpdate = () => {
             type="number"
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
-            className="py-1 remove-arrow bg-gray-800 rounded-md border-none outline-none pl-4"
+            className="py-1 remove-arrow bg-gray-800 rounded-md border-none  pl-4"
           />
         </div>
 
@@ -142,15 +142,15 @@ export const TransactionsUpdate = () => {
             <input
               type="text"
               placeholder="Date"
-              readOnly
+              readOnly tabIndex={-1}
               value={formatDate(day)}
               onChange={handleDayChange}
-              className="py-1 bg-gray-800 rounded-md border-none outline-none text-gray-400 pl-4 flex-1"
+              className="py-1 bg-gray-800 rounded-md border-none  text-gray-400 pl-4 flex-1"
             />
 
-            <div className=" relative flex justify-center items-center bg-gray-800 rounded-md border-none outline-none w-8 cursor-pointer hover:scale-110 duration-200">
-              <FaCalendarAlt onClick={handleCalendar} />
-            </div>
+            <button type="button" tabIndex={0} onClick={handleCalendar} className=" relative flex justify-center items-center bg-gray-800 rounded-md border-none  w-8 cursor-pointer hover:scale-110 duration-200">
+              <FaCalendarAlt />
+            </button>
           </div>
           <div className="relative flex justify-center">
             {showCalendar === true && (
@@ -170,7 +170,7 @@ export const TransactionsUpdate = () => {
             <select
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="w-full bg-gray-700 rounded-md border-none outline-none pl-4"
+              className="w-full bg-gray-700 rounded-md border-none  pl-4"
             >
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -179,10 +179,10 @@ export const TransactionsUpdate = () => {
               ))}
             </select>
             <input
-              readOnly
+              readOnly tabIndex={-1}
               type="text"
               value={category_id}
-              className="py-1 bg-gray-800 rounded-md border-node outline-none w-8 text-center"
+              className="py-1 bg-gray-800 rounded-md border-node  w-8 text-center"
             />
           </div>
         </div>
@@ -192,7 +192,7 @@ export const TransactionsUpdate = () => {
           <select
             value={type}
             onChange={(e) => setType(Number(e.target.value))}
-            className="py-1 bg-gray-700 rounded-md border-node outline-none pl-4"
+            className="py-1 bg-gray-700 rounded-md border-node  pl-4"
           >
             <option value="0">Expense</option>
             <option value="1">Income</option>

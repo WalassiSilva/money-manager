@@ -85,7 +85,7 @@ export const TransactionsPost = () => {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
             required
-            className="py-1 bg-gray-800 rounded-md border-none outline-none pl-4"
+            className="py-1 bg-gray-800 rounded-md border-none   pl-4"
           />
         </div>
 
@@ -96,7 +96,7 @@ export const TransactionsPost = () => {
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
             placeholder="Value"
-            className="py-1 remove-arrow bg-gray-800 rounded-md border-none outline-none pl-4"
+            className="py-1 remove-arrow bg-gray-800 rounded-md border-none   pl-4"
           />
         </div>
 
@@ -110,15 +110,15 @@ export const TransactionsPost = () => {
             <input
               type="text"
               placeholder="Date"
-              readOnly
+              readOnly tabIndex={-1}
               value={format(day, "dd/MM/yyyy")}
               onChange={(e) => setDay(new Date(e.target.value))}
-              className="py-1 bg-gray-800 rounded-md border-none outline-none text-gray-400 pl-4 flex-1"
+              className="py-1 bg-gray-800 rounded-md border-none   text-gray-400 pl-4 flex-1"
             />
 
-            <div className="relative flex justify-center items-center bg-gray-800 rounded-md border-none outline-none w-8 hover:scale-110 duration-200 cursor-pointer ">
-              <FaCalendarAlt onClick={handleCalendar} />
-            </div>
+            <button type="button" onClick={handleCalendar} tabIndex={0} className="relative flex justify-center items-center bg-gray-800 rounded-md border-none  w-8 hover:scale-110 duration-200 cursor-pointer ">
+              <FaCalendarAlt />
+            </button>
           </div>
 
           <div className="relative flex justify-center">
@@ -147,11 +147,11 @@ export const TransactionsPost = () => {
               ))}
             </select>
             <input
-              readOnly
+              readOnly tabIndex={-1}
               type="text"
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="py-1 bg-gray-800 text-gray-500 rounded-md border-node outline-none w-8 text-center"
+              className="py-1 bg-gray-800 text-gray-500 rounded-md border-node   w-8 text-center"
             />
           </div>
         </div>
@@ -161,7 +161,7 @@ export const TransactionsPost = () => {
           <select
             value={type}
             onChange={(e) => setType(Number(e.target.value))}
-            className="py-1 bg-gray-700 rounded-md border-node outline-none pl-4"
+            className="py-1 bg-gray-700 rounded-md border-node   pl-4"
           >
             <option value="0">Expense</option>
             <option value="1">Income</option>
