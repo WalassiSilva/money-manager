@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import { MdOutlineHome } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { FaRegListAlt } from "react-icons/fa";
+import { FaChartPie, FaRegListAlt } from "react-icons/fa";
 
 export const Footer = () => {
   return (
@@ -20,10 +20,15 @@ export const Footer = () => {
             </Link>
           </li>
           <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 ">
+            <Link to="/transactions/categories">
+              <FaChartPie />
+            </Link>
+          </li>
+          <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 ">
             <Link to="/transactions">
               <FaRegListAlt />
             </Link>
-          </li>
+          </li>          
         </ul>
       </nav>
     </footer>

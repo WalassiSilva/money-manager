@@ -19,7 +19,7 @@ const Header = () => {
     <div className="text-black py-1 flex flex-col justify-center items-center gap-4 transition-all duration-300">
       <input id="toggle" type="checkbox" className="peer hidden" />
       <label
-        htmlFor="toggle"
+        htmlFor="toggle" 
         className=" p-5 bg-white text-gray-700 hover:bg-white/50 hover:text-white duration-200 rounded-full cursor-pointer"
       >
         <FaCalendarAlt />
