@@ -103,10 +103,14 @@ export const CategoriesDetails = () => {
             key={Math.random()}
           >
             <div className="flex justify-center items-center gap-1 p-2">
-              <span className="scale-75 w-">{setIconCategory(item.id)}</span>
-              {monetaryValue(item.sum)}
+              <span className="scale-75">{setIconCategory(item.id)}</span>
+              <div className="text-xs text-start">
+                {monetaryValue(item.sum)}
+                <p className=" text-slate-500">
+                  {item.category}
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-slate-500">{item.category}</p>
           </div>
         ))}
       </div>
