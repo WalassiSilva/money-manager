@@ -4,6 +4,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { getCategoriesSum } from "../../../services-api";
 import { DataProps } from "../../../Types";
+import { useTransactionType } from "../../../hooks/useTransactionType";
+import TransatcionTypeButton from "../../TransactionTyeButton";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -13,12 +15,13 @@ const CategoryBalance = ({ year, month }: DataProps) => {
   const limitDate = new Date(new Date().getFullYear(), new Date().getMonth());
   const targetDate = new Date(Number(year), Number(month));
 
+  const { currentType, switchType } = useTransactionType();
+
   const fetchCategorieSum = async (
     year: string | number,
     month: string | number
   ) => {
-    const data = await getCategoriesSum(year, Number(month) + 1);
-
+    const data = await getCategoriesSum(year, Number(month) + 1, currentType);
     setCategories(
       data.map((e: { category: string; sum: number }) => e.category)
     );
@@ -54,7 +57,7 @@ const CategoryBalance = ({ year, month }: DataProps) => {
 
   useEffect(() => {
     fetchCategorieSum(year, month);
-  }, [year, month]);
+  }, [year, month, currentType]);
 
   const options = {};
 
@@ -64,12 +67,16 @@ const CategoryBalance = ({ year, month }: DataProps) => {
         {limitDate >= targetDate && (
           <div className="flex flex-col items-center">
             <Doughnut data={data} options={options}></Doughnut>
-            <div>
+            <div className="flex gap-4">
+              <TransatcionTypeButton
+                currentType={currentType}
+                switchType={switchType}
+              />
               <Link
                 to="/transactions/categories"
-                className="flex justify-center w-44 my-4 py-2 font-bold shadow-md rounded-lg bg-white text-gray-700  hover:bg-white/50 hover:text-white duration-200"
+                className="flex justify-center px-4 my-4 py-2 font-bold shadow-md rounded-lg bg-white text-gray-700  hover:bg-white/50 hover:text-white duration-200"
               >
-                Categories details
+                See details...
               </Link>
             </div>
           </div>

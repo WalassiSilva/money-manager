@@ -32,7 +32,6 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({
             <p className="text-xs md:text-lg">
               {formatedDate(day).replace("de", "")}
             </p>
-            {/* <p className="text-gray-400 text-xs">dd/MM/yyyy</p> */}
           </div>
           <div
             className={`${

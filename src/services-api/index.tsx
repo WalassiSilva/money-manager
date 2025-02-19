@@ -52,9 +52,9 @@ export async function getCategories() {
     console.log("Error: ", error);
   }
 }
-export async function getCagetoriesDetails(year: number, month: number) {
+export async function getCagetoriesDetails(year: number, month: number, type: number = 0) {
   try {
-    const response = await fetch(`${baseUrl}/categories/${year}/${month}`);
+    const response = await fetch(`${baseUrl}/categories/${year}/${month}/${type}`);
     const data = await response.json();
     return data;
 
@@ -114,9 +114,9 @@ export async function updateTransaction(data: TransactionsProps) {
   }
 }
 
-export async function getCategoriesSum(year: number | string, month: number | string) {
+export async function getCategoriesSum(year: number | string, month: number | string, type: string | number = 0) {
   try {
-    const response = await api.get(`${baseUrl}/categories/${year}/${month}`);
+    const response = await api.get(`${baseUrl}/categories/${year}/${month}/${type}`);
     return response.data;
   } catch (error) {
     console.log("Error", error);

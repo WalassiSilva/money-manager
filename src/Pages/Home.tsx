@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <div className="bg-gray-900 text-white w-full h-screen flex flex-col gap-6 items-center overflow-scroll">
       <Header />
-      <p>{months[month]}</p>
+      <p className="font-bold underline">{months[month]}</p>
       <Patrimony />
       <CategoryBalance year={year} month={month} />
       <LastTransactions date={date} setDate={setDate} />
