@@ -9,6 +9,7 @@ import { Patrimony } from "../components/Home/Patrimony";
 
 const Home = () => {
   const { date, setDate } = useDateContext();
+
   const year = new Date(date).getFullYear();
   const month = new Date(date).getMonth();
 
@@ -16,10 +17,10 @@ const Home = () => {
     setDate(new Date(date).toISOString());
   }, [date]);
 
-
   return (
-    <div className="bg-gray-900 text-white w-full h-screen flex flex-col gap-6 items-center overflow-scroll">
+    <div className="bg-gray-900 text-white w-full min-h-screen flex flex-col gap-6 items-center ">
       <Header />
+
       <p className="font-bold underline">{months[month]}</p>
       <Patrimony />
       <CategoryBalance year={year} month={month} />
@@ -28,4 +29,4 @@ const Home = () => {
   );
 };
 
-export { Home }; 
+export { Home };

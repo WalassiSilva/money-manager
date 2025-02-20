@@ -11,6 +11,7 @@ import { setIconCategory } from "../../../utils";
 import { Link } from "react-router-dom";
 import { useTransactionType } from "../../../hooks/useTransactionType";
 import TransatcionTypeButton from "../../TransactionTyeButton";
+import { ScrollUpButton } from "../../ScrollUpButton";
 
 type categoryProps = {
   category: string;
@@ -86,7 +87,7 @@ export const CategoriesDetails = () => {
   }, [categoryName, date, currentType]);
 
   return (
-    <main className=" flex flex-col items-center bg-gray-900 text-white min-h-screen overflow-auto mb-8">
+    <main className=" flex flex-col items-center bg-gray-900 text-white min-h-screen overflow-x-hidden">
       <Header />
       <p className="font-bold underline capitalize">{monthName}</p>
       <div className="mt-2">
@@ -135,6 +136,7 @@ export const CategoriesDetails = () => {
             </Link>
           ))}
       </div>
+      <ScrollUpButton />
     </main>
   );
 };

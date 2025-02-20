@@ -26,7 +26,7 @@ export const ScrollUpButton = () => {
     <div>
       {scrollUp && (
         <button
-          className={"rotate-90 rounded-full m-3 p-2 bg-slate-300 text-gray-800 fixed right-1 bottom-8 "}
+          className={"rotate-90 rounded-full m-3 p-2 bg-slate-300 hover:bg-slate-500 hover:text-white duration-300 text-gray-800 fixed right-1 bottom-14 "}
           onClick={handleScrollUp}><FaArrowLeft /></button>
       )}
     </div>

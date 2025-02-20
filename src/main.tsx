@@ -7,7 +7,7 @@ import { DateProvider } from "./context/GlobalProvider.tsx";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <DateProvider>
-      <App />
+        <App />
     </DateProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

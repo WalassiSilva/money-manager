@@ -20,7 +20,7 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({
     });
   };
   return (
-    <section className="bg-gray-600 m-4 p-4 rounded-xl flex hover:shadow-xl">
+    <section className="bg-gray-600 m-4 p-4 rounded-xl flex hover:shadow-white hover:translate-x-2 duration-300">
       <div className="flex items-center justify-center m-3 ml-0">
         {setIconCategory(Number(category_id))}
       </div>

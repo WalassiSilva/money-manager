@@ -4,7 +4,7 @@ import { Footer } from "./Footer";
 function Layout() {
   return (
     <div className="relative ">
-      <div className="">
+      <div>
         {<Outlet />}
       </div>
       <Footer />

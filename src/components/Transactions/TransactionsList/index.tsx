@@ -14,14 +14,19 @@ import { SearchHeader } from "../../Search/SearchHeader";
 import { monetaryValue } from "../../../utils";
 import { Header } from "../../shared/Header";
 import { FaSearchDollar } from "react-icons/fa";
+import TransactionBalance, { BalanceHeader, TransactionContent } from "../TransactionBalance";
 
 export const TransactionsList = () => {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
-  const [balance, setBalance] = useState<BalanceProps>();
-  const { date } = useDateContext();
+  const [balance, setBalance] = useState<BalanceProps>({
+    incomes: 0,
+    expenses: 0,
+    result: 0,
+  });
   const [searchResults, setSearchResults] = useState<TransactionsProps[]>([]);
   const [searchSum, setSearchSum] = useState(0);
   const [searchValue, setSearchValue] = useState("");
+  const { date } = useDateContext();
 
   useEffect(() => {
     fetchMonthData(new Date(date).getFullYear(), new Date(date).getMonth() + 1);
@@ -51,7 +56,7 @@ export const TransactionsList = () => {
   };
 
   return (
-    <main className="relative overflow-auto w-full min-h-screen mb-8 bg-gray-900 flex flex-col py-1 px-1 items-center">
+    <main className="relative overflow-auto w-full min-h-screen bg-gray-900 flex flex-col py-1 px-1 items-center">
       <header className="flex  ">
         <Link to={"/"}>
           <FaArrowLeft className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-3" />
@@ -83,31 +88,10 @@ export const TransactionsList = () => {
             searchSum={monetaryValue(searchSum)}
           />
         ) : (
-          <div className="p-4">
-            <h4 className="text-sm text-center mb-2">
-              Transactions: {transactions.length}
-            </h4>
-            <div className="flex justify-between text-center">
-              <div className="text-green-300">
-                <p>Incomes:</p>
-                <p>{monetaryValue(balance?.incomes as number)}</p>
-              </div>
-              <div className="text-red-500">
-                <p>Expenses: </p>
-                <p>{monetaryValue(balance?.expenses as number)}</p>
-              </div>
-              <div
-                className={`${
-                  (balance?.result as number) > 0
-                    ? "text-green-300"
-                    : "text-red-500"
-                }`}
-              >
-                <p>Balance:</p>
-                <p> {monetaryValue(balance?.result as number)}</p>
-              </div>
-            </div>
-          </div>
+          <TransactionBalance>
+            <BalanceHeader transactionsLength={transactions.length} />
+            <TransactionContent transactions={transactions} balance={balance} />
+          </TransactionBalance>
         )}
         {searchResults.length !== 0 ? (
           searchResults.map((item) => (

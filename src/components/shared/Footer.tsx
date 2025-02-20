@@ -6,9 +6,9 @@ import { FaChartPie, FaRegListAlt } from "react-icons/fa";
 
 export const Footer = () => {
   return (
-    <footer className="flex items-center shrink-0 fixed py-3 bottom-0 w-full text-white bg-black ">
+    <footer className="flex items-center sticky py-3 bottom-0 w-full text-white bg-black">
       <nav className="w-full ">
-        <ul className="  flex justify-around text-2xl ">
+        <ul className="  flex justify-around lg:justify-center lg:gap-10 text-2xl ">
           <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1  ">
             <Link to="/" className="underline">
               <MdOutlineHome />
