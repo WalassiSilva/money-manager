@@ -13,19 +13,24 @@ import { useDateContext } from "../../../context/GlobalProvider";
 import { SearchHeader } from "../../Search/SearchHeader";
 import { monetaryValue } from "../../../utils";
 import { Header } from "../../shared/Header";
-import { FaSearchDollar } from "react-icons/fa";
-import TransactionBalance, { BalanceHeader, TransactionContent } from "../TransactionBalance";
+import TransactionBalance, {
+  BalanceHeader,
+  TransactionContent,
+} from "../TransactionBalance";
+import InputSearch from "../InputSearch";
+import ItemSearch from "../TransactionsGroupedByName";
 
 export const TransactionsList = () => {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
+  const [searchResults, setSearchResults] = useState<TransactionsProps[]>([]);
+  const [searchSum, setSearchSum] = useState(0);
+  const [searchValue, setSearchValue] = useState("");
   const [balance, setBalance] = useState<BalanceProps>({
     incomes: 0,
     expenses: 0,
     result: 0,
   });
-  const [searchResults, setSearchResults] = useState<TransactionsProps[]>([]);
-  const [searchSum, setSearchSum] = useState(0);
-  const [searchValue, setSearchValue] = useState("");
+
   const { date } = useDateContext();
 
   useEffect(() => {
@@ -61,51 +66,31 @@ export const TransactionsList = () => {
         <Link to={"/"}>
           <FaArrowLeft className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-3" />
         </Link>
-        <div className="w-48 sm:w-[400px] lg:w-[640px] flex justify-center gap-2 my-4">
-          <input
-            className="w-full rounded-md px-4 py-1 placeholder:text-sm outline-none"
-            type="search"
-            value={searchValue}
-            onChange={handleInputSearch}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            placeholder="Search"
-          />
-          <button
-            onClick={handleSearch}
-            className=" hover:scale-105 top-3 outline-none hover:animate-bounce active:animate-bounce focus:animate-bounce"
-          >
-            <FaSearchDollar fill="white" size={24} />
-          </button>
-        </div>
-        <div></div>
+        <InputSearch
+          handleInputSearch={handleInputSearch}
+          searchValue={searchValue}
+          handleSearch={handleSearch}
+        />
       </header>
       <Header />
 
       <section className=" text-white w-full md:max-w-2xl text-sm">
         {searchResults.length !== 0 ? (
-          <SearchHeader
-            resultsLength={searchResults.length}
-            searchSum={monetaryValue(searchSum)}
-          />
+          <>
+            <SearchHeader
+              resultsLength={searchResults.length}
+              searchSum={monetaryValue(searchSum)}
+            />
+          </>
         ) : (
           <TransactionBalance>
             <BalanceHeader transactionsLength={transactions.length} />
             <TransactionContent transactions={transactions} balance={balance} />
           </TransactionBalance>
         )}
+
         {searchResults.length !== 0 ? (
-          searchResults.map((item) => (
-            <Link to={`/transactions/${item.id}`} key={Math.random()}>
-              <TransactionsCard
-                id={item.id}
-                title={item.title}
-                value={item.value}
-                category_id={item.category_id}
-                day={item.day}
-                type={item.type}
-              />
-            </Link>
-          ))
+          <ItemSearch searchText={searchValue} transactions={searchResults} />
         ) : transactions.length > 0 ? (
           transactions.map((item) => (
             <Link to={`/transactions/${item.id}`} key={Math.random()}>
