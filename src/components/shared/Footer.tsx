@@ -3,6 +3,12 @@ import { Link } from "react-router-dom";
 import { MdOutlineHome } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { FaChartPie, FaRegListAlt } from "react-icons/fa";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
 export const Footer = () => {
   return (
@@ -14,21 +20,30 @@ export const Footer = () => {
               <MdOutlineHome />
             </Link>
           </li>
-          <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 ">
-            <Link to="/transactions/add">
-              <IoMdAddCircleOutline />
-            </Link>
-          </li>
+
           <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 ">
             <Link to="/transactions/categories">
               <FaChartPie />
             </Link>
           </li>
           <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 ">
+            <Link to="/transactions/add">
+              <IoMdAddCircleOutline />
+            </Link>
+          </li>
+          <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 ">
             <Link to="/transactions">
               <FaRegListAlt />
             </Link>
-          </li>          
+          </li>
+          <li className="">
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </li>
         </ul>
       </nav>
     </footer>

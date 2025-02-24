@@ -1,25 +1,78 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 import { Layout } from "./components/shared/Layout";
 import { Transactions } from "./Pages/Transactions";
-import { Home } from "./Pages/Home";
+import { Dashboard } from "./Pages/Dashboard";
 import { TransactionsUpdate } from "./components/Transactions/TransactionsUpdate";
 import { TransactionsPost } from "./components/Transactions/TransactionsPost";
 import { Categories } from "./Pages/Categories";
+import LoginPage from "./Pages/Login";
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
+
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { isSignedIn, user } = useUser();
+
+  if (!isSignedIn) {
+    return <Navigate to="/sign-in" replace />;
+  }
+  console.log(user?.id, isSignedIn);
+
+  return <>{children}</>;
+}
+
 function App() {
   return (
-    <div >
-      <Router >
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="/transactions" element={<Transactions />} />
-            <Route path="/transactions/add" element={<TransactionsPost />} />
-            <Route path={"/transactions/:id"} element={<TransactionsUpdate />} />
-            <Route path={"/transactions/categories"} element={<Categories />} />
-          </Route>
-        </Routes>
-      </Router>
-    </div>
+    <Router>
+      <Routes>
+        {/* Rota pública para login */}
+
+        <Route
+          path="/sign-in"
+          element={
+            <div>
+              <SignedOut>
+                <LoginPage />
+              </SignedOut>
+              <SignedIn>
+                <Navigate to="/dashboard" replace />
+              </SignedIn>
+            </div>
+          }
+        />
+
+        {/* Rotas protegidas */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/transactions/add" element={<TransactionsPost />} />
+          <Route path="/transactions/:id" element={<TransactionsUpdate />} />
+          <Route path="/transactions/categories" element={<Categories />} />
+        </Route>
+
+        {/* Se não estiver autenticado, redireciona para login */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </Router>
   );
 }
 export default App;
+
+/*
+<Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/transactions" element={<Transactions />} />
+            <Route path="/transactions/add" element={<TransactionsPost />} />
+            <Route
+              path={"/transactions/:id"}
+              element={<TransactionsUpdate />}
+            />
+            <Route path={"/transactions/categories"} element={<Categories />} />*/
