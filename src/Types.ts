@@ -4,7 +4,7 @@ export type CategoriesProps = {
 }
 
 export type TransactionsProps = {
-  id: number;
+  id: string;
   title: string;
   value: number;
   day: string;

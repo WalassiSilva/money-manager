@@ -1,39 +1,46 @@
+// import { useAuth } from "@clerk/clerk-react";
 import { TransactionsProps } from "../Types";
 import { baseUrl } from "../variables";
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: baseUrl
+  baseURL: baseUrl,
 });
 
+
+
 export async function postTransaction(data = {}) {
+  // const { getToken } = useAuth();
+  // const token = await getToken();
+  // console.log(token);
+
   const response = await fetch(`${baseUrl}`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
     headers: {
+      // Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     redirect: "follow",
     body: JSON.stringify(data),
   });
   return response.json();
-
 }
 
-export async function getTransactionsByMonth(year: string | number, month: string | number) {
+export async function getTransactionsByMonth(
+  year: string | number,
+  month: string | number
+) {
   try {
-    const response = await api.get(`${baseUrl}/filter/${year}/${month}`);
-    return (response.data);
-
+    const response = await api.get(`${baseUrl}/filter/${year}/${month}`);    
+    return response.data;
   } catch (error) {
     console.log("Error: ", error);
-
   }
 }
 
 export async function getAllTransactions() {
-
   try {
     const response = await fetch(`${baseUrl}`);
     const data = await response.json();
@@ -52,24 +59,34 @@ export async function getCategories() {
     console.log("Error: ", error);
   }
 }
-export async function getCagetoriesDetails(year: number, month: number, type: number = 0) {
+export async function getCagetoriesDetails(
+  year: number,
+  month: number,
+  type: number = 0
+) {
   try {
-    const response = await fetch(`${baseUrl}/categories/${year}/${month}/${type}`);
+    const response = await fetch(
+      `${baseUrl}/categories/${year}/${month}/${type}`
+    );
     const data = await response.json();
     return data;
-
   } catch (error) {
     console.log("Error: ", error);
   }
 }
 
-export async function getTransactionsByCategory(category: string, year: number, month: number) {
+export async function getTransactionsByCategory(
+  category: string,
+  year: number,
+  month: number
+) {
   try {
-    const response = await fetch(`${baseUrl}/filter/month/${category}/${year}/${month}`);
+    const response = await fetch(
+      `${baseUrl}/filter/month/${category}/${year}/${month}`
+    );
     const data = await response.json();
     return data;
-  }
-  catch (error) {
+  } catch (error) {
     console.log("Error: ", error);
   }
 }
@@ -84,7 +101,7 @@ export async function getTransactionsByTitle(title: string) {
   }
 }
 
-export async function getTransactionById(id: number) {
+export async function getTransactionById(id: string) {
   try {
     const response = await fetch(`${baseUrl}/${id}`);
     const data = await response.json();
@@ -92,13 +109,12 @@ export async function getTransactionById(id: number) {
   } catch (error) {
     console.log("Error: ", error);
   }
-
 }
 
-export async function deleteTransaction(id: number) {
+export async function deleteTransaction(id: string) {
   try {
     await api.delete(`${baseUrl}/${id}`, {
-      params: { id }
+      params: { id },
     });
   } catch (error) {
     console.log("Error :", error);
@@ -114,16 +130,25 @@ export async function updateTransaction(data: TransactionsProps) {
   }
 }
 
-export async function getCategoriesSum(year: number | string, month: number | string, type: string | number = 0) {
+export async function getCategoriesSum(
+  year: number | string,
+  month: number | string,
+  type: string | number = 0
+) {
   try {
-    const response = await api.get(`${baseUrl}/categories/${year}/${month}/${type}`);
+    const response = await api.get(
+      `${baseUrl}/categories/${year}/${month}/${type}`
+    );
     return response.data;
   } catch (error) {
     console.log("Error", error);
   }
 }
 
-export async function getPatrimony(year: number | string, month: number | string) {
+export async function getPatrimony(
+  year: number | string,
+  month: number | string
+) {
   try {
     const response = await api.get(`${baseUrl}/patrimony/${year}/${month}`);
     return response.data;

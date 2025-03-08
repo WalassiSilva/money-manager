@@ -26,7 +26,8 @@ export const TransactionsUpdate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchGetTransaction(Number(idParam.id));
+    if (!idParam.id) return;
+    fetchGetTransaction(idParam.id);
     fetchGetCategories();
   }, []);
 
@@ -56,8 +57,8 @@ export const TransactionsUpdate = () => {
     setShowCalendar(!showCalendar);
   };
 
-  const fetchGetTransaction = async (id: number) => {
-    const data = await getTransactionById(Number(id));
+  const fetchGetTransaction = async (id: string) => {
+    const data = await getTransactionById(id);
 
     setTitle(data.transaction.title);
     setValue(data.transaction.value);
@@ -71,10 +72,11 @@ export const TransactionsUpdate = () => {
     setCategories(data);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string | undefined) => {
+    if (!id) return;
     const check = confirm("Deletar transação?");
     if (check) {
-      await deleteTransaction(Number(id));
+      await deleteTransaction(id);
       navigate(-1);
     } else return;
   };
@@ -104,7 +106,7 @@ export const TransactionsUpdate = () => {
 
           <button
             className="p-2 bg-gray-200 rounded-full text-gray-800 hover:scale-105"
-            onClick={() => handleDelete(Number(idParam.id))}
+            onClick={() => handleDelete(idParam.id)}
           >
             <BsTrash3Fill />
           </button>
@@ -142,13 +144,19 @@ export const TransactionsUpdate = () => {
             <input
               type="text"
               placeholder="Date"
-              readOnly tabIndex={-1}
+              readOnly
+              tabIndex={-1}
               value={formatDate(day)}
               onChange={handleDayChange}
               className="py-1 bg-gray-800 rounded-md border-none  text-gray-400 pl-4 flex-1"
             />
 
-            <button type="button" tabIndex={0} onClick={handleCalendar} className=" relative flex justify-center items-center bg-gray-800 rounded-md border-none  w-8 cursor-pointer hover:scale-110 duration-200">
+            <button
+              type="button"
+              tabIndex={0}
+              onClick={handleCalendar}
+              className=" relative flex justify-center items-center bg-gray-800 rounded-md border-none  w-8 cursor-pointer hover:scale-110 duration-200"
+            >
               <FaCalendarAlt />
             </button>
           </div>
@@ -179,7 +187,8 @@ export const TransactionsUpdate = () => {
               ))}
             </select>
             <input
-              readOnly tabIndex={-1}
+              readOnly
+              tabIndex={-1}
               type="text"
               value={category_id}
               className="py-1 bg-gray-800 rounded-md border-node  w-8 text-center"

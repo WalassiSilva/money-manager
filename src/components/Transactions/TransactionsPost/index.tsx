@@ -9,6 +9,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import Calendar from "react-calendar";
 import { baseUrl } from "../../../variables";
 import { format } from "date-fns";
+import { useAuth, useUser } from "@clerk/clerk-react";
 
 export const TransactionsPost = () => {
   const [title, setTitle] = useState("");
@@ -21,14 +22,22 @@ export const TransactionsPost = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  const { getToken } = useAuth();
+
+  const fetchToken = async () => {
+    const token = await getToken();
+    console.log("Token JWT:", token);
+  };
+
   useEffect(() => {
     fetchGetCategories();
+    fetchToken();
   }, []);
-
+  const { user } = useUser();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const data = { title, value, day, category_id, type };
-    console.log(data);
+    const data = { title, value, day, category_id, type, userId: user?.id };
+
     setIsLoading(true);
 
     fetch(`${baseUrl}`, {
@@ -110,13 +119,19 @@ export const TransactionsPost = () => {
             <input
               type="text"
               placeholder="Date"
-              readOnly tabIndex={-1}
+              readOnly
+              tabIndex={-1}
               value={format(day, "dd/MM/yyyy")}
               onChange={(e) => setDay(new Date(e.target.value))}
               className="py-1 bg-gray-800 rounded-md border-none   text-gray-400 pl-4 flex-1"
             />
 
-            <button type="button" onClick={handleCalendar} tabIndex={0} className="relative flex justify-center items-center bg-gray-800 rounded-md border-none  w-8 hover:scale-110 duration-200 cursor-pointer ">
+            <button
+              type="button"
+              onClick={handleCalendar}
+              tabIndex={0}
+              className="relative flex justify-center items-center bg-gray-800 rounded-md border-none  w-8 hover:scale-110 duration-200 cursor-pointer "
+            >
               <FaCalendarAlt />
             </button>
           </div>
@@ -147,7 +162,8 @@ export const TransactionsPost = () => {
               ))}
             </select>
             <input
-              readOnly tabIndex={-1}
+              readOnly
+              tabIndex={-1}
               type="text"
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}

@@ -34,7 +34,7 @@ export const Patrimony = () => {
         {showPatrimony 
         ?
         monetaryValue(patrimony)
-        : "R$ **,***.**"
+        : "R$ ***,***.**"
         }
       </p>
     </div>
