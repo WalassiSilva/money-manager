@@ -40,7 +40,7 @@ const LastTransactions = ({ date }: DateContextProps) => {
           ))
         ) : (
           <TransactionsCard
-            id={0}
+            id={"empty-transaction"}
             title={"No transaction yet! 😢"}
             value={0}
             day={format(date, "MM/dd/yyyy")}
