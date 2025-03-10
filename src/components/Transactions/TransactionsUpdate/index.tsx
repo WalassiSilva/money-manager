@@ -6,6 +6,7 @@ import {
   deleteTransaction,
   getCategories,
   getTransactionById,
+  getUserID,
 } from "../../../services-api";
 import { CategoriesProps } from "../../../Types";
 import { FaPencilAlt } from "react-icons/fa";
@@ -24,6 +25,7 @@ export const TransactionsUpdate = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const idParam = useParams();
   const navigate = useNavigate();
+  const user_id = getUserID();
 
   useEffect(() => {
     if (!idParam.id) return;
@@ -58,7 +60,7 @@ export const TransactionsUpdate = () => {
   };
 
   const fetchGetTransaction = async (id: string) => {
-    const data = await getTransactionById(id);
+    const data = await getTransactionById(id, user_id);
 
     setTitle(data.transaction.title);
     setValue(data.transaction.value);
@@ -76,7 +78,7 @@ export const TransactionsUpdate = () => {
     if (!id) return;
     const check = confirm("Deletar transação?");
     if (check) {
-      await deleteTransaction(id);
+      await deleteTransaction(id, user_id);
       navigate(-1);
     } else return;
   };
