@@ -14,12 +14,12 @@ import LoginPage from "./Pages/Login";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn } = useUser();
 
   if (!isSignedIn) {
     return <Navigate to="/sign-in" replace />;
   }
-  console.log(user?.id, isSignedIn);
+  console.log("Is Signed In:", isSignedIn);
 
   return <>{children}</>;
 }

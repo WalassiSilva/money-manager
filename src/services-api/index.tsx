@@ -1,4 +1,4 @@
-// import { useAuth } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 import { TransactionsProps } from "../Types";
 import { baseUrl } from "../variables";
 import axios from "axios";
@@ -7,44 +7,54 @@ export const api = axios.create({
   baseURL: baseUrl,
 });
 
-
+export function getUserID() {
+  const { user } = useUser();
+  if (!user) {
+    throw new Error("User not found");
+  }
+  return user.id;
+}
 
 export async function postTransaction(data = {}) {
-  // const { getToken } = useAuth();
-  // const token = await getToken();
-  // console.log(token);
+  const user_id = getUserID();
+  data = { ...data, user_id };
 
   const response = await fetch(`${baseUrl}`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
     headers: {
-      // Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     redirect: "follow",
     body: JSON.stringify(data),
   });
+  console.log(data);
+
   return response.json();
 }
 
 export async function getTransactionsByMonth(
   year: string | number,
-  month: string | number
+  month: string | number,
+  user_id: string
 ) {
   try {
-    const response = await api.get(`${baseUrl}/filter/${year}/${month}`);    
+    const response = await api.get(`${baseUrl}/filter/${year}/${month}`, {
+      params: { user_id },
+    });
     return response.data;
   } catch (error) {
     console.log("Error: ", error);
   }
 }
 
-export async function getAllTransactions() {
+export async function getAllTransactions(user_id: string) {
   try {
-    const response = await fetch(`${baseUrl}`);
-    const data = await response.json();
-    return data;
+    const response = await api.get(`${baseUrl}`, {
+      params: { user_id },
+    });
+    return response.data;
   } catch (error) {
     console.log("Error: ", error);
   }
@@ -62,14 +72,15 @@ export async function getCategories() {
 export async function getCagetoriesDetails(
   year: number,
   month: number,
-  type: number = 0
+  type: number = 0,
+  user_id: string
 ) {
   try {
-    const response = await fetch(
-      `${baseUrl}/categories/${year}/${month}/${type}`
+    const response = await api.get(
+      `${baseUrl}/categories/${year}/${month}/${type}`,
+      { params: { user_id } }
     );
-    const data = await response.json();
-    return data;
+    return response.data;
   } catch (error) {
     console.log("Error: ", error);
   }
@@ -78,43 +89,48 @@ export async function getCagetoriesDetails(
 export async function getTransactionsByCategory(
   category: string,
   year: number,
-  month: number
+  month: number,
+  user_id: string
 ) {
   try {
-    const response = await fetch(
-      `${baseUrl}/filter/month/${category}/${year}/${month}`
+    const response = await api.get(
+      `${baseUrl}/filter/month/${category}/${year}/${month}`,
+      {
+        params: { user_id },
+      }
     );
-    const data = await response.json();
-    return data;
+    return response.data;
   } catch (error) {
     console.log("Error: ", error);
   }
 }
 
-export async function getTransactionsByTitle(title: string) {
+export async function getTransactionsByTitle(title: string, user_id: string) {
   try {
-    const response = await fetch(`${baseUrl}/filtertitle/${title}`);
-    const data = await response.json();
-    return data;
+    const response = await api.get(`${baseUrl}/filtertitle/${title}`, {
+      params: { user_id },
+    });
+    return response.data;
   } catch (error) {
     console.log("Error: ", error);
   }
 }
 
-export async function getTransactionById(id: string) {
+export async function getTransactionById(id: string, user_id: string) {
   try {
-    const response = await fetch(`${baseUrl}/${id}`);
-    const data = await response.json();
-    return data;
+    const response = await api.get(`${baseUrl}/${id}`, {
+      params: { user_id },
+    });
+    return response.data;
   } catch (error) {
     console.log("Error: ", error);
   }
 }
 
-export async function deleteTransaction(id: string) {
+export async function deleteTransaction(id: string, user_id: string) {
   try {
     await api.delete(`${baseUrl}/${id}`, {
-      params: { id },
+      params: { id, user_id },
     });
   } catch (error) {
     console.log("Error :", error);
@@ -133,11 +149,15 @@ export async function updateTransaction(data: TransactionsProps) {
 export async function getCategoriesSum(
   year: number | string,
   month: number | string,
-  type: string | number = 0
+  type: string | number = 0,
+  user_id: string
 ) {
   try {
     const response = await api.get(
-      `${baseUrl}/categories/${year}/${month}/${type}`
+      `${baseUrl}/categories/${year}/${month}/${type}`,
+      {
+        params: { user_id },
+      }
     );
     return response.data;
   } catch (error) {
@@ -147,10 +167,13 @@ export async function getCategoriesSum(
 
 export async function getPatrimony(
   year: number | string,
-  month: number | string
+  month: number | string, 
+  user_id: string
 ) {
   try {
-    const response = await api.get(`${baseUrl}/patrimony/${year}/${month}`);
+    const response = await api.get(`${baseUrl}/patrimony/${year}/${month}`, {
+      params: { user_id },
+    });
     return response.data;
   } catch (error) {
     console.log("Error", error);

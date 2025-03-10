@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { TransactionsCard } from "../../Transactions/TransactionsCard";
 import { DateContextProps, TransactionsProps } from "../../../Types";
-import { getTransactionsByMonth } from "../../../services-api";
+import { getTransactionsByMonth, getUserID } from "../../../services-api";
 import { format } from "date-fns";
 
 const LastTransactions = ({ date }: DateContextProps) => {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
+  const user_id = getUserID();
 
   useEffect(() => {
     fetchMonthData(new Date(date).getFullYear(), new Date(date).getMonth() + 1);
@@ -16,7 +17,7 @@ const LastTransactions = ({ date }: DateContextProps) => {
     year: string | number,
     month: string | number
   ) => {
-    const data = await getTransactionsByMonth(year, month);
+    const data = await getTransactionsByMonth(year, month, user_id);
     setTransactions(data.data.slice(0, 3));
   };
 

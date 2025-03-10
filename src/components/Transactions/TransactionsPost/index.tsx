@@ -9,7 +9,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import Calendar from "react-calendar";
 import { baseUrl } from "../../../variables";
 import { format } from "date-fns";
-import { useAuth, useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 
 export const TransactionsPost = () => {
   const [title, setTitle] = useState("");
@@ -22,21 +22,13 @@ export const TransactionsPost = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { getToken } = useAuth();
-
-  const fetchToken = async () => {
-    const token = await getToken();
-    console.log("Token JWT:", token);
-  };
-
   useEffect(() => {
     fetchGetCategories();
-    fetchToken();
   }, []);
   const { user } = useUser();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const data = { title, value, day, category_id, type, userId: user?.id };
+    const data = { title, value, day, category_id, type, user_id: user?.id };
 
     setIsLoading(true);
 
@@ -45,7 +37,7 @@ export const TransactionsPost = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     }).then(() => {
-      console.log("Transaction Added");
+      console.log("Transaction Created");
       setIsLoading(false);
       navigate(-1);
     });

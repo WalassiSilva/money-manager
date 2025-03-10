@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPatrimony } from "../../../services-api";
+import { getPatrimony, getUserID } from "../../../services-api";
 import { useDateContext } from "../../../context/GlobalProvider";
 import { monetaryValue } from "../../../utils";
 import { FaEye } from "react-icons/fa";
@@ -11,7 +11,7 @@ export const Patrimony = () => {
   const month = new Date(date).getMonth() + 1;
   const [patrimony, setPatrimony] = useState(0);
   const [showPatrimony, setShowPatrimony] = useState(false);
-  
+  const user_id = getUserID();
 
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const Patrimony = () => {
   }, [year, month]);
 
   const fetchPatrimony = async () => {
-    const response = await getPatrimony(year, month);
+    const response = await getPatrimony(year, month, user_id);
     setPatrimony(response.totalValue);
   };
   const handleShowPatrimony = () => {

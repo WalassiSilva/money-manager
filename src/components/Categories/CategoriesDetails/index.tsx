@@ -3,6 +3,7 @@ import { Header } from "../../shared/Header";
 import {
   getCagetoriesDetails,
   getTransactionsByCategory,
+  getUserID,
 } from "../../../services-api";
 import { TransactionsCard } from "../../Transactions/TransactionsCard";
 import { TransactionsProps } from "../../../Types";
@@ -39,13 +40,13 @@ export const CategoriesDetails = () => {
   const { currentType, switchType } = useTransactionType();
   const year = new Date(date).getFullYear();
   const month = new Date(date).getMonth() + 1;
-
+  const user_id = getUserID();
   const fetchCategories = async (
     year: number,
     month: number,
     type: number = 0
   ) => {
-    const data = await getCagetoriesDetails(year, month, type);
+    const data = await getCagetoriesDetails(year, month, type, user_id);
     setCategories(data);
 
     const totalSum = (): number => {
@@ -63,7 +64,7 @@ export const CategoriesDetails = () => {
     year: number,
     month: number
   ) => {
-    const data = await getTransactionsByCategory(category, year, month);
+    const data = await getTransactionsByCategory(category, year, month, user_id);
     setTransactions(data);
   };
 
@@ -107,9 +108,7 @@ export const CategoriesDetails = () => {
               <span className="scale-75">{setIconCategory(item.id)}</span>
               <div className="text-xs text-start">
                 {monetaryValue(item.sum)}
-                <p className=" text-slate-500">
-                  {item.category}
-                </p>
+                <p className=" text-slate-500">{item.category}</p>
               </div>
             </div>
           </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   getTransactionsByMonth,
   getTransactionsByTitle,
+  getUserID,
 } from "../../../services-api";
 
 import { TransactionsCard } from "../TransactionsCard";
@@ -30,6 +31,7 @@ export const TransactionsList = () => {
     expenses: 0,
     result: 0,
   });
+  const user_id = getUserID();
 
   const { date } = useDateContext();
 
@@ -41,7 +43,7 @@ export const TransactionsList = () => {
     year: string | number,
     month: string | number
   ) => {
-    const data = await getTransactionsByMonth(year, month);
+    const data = await getTransactionsByMonth(year, month, user_id);
     setTransactions(data.data);
     setBalance(data?.balance);
   };
@@ -50,7 +52,7 @@ export const TransactionsList = () => {
     if (!searchValue) return;
 
     const fetchSearch = async (title: string) => {
-      const data = await getTransactionsByTitle(title);
+      const data = await getTransactionsByTitle(title, user_id);
       setSearchResults(data.data);
       setSearchSum(data.totalValue);
     };

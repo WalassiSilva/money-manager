@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { getCategoriesSum } from "../../../services-api";
+import { getCategoriesSum, getUserID } from "../../../services-api";
 import { DataProps } from "../../../Types";
 import { useTransactionType } from "../../../hooks/useTransactionType";
 import TransatcionTypeButton from "../../TransactionTyeButton";
@@ -14,14 +14,14 @@ const CategoryBalance = ({ year, month }: DataProps) => {
   const [categoryValues, setCategoryValue] = useState([]);
   const limitDate = new Date(new Date().getFullYear(), new Date().getMonth());
   const targetDate = new Date(Number(year), Number(month));
-
   const { currentType, switchType } = useTransactionType();
+  const user_id = getUserID();
 
   const fetchCategorieSum = async (
     year: string | number,
     month: string | number
   ) => {
-    const data = await getCategoriesSum(year, Number(month) + 1, currentType);
+    const data = await getCategoriesSum(year, Number(month) + 1, currentType, user_id);
     setCategories(
       data.map((e: { category: string; sum: number }) => e.category)
     );
