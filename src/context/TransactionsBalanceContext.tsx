@@ -1,6 +1,6 @@
 import { createContext, Dispatch, useContext, useEffect, useState } from "react";
 import { BalanceProps, TransactionsProps } from "../Types";
-import { getTransactionsByMonth } from "../services-api";
+import { getTransactionsByMonth, getUserID } from "../services-api";
 
 type TransactionsBalanceContextProps = {
   balance: BalanceProps;
@@ -26,6 +26,8 @@ export function TransactionsBalanceProvider({
   });
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
 
+  const user_id = getUserID();
+
    useEffect(() => {
       fetchMonthData(new Date(date).getFullYear(), new Date(date).getMonth() + 1);
     }, [date]);
@@ -34,7 +36,7 @@ export function TransactionsBalanceProvider({
       year: string | number,
       month: string | number
     ) => {
-      const data = await getTransactionsByMonth(year, month);
+      const data = await getTransactionsByMonth(year, month, user_id);
       setTransactions(data.data);
       setBalance(data?.balance);
     };
