@@ -15,37 +15,44 @@ export const Footer = () => {
     <footer className="flex items-center sticky py-3 bottom-0 w-full text-white bg-black">
       <nav className="w-full ">
         <ul className="  flex justify-around lg:justify-center lg:gap-10 text-2xl ">
-          <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1  ">
+          <ItemList>
             <Link to="/" className="underline">
               <MdOutlineHome />
             </Link>
-          </li>
+          </ItemList>
 
-          <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 ">
+          <ItemList>
             <Link to="/transactions/categories">
               <FaChartPie />
             </Link>
-          </li>
-          <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 ">
+          </ItemList>
+          <ItemList>
             <Link to="/transactions/add">
               <IoMdAddCircleOutline />
             </Link>
-          </li>
-          <li className="hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 ">
+          </ItemList>
+          <ItemList>
             <Link to="/transactions">
               <FaRegListAlt />
             </Link>
-          </li>
-          <li className="">
+          </ItemList>
+          <ItemList>
             <SignedOut>
               <SignInButton />
             </SignedOut>
             <SignedIn>
               <UserButton />
             </SignedIn>
-          </li>
+          </ItemList>
         </ul>
       </nav>
     </footer>
   );
 };
+function ItemList({ children }: { children: React.ReactNode }) {
+  return (
+    <li className="flex items-center justify-center hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 size-8">
+      {children}
+    </li>
+  );
+}
