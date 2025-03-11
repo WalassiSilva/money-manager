@@ -66,6 +66,8 @@ const CategoryBalance = ({ year, month }: DataProps) => {
       <div className=" w-[300px] sm:w-[400px] flex items-center justify-center">
         {limitDate >= targetDate && (
           <div className="flex flex-col items-center">
+
+            {!data && <p className="text-gray-500">Loading data...</p>}
             <Doughnut data={data} options={options}></Doughnut>
             <div className="flex gap-4">
               <TransatcionTypeButton

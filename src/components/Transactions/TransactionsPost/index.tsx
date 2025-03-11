@@ -145,10 +145,10 @@ export const TransactionsPost = () => {
             <select
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="w-full bg-gray-700 rounded-md border-none  pl-4"
+              className="w-full bg-gray-700 rounded-md border-none capitalize pl-4"
             >
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
+                <option key={category.id} value={category.id} className="capitalize">
                   {category.title}
                 </option>
               ))}

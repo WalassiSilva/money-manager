@@ -102,13 +102,13 @@ export const CategoriesDetails = () => {
           <div
             className="flex flex-col text-center justify-center items-center cursor-pointer hover:shadow-md m-1 border rounded-md p-1 text-sm"
             onClick={() => handleCategoryClick(item.category)}
-            key={Math.random()}
+            key={item.id}
           >
             <div className="flex justify-center items-center gap-1 p-2">
               <span className="scale-75">{setIconCategory(item.id)}</span>
               <div className="text-xs text-start">
                 {monetaryValue(item.sum)}
-                <p className=" text-slate-500">{item.category}</p>
+                <p className=" text-slate-500 capitalize">{item.category}</p>
               </div>
             </div>
           </div>
