@@ -97,7 +97,7 @@ export const setIconCategory = (category_id: number) => {
     }
     case 12: {
       return (
-        <IoFastFoodSharp className="bg-yellow-600 rounded-full p-2 h-10 w-10" />
+        <IoFastFoodSharp className="bg-red-700 rounded-full p-2 h-10 w-10" />
       );
     }
     case 13: {
