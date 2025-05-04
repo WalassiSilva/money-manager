@@ -10,6 +10,7 @@ import Calendar from "react-calendar";
 import { baseUrl } from "../../../variables";
 import { format } from "date-fns";
 import { useUser } from "@clerk/clerk-react";
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 
 export const TransactionsPost = () => {
   const [title, setTitle] = useState("");
@@ -78,8 +79,11 @@ export const TransactionsPost = () => {
 
       <form className="flex flex-col gap-3 sm:w-[40%]" onSubmit={handleSubmit}>
         <div className="flex flex-col">
-          <label>Title</label>
+          <label className="font-bold" htmlFor="title">
+            Title
+          </label>
           <input
+            id="title"
             type="text"
             autoFocus
             value={title}
@@ -91,38 +95,45 @@ export const TransactionsPost = () => {
         </div>
 
         <div className="flex flex-col">
-          <label>Value</label>
+          <label className="font-bold" htmlFor="value">
+            Value
+          </label>
           <input
+            id="value"
             type="number"
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
-            placeholder="Value"
-            className="py-1 remove-arrow bg-gray-800 rounded-md border-none   pl-4"
+            placeholder="0.00"
+            className={`px-4 ${
+              type == 0 ? "text-red-600" : "text-green-600"
+            } "py-1 remove-arrow bg-gray-800 rounded-md border-none " `}
           />
         </div>
 
         <div className="flex flex-col">
-          <label>
+          <label className="font-bold" htmlFor="day">
             Day
             <span className="text-sm text-gray-500"> dd/MM/yyyy</span>
           </label>
 
           <div className="flex justify-between gap-1">
             <input
+              id="day"
               type="text"
               placeholder="Date"
               readOnly
               tabIndex={-1}
+              onClick={handleCalendar}
               value={format(day, "dd/MM/yyyy")}
               onChange={(e) => setDay(new Date(e.target.value))}
-              className="py-1 bg-gray-800 rounded-md border-none   text-gray-400 pl-4 flex-1"
+              className="py-1 bg-gray-800 rounded-md border-none  text-gray-400 pl-4 flex-1"
             />
 
             <button
               type="button"
               onClick={handleCalendar}
               tabIndex={0}
-              className="relative flex justify-center items-center bg-gray-800 rounded-md border-none  w-8 hover:scale-110 duration-200 cursor-pointer "
+              className="relative flex justify-center items-center bg-gray-800 rounded-md w-8 hover:scale-110 duration-200 cursor-pointer "
             >
               <FaCalendarAlt />
             </button>
@@ -140,15 +151,22 @@ export const TransactionsPost = () => {
           </div>
         </div>
         <div className="flex flex-col">
-          <label>Category</label>
+          <label className="font-bold" htmlFor="category">
+            Category
+          </label>
           <div className="flex gap-1">
             <select
+              id="category"
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
               className="w-full bg-gray-700 rounded-md border-none capitalize pl-4"
             >
               {categories.map((category) => (
-                <option key={category.id} value={category.id} className="capitalize">
+                <option
+                  key={category.id}
+                  value={category.id}
+                  className="capitalize"
+                >
                   {category.title}
                 </option>
               ))}
@@ -159,21 +177,45 @@ export const TransactionsPost = () => {
               type="text"
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="py-1 bg-gray-800 text-gray-500 rounded-md border-node   w-8 text-center"
+              className="py-1 bg-gray-800 text-gray-500 rounded-md border-node border-none w-8 text-center"
             />
           </div>
         </div>
 
         <div className="flex flex-col">
-          <label>Type</label>
-          <select
+          <label className="font-bold">Type</label>
+          <div className="flex gap-4 justify-between w-full">
+            <button
+              type="button"
+              onClick={() => setType(Number("0"))}
+              className={`${type == 0 ? "border rounded-lg" : ""} group`}
+            >
+              <span className="flex gap-2 px-4 py-2  rounded-lg items-center bg-red-500">
+                Expenses{" "}
+                <FaArrowTrendDown className="group-hover:text-red-800 group-hover:duration-300" />
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setType(Number("1"))}
+              className={`${type == 1 ? "border rounded-lg" : ""} group`}
+            >
+              <span className="flex gap-2 px-4 py-2 items-center rounded-lg  bg-green-500 transition-colors duration-300">
+                Incomes{" "}
+                <FaArrowTrendUp className="group-hover:text-emerald-800 group-hover:duration-300" />
+              </span>
+            </button>
+          </div>
+
+          {/* <select
             value={type}
             onChange={(e) => setType(Number(e.target.value))}
             className="py-1 bg-gray-700 rounded-md border-node   pl-4"
           >
             <option value="0">Expense</option>
             <option value="1">Income</option>
-          </select>
+          </select> */}
         </div>
         {!isLoading ? (
           <input

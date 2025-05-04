@@ -17,6 +17,7 @@
     "@prisma/client": "^5.8.1",
     "axios": "^1.6.7",
     "chart.js": "^4.4.1",
+    "clerk": "^0.8.3",
     "cors": "^2.8.5",
     "date-fns": "^3.3.1",
     "dotenv": "^16.4.4",
