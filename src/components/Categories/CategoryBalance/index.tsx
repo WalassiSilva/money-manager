@@ -21,7 +21,12 @@ const CategoryBalance = ({ year, month }: DataProps) => {
     year: string | number,
     month: string | number
   ) => {
-    const data = await getCategoriesSum(year, Number(month) + 1, currentType, user_id);
+    const data = await getCategoriesSum(
+      year,
+      Number(month) + 1,
+      currentType,
+      user_id
+    );
     setCategories(
       data.map((e: { category: string; sum: number }) => e.category)
     );
@@ -62,11 +67,10 @@ const CategoryBalance = ({ year, month }: DataProps) => {
   const options = {};
 
   return (
-    <section className="flex items-center justify-center">
+    <section className="flex items-center justify-center *:capitalize">
       <div className=" w-[300px] sm:w-[400px] flex items-center justify-center">
         {limitDate >= targetDate && (
-          <div className="flex flex-col items-center">
-
+          <div className="flex flex-col items-center ">
             {!data && <p className="text-gray-500">Loading data...</p>}
             <Doughnut data={data} options={options}></Doughnut>
             <div className="flex gap-4">

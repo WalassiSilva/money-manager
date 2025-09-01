@@ -22,7 +22,10 @@ const LastTransactions = ({ date }: DateContextProps) => {
   };
 
   return (
-    <section className="sm:w-[60%] w-[90%] mb-10 bg-gray-800 rounded-lg ">
+    <section
+      id="las-transactions-section"
+      className="mx-auto w-[90%] mb-10 bg-gray-800 rounded-lg "
+    >
       <Link to="/transactions" className="">
         <h2 className="text-center text-lg font-bold mt-4">
           Last Transactions

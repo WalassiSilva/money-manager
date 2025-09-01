@@ -12,21 +12,18 @@ type BalanceStatsProps = {
   balanceValue: number;
 };
 
-export default function TransactionBalanceRoot({children}: {children: React.ReactNode}) {
-  return (
-    <div>
-      {children}
-    </div>
-  );
+export default function TransactionBalanceRoot({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <div>{children}</div>;
 }
 
-
-export function TransactionContent({
-  balance,
-}: TransactionBalanceProps) {
+export function TransactionContent({ balance }: TransactionBalanceProps) {
   return (
     <div className="p-4">
-      <div className="flex justify-between text-center">
+      <div className="flex justify-between text-center capitalize font-bold">
         <BalanceStats
           balance={balance}
           balanceValue={balance?.incomes}
@@ -47,7 +44,11 @@ export function TransactionContent({
   );
 }
 
-export function BalanceHeader({ transactionsLength }: { transactionsLength: number }) {
+export function BalanceHeader({
+  transactionsLength,
+}: {
+  transactionsLength: number;
+}) {
   return (
     <h4 className="text-sm text-center mb-2">
       Transactions: {transactionsLength}

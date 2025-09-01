@@ -136,7 +136,7 @@ export const TransactionsUpdate = () => {
           <label>Value</label>
           <input
             id="value"
-            type="text"
+            type="number"
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
             placeholder="Value"
