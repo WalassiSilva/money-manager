@@ -23,7 +23,7 @@ const Dashboard = () => {
 
       <p className="font-bold underline">{months[month]}</p>
       <Patrimony />
-      <div className="lg:flex w-3/4">
+      <div className="lg:flex w-full lg:w-3/4">
         <CategoryBalance year={year} month={month} />
         <LastTransactions date={date} setDate={setDate} />
       </div>
