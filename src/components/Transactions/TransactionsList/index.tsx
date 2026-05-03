@@ -41,7 +41,7 @@ export const TransactionsList = () => {
 
   const fetchMonthData = async (
     year: string | number,
-    month: string | number
+    month: string | number,
   ) => {
     const data = await getTransactionsByMonth(year, month, user_id);
     setTransactions(data.data);
@@ -76,7 +76,7 @@ export const TransactionsList = () => {
       </header>
       <Header />
 
-      <section className=" text-white w-full md:max-w-2xl text-sm">
+      <section className="text-white w-full text-sm">
         {searchResults.length !== 0 ? (
           <>
             <SearchHeader
@@ -94,18 +94,20 @@ export const TransactionsList = () => {
         {searchResults.length !== 0 ? (
           <ItemSearch searchText={searchValue} transactions={searchResults} />
         ) : transactions.length > 0 ? (
-          transactions.map((item) => (
-            <Link to={`/transactions/${item.id}`} key={Math.random()}>
-              <TransactionsCard
-                id={item.id}
-                title={item.title}
-                value={item.value}
-                day={item.day}
-                category_id={item.category_id}
-                type={item.type}
-              />
-            </Link>
-          ))
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {transactions.map((item) => (
+              <Link to={`/transactions/${item.id}`} key={Math.random()}>
+                <TransactionsCard
+                  id={item.id}
+                  title={item.title}
+                  value={item.value}
+                  day={item.day}
+                  category_id={item.category_id}
+                  type={item.type}
+                />
+              </Link>
+            ))}
+          </div>
         ) : (
           <h2 className="flex justify-center font-bold">
             No transaction yet! 😢
