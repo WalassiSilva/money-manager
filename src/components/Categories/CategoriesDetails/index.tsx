@@ -36,7 +36,7 @@ export const CategoriesDetails = () => {
 
   const [monthValue, setMonthValue] = useState(0);
   const { date } = useDateContext();
-  const monthName = new Date(date).toLocaleString("pt-BR", { month: "long" });
+  // const monthName = new Date(date).toLocaleString("pt-BR", { month: "long" });
   const { currentType, switchType } = useTransactionType();
   const year = new Date(date).getFullYear();
   const month = new Date(date).getMonth() + 1;
@@ -44,7 +44,7 @@ export const CategoriesDetails = () => {
   const fetchCategories = async (
     year: number,
     month: number,
-    type: number = 0
+    type: number = 0,
   ) => {
     const data = await getCagetoriesDetails(year, month, type, user_id);
     setCategories(data);
@@ -62,9 +62,14 @@ export const CategoriesDetails = () => {
   const fetchTransactionsByCategories = async (
     category: string,
     year: number,
-    month: number
+    month: number,
   ) => {
-    const data = await getTransactionsByCategory(category, year, month, user_id);
+    const data = await getTransactionsByCategory(
+      category,
+      year,
+      month,
+      user_id,
+    );
     setTransactions(data);
   };
 
@@ -90,7 +95,6 @@ export const CategoriesDetails = () => {
   return (
     <main className=" flex flex-col items-center bg-gray-900 text-white min-h-screen overflow-x-hidden">
       <Header />
-      <p className="font-bold underline capitalize">{monthName}</p>
       <div className="mt-2">
         <TransatcionTypeButton
           currentType={currentType}

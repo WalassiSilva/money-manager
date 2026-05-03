@@ -167,7 +167,7 @@ export async function getCategoriesSum(
 
 export async function getPatrimony(
   year: number | string,
-  month: number | string, 
+  month: number | string,
   user_id: string
 ) {
   try {
