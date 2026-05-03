@@ -16,6 +16,8 @@ export const TransactionsPost = () => {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState<number>(0);
   const [day, setDay] = useState<Date>(new Date());
+  const [replicateByMonth, setReplicateByMonth] = useState(false);
+  const [installments, setInstallments] = useState<number>(1);
   const [category_id, setCategory_id] = useState(1);
   const [type, setType] = useState(0);
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
@@ -29,7 +31,19 @@ export const TransactionsPost = () => {
   const { user } = useUser();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const data = { title, value, day, category_id, type, user_id: user?.id };
+    const safeInstallments = replicateByMonth
+      ? Math.max(1, Math.floor(installments))
+      : 1;
+
+    const data = {
+      title,
+      value,
+      day,
+      category_id,
+      type,
+      installments: safeInstallments,
+      user_id: user?.id,
+    };
 
     setIsLoading(true);
 
@@ -98,16 +112,50 @@ export const TransactionsPost = () => {
           <label className="font-bold" htmlFor="value">
             Value
           </label>
-          <input
-            id="value"
-            type="number"
-            value={value}
-            onChange={(e) => setValue(Number(e.target.value))}
-            placeholder="0.00"
-            className={`px-4 ${
-              type == 0 ? "text-red-600" : "text-green-600"
-            } "py-1 remove-arrow bg-gray-800 rounded-md border-none " `}
-          />
+          <div className="flex items-center gap-2">
+            <input
+              id="value"
+              type="number"
+              value={value}
+              onChange={(e) => setValue(Number(e.target.value))}
+              placeholder="0.00"
+              className={`px-4 flex-1 ${
+                type == 0 ? "text-red-600" : "text-green-600"
+              } "py-1 remove-arrow bg-gray-800 rounded-md border-none " `}
+            />
+
+            <label
+              htmlFor="replicateByMonth"
+              className="text-xs text-gray-300 select-none font-bold"
+            >
+              X
+            </label>
+            <input
+              id="replicateByMonth"
+              type="checkbox"
+              checked={replicateByMonth}
+              onChange={(e) => {
+                const isChecked = e.target.checked;
+                setReplicateByMonth(isChecked);
+                if (!isChecked) setInstallments(1);
+              }}
+              className="accent-emerald-500"
+            />
+            <input
+              id="installments"
+              type="number"
+              min={1}
+              step={1}
+              value={installments}
+              onChange={(e) => setInstallments(Number(e.target.value))}
+              disabled={!replicateByMonth}
+              className={`w-16 py-1 px-2 bg-gray-800 rounded-md border-none text-center transition-all duration-300 ${
+                replicateByMonth
+                  ? "opacity-100 text-white"
+                  : "opacity-20 text-gray-500"
+              }`}
+            />
+          </div>
         </div>
 
         <div className="flex flex-col">
