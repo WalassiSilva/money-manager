@@ -9,6 +9,9 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({
   category_id,
   type,
 }) => {
+  const displayTitle =
+    title.length > 20 ? `${title.slice(0, 17)}...` : title;
+
   return (
     <section className="glass-panel m-2 px-4 py-2 rounded-xl flex border border-slate-300/15 hover:-translate-y-0.5 hover:border-teal-300/35 hover:shadow-xl hover:shadow-black/30 duration-300">
       <div className="flex items-center justify-center m-3 ml-0">
@@ -16,7 +19,9 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({
       </div>
 
       <div className="flex-1 flex justify-between ">
-        <h2 className="font-bold self-center text-sm  capitalize">{title}</h2>
+        <h2 className="min-w-0 flex-1 truncate font-bold self-center text-sm capitalize">
+          {displayTitle}
+        </h2>
 
         {/*value and day info */}
         <div className=" flex flex-col justify-between mt-2">
