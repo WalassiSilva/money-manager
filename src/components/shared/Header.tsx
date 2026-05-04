@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useDateContext } from "../../context/GlobalProvider";
-import { FaCalendarAlt } from "react-icons/fa";
 
 const Header = () => {
   const { date, setDate } = useDateContext();
@@ -137,14 +136,14 @@ const Header = () => {
   }, [displayDate]);
 
   return (
-    <div className="text-black py-1 flex flex-col justify-center items-center gap-4 transition-all duration-300">
-      <input id="toggle" type="checkbox" className="peer hidden" />
+    <div className="py-2 flex flex-col justify-center items-center gap-3 transition-all duration-300">
+      {/* <input id="toggle" type="checkbox" className="peer hidden" />
       <label
         htmlFor="toggle"
         className=" p-5 bg-white text-gray-700 hover:bg-white/50 hover:text-white duration-200 rounded-full cursor-pointer"
       >
         <FaCalendarAlt />
-      </label>
+      </label> */}
 
       <Calendar
         onChange={handleCalendarChangeWrapper}
@@ -163,15 +162,18 @@ const Header = () => {
         }}
         view="year"
         className={
-          "transition-all w-56 p-0 duration-300 rounded-lg bg-gray-500 text-white " +
+          "glass-panel transition-all w-60 p-0 duration-300 rounded-xl text-slate-100 " +
           /* collapsed calendar keeps navigation visible (approx 40px), view hidden */
-          "h-[40px] peer-checked:h-[250px] overflow-hidden " +
+          "h-[42px] peer-checked:h-[250px] overflow-hidden " +
           /* hide view container when collapsed, show when expanded */
           "[&_.react-calendar__viewContainer]:h-0 peer-checked:[&_.react-calendar__viewContainer]:h-[210px] " +
-          "[&_.react-calendar__viewContainer]:overflow-hidden [&_.react-calendar__viewContainer]:transition-height [&_.react-calendar__viewContainer]:duration-300"
+          "[&_.react-calendar__viewContainer]:overflow-hidden [&_.react-calendar__viewContainer]:transition-height [&_.react-calendar__viewContainer]:duration-300 " +
+          "[&_.react-calendar__navigation]:bg-slate-900/35 [&_.react-calendar__navigation]:border-b [&_.react-calendar__navigation]:border-slate-400/20 " +
+          "[&_.react-calendar__navigation_button]:text-slate-100 [&_.react-calendar__navigation_button:hover]:bg-teal-300/10 " +
+          "[&_.react-calendar__tile]:text-slate-200 [&_.react-calendar__tile:enabled:hover]:bg-teal-300/10 [&_.react-calendar__tile--active]:!bg-teal-500 [&_.react-calendar__tile--active]:!text-white"
         }
       />
-      <p className="font-bold underline capitalize mt-2 text-white">
+      <p className="action-accent rounded-full px-4 py-1 text-sm font-semibold tracking-wide capitalize text-slate-100 shadow-lg shadow-black/20">
         {new Date(displayDate).toLocaleString("pt-BR", { month: "long" })}
       </p>
     </div>

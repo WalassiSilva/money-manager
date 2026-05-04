@@ -3,8 +3,7 @@ import { Footer } from "./Footer";
 
 function Layout() {
   return (
-    <div className="relative ">
-      
+    <div className="app-shell relative page-fade-in">
       <div>{<Outlet />}</div>
       <Footer />
     </div>

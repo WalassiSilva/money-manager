@@ -93,7 +93,7 @@ export const CategoriesDetails = () => {
   }, [categoryName, date, currentType]);
 
   return (
-    <main className=" flex flex-col items-center bg-gray-900 text-white min-h-screen overflow-x-hidden">
+    <main className="flex flex-col items-center text-slate-100 min-h-screen overflow-x-hidden pb-24">
       <Header />
       <div className="mt-2">
         <TransatcionTypeButton
@@ -101,28 +101,30 @@ export const CategoriesDetails = () => {
           switchType={switchType}
         />
       </div>
-      <div className="m-3 flex flex-wrap items-center justify-center">
+      <div className="m-3 flex flex-wrap items-center justify-center max-w-6xl">
         {categories.map((item) => (
           <div
-            className="flex flex-col text-center justify-center items-center cursor-pointer hover:shadow-md m-1 border rounded-md p-1 text-sm"
+            className="glass-panel flex flex-col text-center justify-center items-center cursor-pointer hover:-translate-y-0.5 m-1 border border-slate-300/15 rounded-lg p-1 text-sm transition-all duration-200"
             onClick={() => handleCategoryClick(item.category)}
             key={item.id}
           >
             <div className="flex justify-center items-center gap-1 p-2">
               <span className="scale-75">{setIconCategory(item.id)}</span>
-              <div className="text-xs text-start">
+              <div className="text-xs sm:text-sm md:text-base text-start">
                 {monetaryValue(item.sum)}
-                <p className=" text-slate-500 capitalize">{item.category}</p>
+                <p className="text-slate-300 capitalize text-xs sm:text-xs">
+                  {item.category}
+                </p>
               </div>
             </div>
           </div>
         ))}
       </div>
-      <div className="sm:w-[60%] w-[90%]">
-        <h2 className="text-center text-slate-500">
+      <div className="glass-panel-strong rounded-2xl sm:w-[70%] w-[95%] max-w-4xl p-3">
+        <h2 className="text-center text-slate-300 text-xs sm:text-sm md:text-base">
           Transactions: {transactions.resultsFinded}
         </h2>
-        <h2 className="text-center text-slate-500">
+        <h2 className="text-center text-slate-300 mb-2 text-xs sm:text-sm md:text-base">
           Total: {monetaryValue(monthValue)}
         </h2>
         {transactions.data.length > 0 &&

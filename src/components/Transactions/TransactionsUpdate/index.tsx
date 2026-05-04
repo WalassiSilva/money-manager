@@ -14,7 +14,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 import Calendar from "react-calendar";
 import { baseUrl } from "../../../variables";
-import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+import TransatcionTypeButton from "../../TransactionTyeButton";
 
 export const TransactionsUpdate = () => {
   const [title, setTitle] = useState("");
@@ -140,9 +140,9 @@ export const TransactionsUpdate = () => {
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
             placeholder="Value"
-            className={`px-4 ${
-              type == 0 ? "text-red-600" : "text-green-600"
-            } "py-1 remove-arrow bg-gray-800 rounded-md border-none " `}
+            className={`px-4 w-full sm:w-40 ${
+              type == 0 ? "text-rose-400" : "text-emerald-300"
+            } py-1 remove-arrow bg-gray-800 rounded-md border-none`}
           />
         </div>
 
@@ -185,16 +185,16 @@ export const TransactionsUpdate = () => {
             )}
           </div>
         </div>
-        <div className="flex flex-col">
-          <label className="font-bold" htmlFor="category">
-            Category
-          </label>
-          <div className="flex gap-1">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:gap-4">
+          <div className="flex-1">
+            <label className="font-bold" htmlFor="category">
+              Category
+            </label>
             <select
               id="category"
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="w-full bg-gray-700 rounded-md border-none  pl-4"
+              className="w-full bg-gray-700 rounded-md border-none  pl-4 py-1"
             >
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -202,40 +202,14 @@ export const TransactionsUpdate = () => {
                 </option>
               ))}
             </select>
-            <input
-              readOnly
-              tabIndex={-1}
-              type="text"
-              value={category_id}
-              className="py-1 bg-gray-800 rounded-md border-node  w-8 text-center"
-            />
           </div>
-        </div>
 
-        <div className="flex flex-col">
-          <label className="font-bold">Type</label>
-          <div className="flex gap-4 justify-between w-full">
-            <button
-              type="button"
-              onClick={() => setType(Number("0"))}
-              className={`${type == 0 ? "border rounded-lg" : ""} group`}
-            >
-              <span className="flex gap-2 px-4 py-2  rounded-lg items-center bg-red-500">
-                Expenses{" "}
-                <FaArrowTrendDown className="group-hover:text-red-800 group-hover:duration-300" />
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setType(Number("1"))}
-              className={`${type == 1 ? "border rounded-lg" : ""} group`}
-            >
-              <span className="flex gap-2 px-4 py-2 items-center rounded-lg  bg-green-500 transition-colors duration-300">
-                Incomes{" "}
-                <FaArrowTrendUp className="group-hover:text-emerald-800 group-hover:duration-300" />
-              </span>
-            </button>
+          <div className="w-full sm:w-auto">
+            <label className="font-bold block mb-1">Type</label>
+            <TransatcionTypeButton
+              currentType={type}
+              switchType={() => setType(type === 0 ? 1 : 0)}
+            />
           </div>
         </div>
 

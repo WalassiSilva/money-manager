@@ -13,10 +13,8 @@ export const Patrimony = () => {
   const [showPatrimony, setShowPatrimony] = useState(false);
   const user_id = getUserID();
 
-
   useEffect(() => {
-    fetchPatrimony();   
-    
+    fetchPatrimony();
   }, [year, month]);
 
   const fetchPatrimony = async () => {
@@ -25,17 +23,17 @@ export const Patrimony = () => {
   };
   const handleShowPatrimony = () => {
     setShowPatrimony(!showPatrimony);
-
   };
   return (
-    <div>
-      <button onClick={handleShowPatrimony} className="text-gray-300 font-bold flex items-center flex-col">Patrimony {!showPatrimony ? <FaEye /> : <FaEyeSlash />}</button>
-      <p className="text-gray-300 font-bold duration-200">
-        {showPatrimony 
-        ?
-        monetaryValue(patrimony)
-        : "R$ ***,***.**"
-        }
+    <div className="glass-panel-strong rounded-2xl px-6 py-4 text-center min-w-[280px]">
+      <button
+        onClick={handleShowPatrimony}
+        className="mx-auto flex items-center gap-2 text-sm font-semibold tracking-wide text-slate-300 hover:text-teal-200 transition-colors"
+      >
+        Patrimony {!showPatrimony ? <FaEye /> : <FaEyeSlash />}
+      </button>
+      <p className="mt-2 text-xl lg:text-2xl font-bold text-slate-100 duration-200">
+        {showPatrimony ? monetaryValue(patrimony) : "R$ ***,***.**"}
       </p>
     </div>
   );

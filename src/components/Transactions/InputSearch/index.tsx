@@ -5,16 +5,16 @@ type InputSearchProps = {
   searchValue: string;
   handleInputSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSearch: () => void;
-}
+};
 export default function InputSearch({
   searchValue,
   handleInputSearch,
   handleSearch,
 }: InputSearchProps) {
   return (
-    <div className="w-48 sm:w-[400px] lg:w-[640px] flex justify-center gap-2 my-4">
+    <div className="w-52 sm:w-[460px] lg:w-[700px] flex justify-center gap-2 my-4">
       <input
-        className="w-full rounded-md px-4 py-1 placeholder:text-sm outline-none"
+        className="glass-panel w-full rounded-lg px-4 py-2 placeholder:text-sm placeholder:text-slate-400 text-slate-100 outline-none focus:ring-2 focus:ring-teal-300/35"
         type="search"
         value={searchValue}
         onChange={handleInputSearch}
@@ -23,9 +23,9 @@ export default function InputSearch({
       />
       <button
         onClick={handleSearch}
-        className=" hover:scale-105 top-3 outline-none hover:animate-bounce active:animate-bounce focus:animate-bounce"
+        className="action-accent rounded-lg px-2 hover:scale-105 outline-none focus:ring-2 focus:ring-teal-300/35"
       >
-        <FaSearchDollar fill="white" size={24} />
+        <FaSearchDollar fill="#e2e8f0" size={22} />
       </button>
     </div>
   );

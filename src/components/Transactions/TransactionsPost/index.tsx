@@ -6,11 +6,12 @@ import { getCategories } from "../../../services-api";
 import { CategoriesProps } from "../../../Types";
 
 import { FaCalendarAlt } from "react-icons/fa";
+import { FaRedo } from "react-icons/fa";
 import Calendar from "react-calendar";
 import { baseUrl } from "../../../variables";
 import { format } from "date-fns";
 import { useUser } from "@clerk/clerk-react";
-import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+import TransatcionTypeButton from "../../TransactionTyeButton";
 
 export const TransactionsPost = () => {
   const [title, setTitle] = useState("");
@@ -112,35 +113,36 @@ export const TransactionsPost = () => {
           <label className="font-bold" htmlFor="value">
             Value
           </label>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <input
               id="value"
               type="number"
               value={value}
               onChange={(e) => setValue(Number(e.target.value))}
               placeholder="0.00"
-              className={`px-4 flex-1 ${
-                type == 0 ? "text-red-600" : "text-green-600"
-              } "py-1 remove-arrow bg-gray-800 rounded-md border-none " `}
+              className={`px-4 w-full sm:w-40 ${
+                type == 0 ? "text-rose-400" : "text-emerald-300"
+              } py-1 remove-arrow bg-gray-800 rounded-md border-none`}
             />
 
-            <label
-              htmlFor="replicateByMonth"
-              className="text-xs text-gray-300 select-none font-bold"
-            >
-              X
-            </label>
-            <input
-              id="replicateByMonth"
-              type="checkbox"
-              checked={replicateByMonth}
-              onChange={(e) => {
-                const isChecked = e.target.checked;
-                setReplicateByMonth(isChecked);
-                if (!isChecked) setInstallments(1);
+            <button
+              type="button"
+              aria-pressed={replicateByMonth}
+              onClick={() => {
+                const next = !replicateByMonth;
+                setReplicateByMonth(next);
+                if (!next) setInstallments(1);
               }}
-              className="accent-emerald-500"
-            />
+              className={`p-2 rounded-md transition-all duration-200 flex items-center justify-center ${
+                replicateByMonth
+                  ? "bg-teal-600/20 text-teal-300"
+                  : "bg-gray-800 text-gray-400"
+              }`}
+              title="Replicate monthly"
+            >
+              <FaRedo />
+            </button>
+
             <input
               id="installments"
               type="number"
@@ -156,6 +158,9 @@ export const TransactionsPost = () => {
               }`}
             />
           </div>
+          <p className="text-xs text-gray-400 mt-1">
+            1 = month now, 2 = now + next
+          </p>
         </div>
 
         <div className="flex flex-col">
@@ -198,16 +203,16 @@ export const TransactionsPost = () => {
             )}
           </div>
         </div>
-        <div className="flex flex-col">
-          <label className="font-bold" htmlFor="category">
-            Category
-          </label>
-          <div className="flex gap-1">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:gap-4">
+          <div className="flex-1">
+            <label className="font-bold" htmlFor="category">
+              Category
+            </label>
             <select
               id="category"
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="w-full bg-gray-700 rounded-md border-none capitalize pl-4"
+              className="w-full bg-gray-700 rounded-md border-none capitalize pl-4 py-1"
             >
               {categories.map((category) => (
                 <option
@@ -219,52 +224,18 @@ export const TransactionsPost = () => {
                 </option>
               ))}
             </select>
-            <input
-              readOnly
-              tabIndex={-1}
-              type="text"
-              value={category_id}
-              onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="py-1 bg-gray-800 text-gray-500 rounded-md border-node border-none w-8 text-center"
+          </div>
+
+          <div className="w-full sm:w-auto">
+            <label className="font-bold block mb-1">Type</label>
+            <TransatcionTypeButton
+              currentType={type}
+              switchType={() => setType(type === 0 ? 1 : 0)}
             />
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <label className="font-bold">Type</label>
-          <div className="flex gap-4 justify-between w-full">
-            <button
-              type="button"
-              onClick={() => setType(Number("0"))}
-              className={`${type == 0 ? "border rounded-lg" : ""} group`}
-            >
-              <span className="flex gap-2 px-4 py-2  rounded-lg items-center bg-red-500">
-                Expenses{" "}
-                <FaArrowTrendDown className="group-hover:text-red-800 group-hover:duration-300" />
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setType(Number("1"))}
-              className={`${type == 1 ? "border rounded-lg" : ""} group`}
-            >
-              <span className="flex gap-2 px-4 py-2 items-center rounded-lg  bg-green-500 transition-colors duration-300">
-                Incomes{" "}
-                <FaArrowTrendUp className="group-hover:text-emerald-800 group-hover:duration-300" />
-              </span>
-            </button>
-          </div>
-
-          {/* <select
-            value={type}
-            onChange={(e) => setType(Number(e.target.value))}
-            className="py-1 bg-gray-700 rounded-md border-node   pl-4"
-          >
-            <option value="0">Expense</option>
-            <option value="1">Income</option>
-          </select> */}
-        </div>
+        {/* </div> */}
         {!isLoading ? (
           <input
             type="submit"

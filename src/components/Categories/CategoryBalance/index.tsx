@@ -65,19 +65,19 @@ const CategoryBalance = ({ year, month }: DataProps) => {
   const options = {};
 
   return (
-    <section className="flex items-center justify-center *:capitalize">
-      <div className=" w-[300px] sm:w-[400px] flex items-center justify-center">
-        <div className="flex flex-col items-center ">
+    <section className="flex flex-1 justify-center *:capitalize">
+      <div className="glass-panel-strong w-full max-w-[460px] rounded-2xl p-4 sm:p-6 flex items-center justify-center">
+        <div className="flex flex-col items-center w-full">
           {!data && <p className="text-gray-500">Loading data...</p>}
           <Doughnut data={data} options={options}></Doughnut>
-          <div className="flex gap-4">
+          <div className="flex gap-4 ">
             <TransatcionTypeButton
               currentType={currentType}
               switchType={switchType}
             />
             <Link
               to="/transactions/categories"
-              className="flex justify-center px-4 my-4 py-2 font-bold shadow-md rounded-lg bg-white text-gray-700  hover:bg-white/50 hover:text-white duration-200"
+              className="action-accent flex justify-center px-4 my-4 py-2 font-bold rounded-lg text-slate-100 hover:brightness-110 duration-200"
             >
               See details...
             </Link>

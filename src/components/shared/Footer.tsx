@@ -12,9 +12,9 @@ import {
 
 export const Footer = () => {
   return (
-    <footer className="flex items-center sticky py-3 bottom-0 w-full text-white bg-black">
-      <nav className="w-full ">
-        <ul className="  flex justify-around lg:justify-center lg:gap-10 text-2xl ">
+    <footer className="sticky bottom-0 z-30 w-full px-3 pb-2">
+      <nav className="glass-panel-strong mx-auto max-w-4xl rounded-2xl py-3">
+        <ul className="flex justify-around lg:justify-center lg:gap-12 text-2xl text-slate-200">
           <ItemList>
             <Link to="/" className="underline">
               <MdOutlineHome />
@@ -51,7 +51,7 @@ export const Footer = () => {
 };
 function ItemList({ children }: { children: React.ReactNode }) {
   return (
-    <li className="flex items-center justify-center hover:scale-110 duration-500 hover:bg-white hover:text-black rounded-full p-1 size-8">
+    <li className="flex size-9 items-center justify-center rounded-full border border-transparent p-1 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-300/30 hover:bg-teal-300/10 hover:text-teal-200">
       {children}
     </li>
   );

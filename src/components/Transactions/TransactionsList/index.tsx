@@ -63,10 +63,10 @@ export const TransactionsList = () => {
   };
 
   return (
-    <main className="relative overflow-auto w-full min-h-screen bg-gray-900 flex flex-col py-1 px-1 items-center">
+    <main className="relative overflow-auto w-full min-h-screen flex flex-col py-2 px-2 items-center pb-24 text-slate-100">
       <header className="flex  ">
         <Link to={"/"}>
-          <FaArrowLeft className="m-2 cursor-pointer text-white fixed left-1 hover:scale-105 top-3" />
+          <FaArrowLeft className="m-2 cursor-pointer text-slate-200 fixed left-2 hover:scale-105 top-3" />
         </Link>
         <InputSearch
           handleInputSearch={handleInputSearch}
@@ -76,7 +76,7 @@ export const TransactionsList = () => {
       </header>
       <Header />
 
-      <section className="text-white w-full text-sm">
+      <section className="w-full max-w-6xl text-sm">
         {searchResults.length !== 0 ? (
           <>
             <SearchHeader
@@ -94,7 +94,7 @@ export const TransactionsList = () => {
         {searchResults.length !== 0 ? (
           <ItemSearch searchText={searchValue} transactions={searchResults} />
         ) : transactions.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
             {transactions.map((item) => (
               <Link to={`/transactions/${item.id}`} key={Math.random()}>
                 <TransactionsCard
