@@ -9,8 +9,7 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({
   category_id,
   type,
 }) => {
-  const displayTitle =
-    title.length > 20 ? `${title.slice(0, 17)}...` : title;
+  const displayTitle = title.length > 20 ? `${title.slice(0, 17)}...` : title;
 
   return (
     <section className="glass-panel m-2 px-4 py-2 rounded-xl flex border border-slate-300/15 hover:-translate-y-0.5 hover:border-teal-300/35 hover:shadow-xl hover:shadow-black/30 duration-300">
