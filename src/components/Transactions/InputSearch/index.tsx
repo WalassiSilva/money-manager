@@ -5,11 +5,15 @@ type InputSearchProps = {
   searchValue: string;
   handleInputSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSearch: () => void;
+  noResults?: boolean;
+  shakeToken?: number;
 };
 export default function InputSearch({
   searchValue,
   handleInputSearch,
   handleSearch,
+  noResults = false,
+  shakeToken = 0,
 }: InputSearchProps) {
   return (
     <div className="w-52 sm:w-[460px] lg:w-[700px] flex justify-center gap-2 my-4">
@@ -23,9 +27,14 @@ export default function InputSearch({
       />
       <button
         onClick={handleSearch}
-        className="action-accent rounded-lg px-2 hover:scale-105 outline-none focus:ring-2 focus:ring-teal-300/35"
+        className="action-accent rounded-lg px-2 hover:scale-105 outline-none transition-all duration-150"
       >
-        <FaSearchDollar fill="#e2e8f0" size={22} />
+        <FaSearchDollar
+          key={shakeToken}
+          fill="#e2e8f0"
+          size={22}
+          className={noResults ? "search-shake" : ""}
+        />
       </button>
     </div>
   );

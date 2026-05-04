@@ -14,10 +14,7 @@ import { useDateContext } from "../../../context/GlobalProvider";
 import { SearchHeader } from "../../Search/SearchHeader";
 import { monetaryValue } from "../../../utils";
 import { Header } from "../../shared/Header";
-import TransactionBalance, {
-  BalanceHeader,
-  TransactionContent,
-} from "../TransactionBalance";
+import { MonthlyBalance } from "../../Dashboard/MonthlyBalance";
 import InputSearch from "../InputSearch";
 import ItemSearch from "../TransactionsGroupedByName";
 
@@ -26,6 +23,8 @@ export const TransactionsList = () => {
   const [searchResults, setSearchResults] = useState<TransactionsProps[]>([]);
   const [searchSum, setSearchSum] = useState(0);
   const [searchValue, setSearchValue] = useState("");
+  const [searchAttempted, setSearchAttempted] = useState(false);
+  const [searchAttemptToken, setSearchAttemptToken] = useState(0);
   const [balance, setBalance] = useState<BalanceProps>({
     incomes: 0,
     expenses: 0,
@@ -51,6 +50,9 @@ export const TransactionsList = () => {
   const handleSearch = () => {
     if (!searchValue) return;
 
+    setSearchAttempted(true);
+    setSearchAttemptToken((current) => current + 1);
+
     const fetchSearch = async (title: string) => {
       const data = await getTransactionsByTitle(title, user_id);
       setSearchResults(data.data);
@@ -58,7 +60,8 @@ export const TransactionsList = () => {
     };
     fetchSearch(searchValue);
   };
-  const handleInputSearch = (e) => {
+  const handleInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchAttempted(false);
     setSearchValue(e.target.value);
   };
 
@@ -72,6 +75,8 @@ export const TransactionsList = () => {
           handleInputSearch={handleInputSearch}
           searchValue={searchValue}
           handleSearch={handleSearch}
+          noResults={searchAttempted && searchResults.length === 0}
+          shakeToken={searchAttemptToken}
         />
       </header>
       <Header />
@@ -85,10 +90,9 @@ export const TransactionsList = () => {
             />
           </>
         ) : (
-          <TransactionBalance>
-            <BalanceHeader transactionsLength={transactions.length} />
-            <TransactionContent transactions={transactions} balance={balance} />
-          </TransactionBalance>
+          <div className="glass-panel-strong rounded-2xl m-2">
+            <MonthlyBalance balance={balance} />
+          </div>
         )}
 
         {searchResults.length !== 0 ? (
