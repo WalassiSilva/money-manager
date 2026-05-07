@@ -10,9 +10,20 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({
   type,
 }) => {
   const displayTitle = title.length > 20 ? `${title.slice(0, 17)}...` : title;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const transactionDay = new Date(day);
+  transactionDay.setHours(0, 0, 0, 0);
+
+  const isFutureDay = transactionDay.getTime() > today.getTime();
 
   return (
-    <section className="glass-panel m-2 px-4 py-2 rounded-xl flex border border-slate-300/15 hover:-translate-y-0.5 hover:border-teal-300/35 hover:shadow-xl hover:shadow-black/30 duration-300">
+    <section
+      className={`glass-panel m-2 px-4 py-2 rounded-xl flex border border-slate-300/15 hover:-translate-y-0.5 hover:border-teal-300/35 hover:shadow-xl hover:shadow-black/30 duration-300 ${
+        isFutureDay ? "opacity-25" : ""
+      }`}
+    >
       <div className="flex items-center justify-center m-3 ml-0">
         {setIconCategory(Number(category_id))}
       </div>
