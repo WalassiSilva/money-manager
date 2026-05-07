@@ -16,6 +16,24 @@ import Calendar from "react-calendar";
 import { baseUrl } from "../../../variables";
 import TransatcionTypeButton from "../../TransactionTyeButton";
 
+const serializeDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+const parseDBDate = (dateValue: string | Date) => {
+  if (dateValue instanceof Date) return dateValue;
+
+  const match = dateValue.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!match) return new Date(dateValue);
+
+  const [, year, month, day] = match;
+  return new Date(Number(year), Number(month) - 1, Number(day));
+};
+
 export const TransactionsUpdate = () => {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState(0);
@@ -36,7 +54,7 @@ export const TransactionsUpdate = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = { title, value, day, category_id, type };
+    const data = { title, value, day: serializeDate(day), category_id, type };
 
     fetch(`${baseUrl}/${idParam.id}`, {
       method: "PUT",
@@ -66,7 +84,7 @@ export const TransactionsUpdate = () => {
 
     setTitle(data.transaction.title);
     setValue(data.transaction.value);
-    setDay(data.transaction.day);
+    setDay(parseDBDate(data.transaction.day));
     setCategory_id(data.transaction.category_id);
     setType(data.transaction.type);
   };

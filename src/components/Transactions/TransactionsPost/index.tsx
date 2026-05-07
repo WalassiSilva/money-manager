@@ -13,6 +13,14 @@ import { format } from "date-fns";
 import { useUser } from "@clerk/clerk-react";
 import TransatcionTypeButton from "../../TransactionTyeButton";
 
+const serializeDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
 export const TransactionsPost = () => {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState<number>(0);
@@ -39,7 +47,7 @@ export const TransactionsPost = () => {
     const data = {
       title,
       value,
-      day,
+      day: serializeDate(day),
       category_id,
       type,
       installments: safeInstallments,
