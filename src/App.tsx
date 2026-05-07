@@ -9,7 +9,7 @@ import { Transactions } from "./Pages/Transactions";
 import { Dashboard } from "./Pages/Dashboard";
 import { TransactionsUpdate } from "./components/Transactions/TransactionsUpdate";
 import { TransactionsPost } from "./components/Transactions/TransactionsPost";
-import { Categories } from "./Pages/Categories";
+// import { Categories } from "./Pages/Categories";
 import LoginPage from "./Pages/Login";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 
@@ -56,7 +56,7 @@ function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/transactions/add" element={<TransactionsPost />} />
           <Route path="/transactions/:id" element={<TransactionsUpdate />} />
-          <Route path="/transactions/categories" element={<Categories />} />
+          {/* <Route path="/transactions/categories" element={<Categories />} /> */}
         </Route>
 
         {/* Se não estiver autenticado, redireciona para login */}

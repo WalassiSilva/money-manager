@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import { MdOutlineHome } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { FaChartPie, FaRegListAlt } from "react-icons/fa";
+import { FaRegListAlt } from "react-icons/fa";
 import {
   SignedIn,
   SignedOut,
@@ -21,11 +21,11 @@ export const Footer = () => {
             </Link>
           </ItemList>
 
-          <ItemList>
+          {/* <ItemList>
             <Link to="/transactions/categories">
               <FaChartPie />
             </Link>
-          </ItemList>
+          </ItemList> */}
           <ItemList>
             <Link to="/transactions/add">
               <IoMdAddCircleOutline />
