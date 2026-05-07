@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BsTrash3Fill } from "react-icons/bs";
+
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -8,6 +8,7 @@ import {
   getTransactionById,
   getUserID,
 } from "../../../services-api";
+import ConfirmDialog from "../../shared/ConfirmDialog";
 import { CategoriesProps } from "../../../Types";
 import { FaPencilAlt } from "react-icons/fa";
 
@@ -42,6 +43,10 @@ export const TransactionsUpdate = () => {
   const [type, setType] = useState(0);
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [targetDeleteId, setTargetDeleteId] = useState<string | undefined>(
+    undefined,
+  );
   const idParam = useParams();
   const navigate = useNavigate();
   const user_id = getUserID();
@@ -94,13 +99,23 @@ export const TransactionsUpdate = () => {
     setCategories(data);
   };
 
-  const handleDelete = async (id: string | undefined) => {
+  const handleDelete = (id: string | undefined) => {
     if (!id) return;
-    const check = confirm("Deletar transação?");
-    if (check) {
-      await deleteTransaction(id, user_id);
-      navigate(-1);
-    } else return;
+    setTargetDeleteId(id);
+    setConfirmOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!targetDeleteId) return;
+    await deleteTransaction(targetDeleteId, user_id);
+    setConfirmOpen(false);
+    setTargetDeleteId(undefined);
+    navigate(-1);
+  };
+
+  const cancelDelete = () => {
+    setConfirmOpen(false);
+    setTargetDeleteId(undefined);
   };
 
   const formatDate = (date: Date) => {
@@ -110,7 +125,7 @@ export const TransactionsUpdate = () => {
     return `${d}/${m}/${y}`;
   };
   return (
-    <main className="overflow-scroll w-full min-h-screen text-white bg-gray-900 flex flex-col gap-8 px-4 items-center">
+    <main className="overflow-hidden no-scrollbar w-full min-h-screen text-white bg-gray-900 flex flex-col gap-8 px-4 items-center">
       <header className="w-full my-2">
         <nav className="flex items-center justify-between">
           <button
@@ -125,13 +140,7 @@ export const TransactionsUpdate = () => {
             <FaPencilAlt />
             Edit Transaction
           </h1>
-
-          <button
-            className="p-2 bg-gray-200 rounded-full text-gray-800 hover:scale-105"
-            onClick={() => handleDelete(idParam.id)}
-          >
-            <BsTrash3Fill />
-          </button>
+          <div className=""></div>
         </nav>
       </header>
 
@@ -231,14 +240,32 @@ export const TransactionsUpdate = () => {
           </div>
         </div>
 
-        <input
-          type="submit"
-          value="Save"
-          className={
-            "py-2 cursor-pointer bg-gray-800 font-bold rounded-md hover:bg-slate-300 hover:text-gray-800 duration-200 active:bg-gray-500"
-          }
-        />
+        <div className="flex gap-2">
+          <button
+            type="submit"
+            className="w-1/2 py-2 bg-gray-800 font-bold rounded-md hover:bg-slate-300 hover:text-gray-800 duration-200 active:bg-gray-500"
+          >
+            Save
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleDelete(idParam.id)}
+            className="w-1/2 py-2 bg-rose-600 text-white font-bold rounded-md hover:bg-red-500 duration-200 active:bg-red-700"
+          >
+            Delete
+          </button>
+        </div>
       </form>
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Delete Transaction"
+        description="This action cannot be undone."
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
     </main>
   );
 };
