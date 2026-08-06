@@ -161,13 +161,20 @@ export const TransactionsUpdate = () => {
 
         <div className="flex flex-col">
           <label>Value</label>
+          <p
+            className={` -mb-7 ml-1 z-10 w-2 ${
+              type == 0 ? "text-rose-400" : "text-emerald-300"
+            } `}
+          >
+            R$
+          </p>
           <input
             id="value"
             type="number"
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
             placeholder="Value"
-            className={`px-4 w-full sm:w-40 ${
+            className={`px-8 w-full sm:w-40 ${
               type == 0 ? "text-rose-400" : "text-emerald-300"
             } py-1 remove-arrow bg-gray-800 rounded-md border-none`}
           />
@@ -221,7 +228,7 @@ export const TransactionsUpdate = () => {
               id="category"
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="w-full bg-gray-700 rounded-md border-none  pl-4 py-1"
+              className="w-full h-10 bg-gray-700 rounded-md border-none  pl-4 py-1"
             >
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -243,7 +250,7 @@ export const TransactionsUpdate = () => {
         <div className="flex gap-2">
           <button
             type="submit"
-            className="w-1/2 py-2 bg-gray-800 font-bold rounded-md hover:bg-slate-300 hover:text-gray-800 duration-200 active:bg-gray-500"
+            className="w-1/2 py-2 bg-slate-500 font-bold rounded-md hover:bg-slate-300 hover:text-gray-800 duration-200 active:bg-gray-500"
           >
             Save
           </button>
@@ -251,7 +258,7 @@ export const TransactionsUpdate = () => {
           <button
             type="button"
             onClick={() => handleDelete(idParam.id)}
-            className="w-1/2 py-2 bg-rose-600 text-white font-bold rounded-md hover:bg-red-500 duration-200 active:bg-red-700"
+            className="w-1/2 py-2 bg-rose-400 text-white font-bold rounded-md hover:bg-red-500 duration-200 active:bg-red-700"
           >
             Delete
           </button>

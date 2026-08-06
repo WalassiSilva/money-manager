@@ -1,5 +1,5 @@
 import { FaHome, FaBus } from "react-icons/fa";
-import { GiFireSpellCast, GiStairsGoal } from "react-icons/gi";
+import { GiBurningSkull, GiFireSpellCast, GiStairsGoal } from "react-icons/gi";
 import { MdHealthAndSafety } from "react-icons/md";
 import { GiMoneyStack } from "react-icons/gi";
 import { GiReceiveMoney } from "react-icons/gi";
@@ -98,6 +98,9 @@ export const setIconCategory = (category_id: number) => {
       return (
         <IoFastFoodSharp className="bg-yellow-600 rounded-full p-2 h-8 w-8" />
       );
+    }
+    case 14: {
+      return <GiBurningSkull className=" rounded-full h-8 w-8" />;
     }
   }
 };

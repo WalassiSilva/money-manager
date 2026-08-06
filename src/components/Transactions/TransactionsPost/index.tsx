@@ -121,6 +121,13 @@ export const TransactionsPost = () => {
           <label className="font-bold" htmlFor="value">
             Value
           </label>
+          <p
+            className={` -mb-7 ml-1 z-10 w-2 ${
+              type == 0 ? "text-rose-400" : "text-emerald-300"
+            } `}
+          >
+            R$
+          </p>
           <div className="flex items-center gap-3">
             <input
               id="value"
@@ -128,7 +135,7 @@ export const TransactionsPost = () => {
               value={value}
               onChange={(e) => setValue(Number(e.target.value))}
               placeholder="0.00"
-              className={`px-4 w-full sm:w-40 ${
+              className={`px-8 w-full sm:w-40 ${
                 type == 0 ? "text-rose-400" : "text-emerald-300"
               } py-1 remove-arrow bg-gray-800 rounded-md border-none`}
             />
@@ -220,7 +227,7 @@ export const TransactionsPost = () => {
               id="category"
               value={category_id}
               onChange={(e) => setCategory_id(Number(e.target.value))}
-              className="w-full bg-gray-700 rounded-md border-none capitalize pl-4 py-1"
+              className="w-full h-10 bg-gray-700 rounded-md border-none capitalize pl-4 py-1"
             >
               {categories.map((category) => (
                 <option
