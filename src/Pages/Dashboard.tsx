@@ -14,8 +14,9 @@ import {
 const Dashboard = () => {
   const { date, setDate } = useDateContext();
 
-  const year = new Date(date).getFullYear();
-  const month = new Date(date).getMonth();
+  const currentDate = new Date(date);
+  const year = currentDate.getUTCFullYear();
+  const month = currentDate.getUTCMonth();
 
   useEffect(() => {
     setDate(new Date(date).toISOString());

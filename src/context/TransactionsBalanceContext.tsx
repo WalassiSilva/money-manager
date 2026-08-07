@@ -28,9 +28,10 @@ export function TransactionsBalanceProvider({
 
   const user_id = getUserID();
 
-   useEffect(() => {
-      fetchMonthData(new Date(date).getFullYear(), new Date(date).getMonth() + 1);
-    }, [date]);
+  useEffect(() => {
+    const currentDate = new Date(date);
+    fetchMonthData(currentDate.getUTCFullYear(), currentDate.getUTCMonth() + 1);
+   }, [date]);
   
     const fetchMonthData = async (
       year: string | number,

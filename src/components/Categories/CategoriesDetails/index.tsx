@@ -38,8 +38,9 @@ export const CategoriesDetails = () => {
   const { date } = useDateContext();
   // const monthName = new Date(date).toLocaleString("pt-BR", { month: "long" });
   const { currentType, switchType } = useTransactionType();
-  const year = new Date(date).getFullYear();
-  const month = new Date(date).getMonth() + 1;
+  const currentDate = new Date(date);
+  const year = currentDate.getUTCFullYear();
+  const month = currentDate.getUTCMonth() + 1;
   const user_id = getUserID();
   const fetchCategories = async (
     year: number,

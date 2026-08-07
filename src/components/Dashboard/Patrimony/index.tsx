@@ -7,8 +7,9 @@ import { FaEyeSlash } from "react-icons/fa";
 
 export const Patrimony = () => {
   const { date } = useDateContext();
-  const year = new Date(date).getFullYear();
-  const month = new Date(date).getMonth() + 1;
+  const currentDate = new Date(date);
+  const year = currentDate.getUTCFullYear();
+  const month = currentDate.getUTCMonth() + 1;
   const [patrimony, setPatrimony] = useState(0);
   const [showPatrimony, setShowPatrimony] = useState(false);
   const user_id = getUserID();
