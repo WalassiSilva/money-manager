@@ -9,7 +9,6 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({
   category_id,
   type,
 }) => {
-  const displayTitle = title.length > 20 ? `${title.slice(0, 17)}...` : title;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -30,8 +29,8 @@ export const TransactionsCard: React.FC<TransactionsProps> = ({
       </div>
 
       <div className="flex-1 flex justify-between ">
-        <h2 className="min-w-0 flex-1 truncate font-bold self-center text-sm capitalize">
-          {displayTitle}
+        <h2 className="min-w-0 flex-1 break-words font-bold self-center text-xs capitalize leading-tight">
+          {title}
         </h2>
 
         {/*value and day info */}
